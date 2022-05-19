@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function SearchBar(props) {
+  const {setView} = props;
   return (
     <div className="search-bar">
        <input placeholder="Search Recipe Name"/>
@@ -13,7 +14,7 @@ export default function SearchBar(props) {
         <option value="meat">over 900</option>
       </select>
 
-      <button>Search</button>
+      <button onClick={()=>{setView("SearchResult")}}>Search</button>
 
     </div>
   );

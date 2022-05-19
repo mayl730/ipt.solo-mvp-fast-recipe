@@ -6,6 +6,7 @@ import SearchBar from "./components/SearchBar";
 import SearchResult from "./components/SearchResult";
 import HomeRecipes from './components/HomeRecipes';
 import RecipeDetail from './components/RecipeDetail';
+import Admin from './components/Admin';
 
 function App() {
   //State
@@ -22,26 +23,22 @@ function App() {
   });
 
   // handler function
-  const changeToRecipeDetail = (e) => {
-    console.log('clicked!');
-    setView("RecipeDetail")
-  }
 
   // setView Statement
   let view;
   if(currentView === "HomeRecipes") view = <HomeRecipes
   recipes = {recipes}
   setView = {setView}/>;
-  if(currentView === "RecipeDetail") view = <RecipeDetail />
+  if(currentView === "RecipeDetail") view = <RecipeDetail setView = {setView}/>
+  if(currentView === "SearchResult") view = <SearchResult />
+  if(currentView === "Admin") view = <Admin />
 
 
   return (
     <div className="App">
          <NavBar setView = {setView}/>
-         <SearchBar /> 
+         <SearchBar setView = {setView}/> 
          { view }   
-         {/* <RecipeDetail /> */}
-         <SearchResult />
     </div>
   );
 }
