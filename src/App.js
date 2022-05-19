@@ -11,6 +11,8 @@ import Admin from './components/Admin';
 function App() {
   //State
   const [recipes, setRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
+  const [filteredID, setFilteredID] = useState({});
   const [currentView, setView] = useState("HomeRecipes");
   const [selectedRecipe, setSelectedRecipe] = useState("");
 
@@ -34,15 +36,23 @@ function App() {
   />;
   }
   if(currentView === "RecipeDetail") view = <RecipeDetail setView = {setView}
-  selectedRecipe = {selectedRecipe}/>
-  if(currentView === "SearchResult") view = <SearchResult />
+  selectedRecipe = {selectedRecipe}
+  filteredRecipes = {filteredRecipes}/>
+  if(currentView === "SearchResult") view = <SearchResult filteredRecipes = {filteredRecipes}/>
   if(currentView === "Admin") view = <Admin />
 
 
   return (
     <div className="App">
-         <NavBar setView = {setView}/>
-         <SearchBar setView = {setView}/> 
+         <NavBar
+         setView = {setView}
+         />
+         <SearchBar
+         setView = {setView}
+         filteredID = {filteredID}
+         setFilteredID = {setFilteredID}
+         setFilteredRecipes = {setFilteredRecipes}
+         /> 
          { view }   
     </div>
   );
