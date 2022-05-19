@@ -12,7 +12,7 @@ function App() {
   //State
   const [recipes, setRecipes] = useState([]);
   const [currentView, setView] = useState("HomeRecipes");
-  const [selectedRecipe, setSelectedRecipe] = useState([]);
+  const [selectedRecipe, setSelectedRecipe] = useState("");
 
   //Effect
   useEffect(() => { 
@@ -26,10 +26,15 @@ function App() {
 
   // setView Statement
   let view;
-  if(currentView === "HomeRecipes") view = <HomeRecipes
-  recipes = {recipes}
-  setView = {setView}/>;
-  if(currentView === "RecipeDetail") view = <RecipeDetail setView = {setView}/>
+  if(currentView === "HomeRecipes") {
+    view = <HomeRecipes
+    recipes = {recipes}
+    setView = {setView}
+    setSelectedRecipe = {setSelectedRecipe}
+  />;
+  }
+  if(currentView === "RecipeDetail") view = <RecipeDetail setView = {setView}
+  selectedRecipe = {selectedRecipe}/>
   if(currentView === "SearchResult") view = <SearchResult />
   if(currentView === "Admin") view = <Admin />
 
