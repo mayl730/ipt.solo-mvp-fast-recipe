@@ -1,9 +1,10 @@
 import React from "react";
 
 export default function NavBar(props) {
+  const { setView } = props;
   return (
     <div className="nav-bar">
-     <p>Nav: Fast Recipe</p>
+     <p onClick={()=> {setView("HomeRecipes")}}>Nav: Fast Recipe</p>
      <button>Admin →</button>
     </div>
   );

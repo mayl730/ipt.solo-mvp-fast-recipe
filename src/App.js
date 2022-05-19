@@ -11,7 +11,7 @@ function App() {
   //State
   const [recipes, setRecipes] = useState([]);
   const [currentView, setView] = useState("HomeRecipes");
-  const [selectedRecipe, setSelectedRecipe] = useState("");
+  const [selectedRecipe, setSelectedRecipe] = useState([]);
 
   //Effect
   useEffect(() => { 
@@ -19,16 +19,25 @@ function App() {
       listRecipes().then(data => setRecipes(data));
     }
     getAllRecipes();
-    // console.log(recipes);
   });
-  let view;
 
-  if(currentView === "HomeRecipes") view = <HomeRecipes recipes = {recipes}/>;
+  // handler function
+  const changeToRecipeDetail = (e) => {
+    console.log('clicked!');
+    setView("RecipeDetail")
+  }
+
+  // setView Statement
+  let view;
+  if(currentView === "HomeRecipes") view = <HomeRecipes
+  recipes = {recipes}
+  setView = {setView}/>;
   if(currentView === "RecipeDetail") view = <RecipeDetail />
+
 
   return (
     <div className="App">
-         <NavBar />
+         <NavBar setView = {setView}/>
          <SearchBar /> 
          { view }   
          {/* <RecipeDetail /> */}
