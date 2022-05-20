@@ -70,6 +70,14 @@ export async function editRecipe (req) {
     console.log('Request Sent!', req)
 }
 
+export async function removeRecipe (id) {
+    axios({
+        method: 'delete',
+        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${id}`
+      });
+    console.log('Item Removed!', "id", id)
+}
+
 
 // ingredient fucntions
 
@@ -97,13 +105,3 @@ export async function addIngridentToRecipe (recipeID, req) {
       });
     console.log('Ingredient is added into a Recipe!', req)
 }
-
-
-
-// {
-//     id: 8,
-//     title: "Miso Soup",
-//     description: "Changed Description",
-//     calories : 200,
-//     type: "Lunch",
-// }

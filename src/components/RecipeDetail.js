@@ -1,4 +1,5 @@
 import React from "react";
+import { removeRecipe } from '../utils/index';
 
 export default function RecipeDetail(props) {
   const { setView, selectedRecipe } = props
@@ -11,7 +12,10 @@ export default function RecipeDetail(props) {
        <button onClick={()=>{
          setView("Edit")
        }}>Edit</button>
-       <button>Delete</button>
+       <button onClick={()=>{
+         removeRecipe(selectedRecipe.id)
+         setView("HomeRecipes")
+       }}>Delete</button>
        <p>{selectedRecipe.title}</p>
        <p>{selectedRecipe.description}</p>
        <p>Ingridents: {selectedRecipe.ingredients}</p>
