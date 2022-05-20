@@ -1,5 +1,7 @@
 const axios = require('axios').default;
 
+// recipe functions
+
 export async function listRecipes (n) {
     if (n !== undefined) {
         return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe?limit=${n}`)
@@ -67,6 +69,17 @@ export async function editRecipe (req) {
       });
     console.log('Request Sent!', req)
 }
+
+
+// ingredient fucntions
+
+export async function listIngredients () {
+    return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/ingredient`)
+                .then((res)=>res.data)
+                .catch(err=>console.log(err));
+}
+
+
 
 // {
 //     id: 8,

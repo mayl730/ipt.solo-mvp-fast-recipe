@@ -56,7 +56,7 @@ export default function SearchBar(props) {
     <div className="search-bar">
        <input type="text" placeholder="Search Recipe Name" onChange={getName}/>
        <input type="text" placeholder="Ingrident" onChange={getIngredient}/>
-       <select onChange={getCalories}>
+      <select onChange={getCalories}>
         <option value="[null, null]">--Calories--</option>
         <option value="[400, 0]">Under 400kcal</option>
         <option value="[600, 400]">400 - 600kcal</option>
