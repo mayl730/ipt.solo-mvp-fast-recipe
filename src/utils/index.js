@@ -59,18 +59,19 @@ export async function listRecipesByIds (arr) {
     return result;
 }
 
-export async function editRecipe (id) {
+export async function editRecipe (req) {
     axios({
         method: 'patch',
-        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/8`,
-        data: {
-            id: 8,
-            title: "Miso Soup",
-            description: "Changed Description",
-            calories : 200,
-            type: "Lunch",
-        }
+        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${req.id}`,
+        data: req
       });
-    console.log('runng')
+    console.log('Request Sent!', req)
 }
 
+// {
+//     id: 8,
+//     title: "Miso Soup",
+//     description: "Changed Description",
+//     calories : 200,
+//     type: "Lunch",
+// }

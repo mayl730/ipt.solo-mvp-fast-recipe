@@ -3,23 +3,33 @@ import { editRecipe } from '../utils/index';
 
 export default function Edit(props) {
 const { selectedRecipe } = props;
-const [titlee, setTitle] = useState(selectedRecipe.title);
-const [descriptionn, setDescription] = useState("");
-const [caloriess, setCalories] = useState([]);
-const [typee, setType] = useState([]);
+const [title, setTitle] = useState(selectedRecipe.title);
+const [description, setDescription] = useState(selectedRecipe.description);
+const [calories, setCalories] = useState(selectedRecipe.calories);
+const [type, setType] = useState(selectedRecipe.type);
 
 const getTitle = (event) => {
     setTitle(event.target.value);
 }
-//function
-const sendRequest = () => {
-// const [request, setRequest] = useState({
-//             id: 8,
-//             title: "Miso Soup",
-//             description: "Changed Description",
-//             calories : 200,
-//             type: "Lunch"
-// });
+const getDescription  = (event) => {
+    setDescription(event.target.value);
+}
+const getCalories  = (event) => {
+    setCalories(event.target.value);
+}
+const getType  = (event) => {
+    setType(event.target.value);
+}
+
+// function
+const sendRequest = async () => {
+    const req = { id: selectedRecipe.id,
+                    title: title,
+                    description: description,
+                    calories : calories,
+                    type: type,
+                    }
+        await editRecipe(req);
 }
 
  return (
@@ -28,18 +38,29 @@ const sendRequest = () => {
      <p>print {JSON.stringify(selectedRecipe)}</p>
      <form>
       <label>Recipe Name: 
-        <input type="text" value={titlee} onChange={getTitle}/>
+        <input type="text"
+               value={title}
+               onChange={getTitle}/>
       </label>
     
       <label>Recipe description: 
-        <textarea type="text" />
+        <textarea type="text"
+                  value={description}
+                  onChange={getDescription}/>
       </label>
 
       <label>Calories - kcal
-        <input type="text" />
+        <input type="text"
+        value={calories}
+        onChange={getCalories}/>
+      </label>
+      <label>Type
+        <input type="text"
+        value={type}
+        onChange={getType}/>
       </label>
     </form>
-    <button onClick={editRecipe}>Confirm</button>
+    <button onClick={sendRequest}>Confirm</button>
      </div>
  )
 }
