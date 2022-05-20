@@ -11,7 +11,12 @@ export default function RecipeDetail(props) {
        <p>{selectedRecipe.title}</p>
        <p>{selectedRecipe.description}</p>
        <p>{selectedRecipe.calories}</p>
-       <button onClick={()=>setView("SearchResult")}>Back</button>
+       <ul>
+         <li>Step1: orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
+         <li>Step2: orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
+         <li>Step3: orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
+       </ul>
+       {/* <button onClick={()=>setView("SearchResult")}>Back</button> */}
     </div>
   );
 }
