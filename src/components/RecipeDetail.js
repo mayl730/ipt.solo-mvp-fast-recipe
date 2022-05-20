@@ -7,6 +7,11 @@ export default function RecipeDetail(props) {
        <h2>Recipe Detail</h2>
        <img src="https://picsum.photos/seed/picsum/180/130
 " alt="food"></img>
+        <br></br>
+       <button onClick={()=>{
+         setView("Edit")
+       }}>Edit</button>
+       <button>Delete</button>
        <p>{selectedRecipe.title}</p>
        <p>{selectedRecipe.description}</p>
        <p>Ingridents: {selectedRecipe.ingredients}</p>

@@ -58,3 +58,19 @@ export async function listRecipesByIds (arr) {
     }
     return result;
 }
+
+export async function editRecipe (id) {
+    axios({
+        method: 'patch',
+        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/8`,
+        data: {
+            id: 8,
+            title: "Miso Soup",
+            description: "Changed Description",
+            calories : 200,
+            type: "Lunch",
+        }
+      });
+    console.log('runng')
+}
+

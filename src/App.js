@@ -7,6 +7,7 @@ import SearchResult from "./components/SearchResult";
 import HomeRecipes from './components/HomeRecipes';
 import RecipeDetail from './components/RecipeDetail';
 import Admin from './components/Admin';
+import Edit from './components/Edit';
 
 function App() {
   //State
@@ -43,6 +44,9 @@ function App() {
   setSelectedRecipe = {setSelectedRecipe}
   />
   if(currentView === "Admin") view = <Admin />
+  if(currentView === "Edit") view = <Edit 
+  selectedRecipe = {selectedRecipe}
+  />
 
 
   return (
