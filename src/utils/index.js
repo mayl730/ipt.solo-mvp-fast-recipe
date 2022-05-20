@@ -13,17 +13,17 @@ export async function listRecipes (n) {
 
 export async function listRecipesByName (title) {
     if (title === "") {
-        return;
+        return [];
     }
     return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe/${title}`)
-                .then((res)=>res.data)
+                .then((res)=>[res.data.id])
                 .catch(err=>console.log(err));
 }
 
 export async function listRecipesByIngredient (name) {
     let result = [];
     if (name === "") {
-        return;
+        return result;
     }
     const res = await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe/ingredient/${name}`)
                 .then((res)=>res.data)
@@ -32,11 +32,25 @@ export async function listRecipesByIngredient (name) {
         result.push(item.id)
     });
     return result;
-    
+}
+
+export async function listRecipesByCalories (lt, gt) {
+    console.log(lt, gt);
+    let result = [];
+    if (!lt && !gt) {
+        return result;
+    } else {
+        const res = await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe?calories={"lt": ${lt}, "gt": ${gt}}`)
+        .then((res)=>res.data)
+        .catch(err=>console.log(err));
+        res.forEach(item => {
+        result.push(item.id)
+        });
+        return result;
+    }   
 }
 
 export async function listRecipesByIds (arr) {
-    let testArr = ["1","2","3"]
     let result = [];
     for (const id of arr) {
             const p = await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe/${id}`)

@@ -13,7 +13,7 @@ export default function HomeRecipes(props) {
                    setView("RecipeDetail")
                   }}
                  >
-              <img src="https://api.lorem.space/image/burger?w=180&h=130
+              <img src="https://picsum.photos/seed/picsum/180/130
 " alt="food"></img>
               <h4>{item.title}</h4>
             </div>
