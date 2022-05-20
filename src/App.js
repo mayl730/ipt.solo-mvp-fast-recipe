@@ -38,7 +38,10 @@ function App() {
   if(currentView === "RecipeDetail") view = <RecipeDetail setView = {setView}
   selectedRecipe = {selectedRecipe}
   filteredRecipes = {filteredRecipes}/>
-  if(currentView === "SearchResult") view = <SearchResult filteredRecipes = {filteredRecipes}/>
+  if(currentView === "SearchResult") view = <SearchResult filteredRecipes = {filteredRecipes}
+  setView = {setView}
+  setSelectedRecipe = {setSelectedRecipe}
+  />
   if(currentView === "Admin") view = <Admin />
 
 

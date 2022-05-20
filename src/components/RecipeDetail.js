@@ -7,10 +7,10 @@ export default function RecipeDetail(props) {
        <h2>Recipe Detail</h2>
        <img src="https://picsum.photos/seed/picsum/180/130
 " alt="food"></img>
-       <p>{JSON.stringify(selectedRecipe)}</p>
        <p>{selectedRecipe.title}</p>
        <p>{selectedRecipe.description}</p>
-       <p>{selectedRecipe.calories}</p>
+       <p>Ingridents: {selectedRecipe.ingredients}</p>
+       <p>Calories: {selectedRecipe.calories}kcal</p>
        <ul>
          <li>Step1: orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
          <li>Step2: orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
