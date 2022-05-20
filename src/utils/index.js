@@ -80,6 +80,25 @@ export async function listIngredients () {
 }
 
 
+export async function addRecipe (req) {
+    axios({
+        method: 'post',
+        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/`,
+        data: req
+      });
+    console.log('Recipe Added!', req)
+}
+
+export async function addIngridentToRecipe (recipeID, req) {
+    axios({
+        method: 'post',
+        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
+        data: req
+      });
+    console.log('Ingredient is added into a Recipe!', req)
+}
+
+
 
 // {
 //     id: 8,

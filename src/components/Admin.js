@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { listRecipes, listIngredients } from '../utils/index';
+import { listRecipes, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
 
 export default function Admin(props) {
 const [title, setTitle] = useState("");
@@ -40,7 +40,9 @@ const getAmount  = (event) => {
 
 const sendAddRequest = async () => {
   const allRecipes = await listRecipes().then(res=>res);
-  const reqRecipe = { id: allRecipes.length+1,
+  const recipeID = allRecipes.length+1;
+  const reqRecipe = { id: recipeID,
+    userID: 999,
     title: title,
     description: description,
     calories : calories,
@@ -50,8 +52,9 @@ const sendAddRequest = async () => {
     ingredientID: ingredient,
     amount: amount,
   }
-  console.log(reqRecipe);
-  console.log(reqRecipeIngre);
+
+  await addRecipe(reqRecipe);
+  await addIngridentToRecipe(recipeID, reqRecipeIngre);
 
 }
   return (
