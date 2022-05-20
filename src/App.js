@@ -46,6 +46,8 @@ function App() {
   if(currentView === "Admin") view = <Admin />
   if(currentView === "Edit") view = <Edit 
   selectedRecipe = {selectedRecipe}
+  setView = {setView}
+  setSelectedRecipe = {setSelectedRecipe}
   />
 
 

@@ -22,6 +22,13 @@ export async function listRecipesByName (title) {
                 .catch(err=>console.log(err));
 }
 
+export async function findRecipeByID (id) {
+    return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe/${id}`)
+                .then((res)=>[res.data])
+                .catch(err=>console.log(err));
+}
+
+
 export async function listRecipesByIngredient (name) {
     let result = [];
     if (name === "") {

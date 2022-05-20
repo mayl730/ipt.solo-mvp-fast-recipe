@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { editRecipe } from '../utils/index';
+import { editRecipe, findRecipeByID } from '../utils/index';
 
 export default function Edit(props) {
-const { selectedRecipe } = props;
+const { setSelectedRecipe, selectedRecipe, setView } = props;
 const [title, setTitle] = useState(selectedRecipe.title);
 const [description, setDescription] = useState(selectedRecipe.description);
 const [calories, setCalories] = useState(selectedRecipe.calories);
@@ -29,7 +29,12 @@ const sendRequest = async () => {
                     calories : calories,
                     type: type,
                     }
-        await editRecipe(req);
+    await editRecipe(req)
+    setTimeout(async() => {
+        const newRecipe = await findRecipeByID(selectedRecipe.id)
+    setSelectedRecipe(...newRecipe);
+    setView("RecipeDetail");
+      }, "1000")
 }
 
  return (
@@ -60,7 +65,9 @@ const sendRequest = async () => {
         onChange={getType}/>
       </label>
     </form>
-    <button onClick={sendRequest}>Confirm</button>
+    <button onClick={()=>{
+         sendRequest(); 
+    }}>Confirm</button>
      </div>
  )
 }

@@ -5,7 +5,7 @@ export default function NavBar(props) {
   return (
     <div className="nav-bar">
      <p onClick={()=> {setView("HomeRecipes")}}>Nav: Fast Recipe</p>
-     <button onClick={()=> {setView("Admin")}}>Admin →</button>
+     <button onClick={()=> {setView("Admin")}}>Add Recipe +</button>
     </div>
   );
 }
