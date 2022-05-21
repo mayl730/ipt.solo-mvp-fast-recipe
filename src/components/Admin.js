@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { Form, Col, Row, Container, Button, Alert } from 'react-bootstrap';
 import { listRecipes, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
 
 export default function Admin(props) {
@@ -55,12 +56,82 @@ const sendAddRequest = async () => {
 
   await addRecipe(reqRecipe);
   await addIngridentToRecipe(recipeID, reqRecipeIngre);
+  console.log('recipe added!', recipeID, reqRecipeIngre);
 
 }
   return (
     <div className="admin">
        <h2>Add Recipe</h2>
-       <form>
+       <Container>
+          <Form>
+            <Form.Group className="mb-3">
+                <Form.Label>Recipe Name</Form.Label>
+                <Form.Control  type="text"
+                      value={title}
+                      onChange={getTitle}/>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Description</Form.Label>
+                <Form.Control as="textarea" rows={3} type="text"
+                          value={description}
+                          onChange={getDescription}/>
+            </Form.Group>
+            <Row>
+              <Col>
+                  <Form.Group className="mb-3">
+                  <Form.Label>Calories - kcal</Form.Label>
+                  <Form.Control type="text"
+                  value={calories}
+                  onChange={getCalories}/>
+                  </Form.Group>
+              </Col>
+              <Col>
+                  <Form.Group className="mb-3">
+                  <Form.Label>Type</Form.Label>
+                  <Form.Control type="text"
+                                value={type}
+                                onChange={getType}/>
+                  </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+              <Form.Label>Ingredient</Form.Label>
+              <Form.Select aria-label="Default select example"
+              onChange={getIngredient}>
+                { allIngredients.map((item) => {
+                  return (
+                    <option value={item.id}>{item.name}</option>
+                  )
+                })
+                }
+              </Form.Select>
+              </Col>
+
+              <Col>
+              <Col>
+                  <Form.Group className="mb-3">
+                  <Form.Label>Amount</Form.Label>
+                  <Form.Control  type="text"
+                                 value={amount}
+                                 onChange={getAmount}/>
+                  </Form.Group>
+              </Col>
+              </Col>
+            </Row>
+            <Button onClick={sendAddRequest}>
+              Submit
+            </Button>
+
+            {/* <Alert key="success" variant="success">
+              Recipe is Added!
+            </Alert> */}
+            
+          </Form>
+       </Container>
+
+
+       {/* <form>
       <label>Recipe Name: 
         <input type="text"
                value={title}
@@ -101,7 +172,7 @@ const sendAddRequest = async () => {
       </label>
 
     </form>
-    <button onClick={sendAddRequest}>Confirm</button>
+    <button onClick={sendAddRequest}>Confirm</button> */}
 
     </div>
   );
