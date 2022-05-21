@@ -7,6 +7,9 @@ body h3 {
 body h4 {
   line-height: 40px;
 }
+body p {
+  line-height: 20px;
+}
 .nav-bar {
   position: fixed;
   top: 0;

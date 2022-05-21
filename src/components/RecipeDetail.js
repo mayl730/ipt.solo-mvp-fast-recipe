@@ -24,7 +24,7 @@ export default function RecipeDetail(props) {
        }}>Delete</Button>
       <h3>{selectedRecipe.title}</h3>
        <p>{selectedRecipe.description}</p>
-       <p>Ingridents: {selectedRecipe.ingredients}</p>
+       <p>Ingridents: {selectedRecipe.ingredients.map(function(item){return item;}).join(', ')}</p>
        <p>Calories: {selectedRecipe.calories}kcal</p></Col>
        </Row>
      

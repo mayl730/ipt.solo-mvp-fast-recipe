@@ -16,14 +16,14 @@ export default function SearchResult(props) {
              <img src="https://picsum.photos/seed/picsum/180/130
 " alt="food"></img>
 <h4>{item.title}</h4>
-            <p>Ingridents: {JSON.stringify(item.ingredients)}</p>
+            <p>Ingridents: {item.ingredients.map(function(item){return item;}).join(', ')}</p>
             <p>Calories: {JSON.stringify(item.calories)}</p>
            </div>
          )
        })
        
        }
-       <p>{JSON.stringify(filteredRecipes)}</p>
+       {/* <p>{JSON.stringify(filteredRecipes)}</p> */}
     </div>
   );
 }
