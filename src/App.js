@@ -1,6 +1,6 @@
 import './App.css';
 import './css/main.css';
-import { listRecipes } from './utils/index';
+import { listRecipes, listImages } from './utils/index';
 import { useEffect, useState } from 'react'
 import NavBar from "./components/NavBar";
 import SearchBar from "./components/SearchBar";
@@ -13,17 +13,24 @@ import Edit from './components/Edit';
 function App() {
   //State
   const [recipes, setRecipes] = useState([]);
+  const [images, setImages] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [filteredID, setFilteredID] = useState({});
   const [currentView, setView] = useState("HomeRecipes");
   const [selectedRecipe, setSelectedRecipe] = useState("");
+  const [selectedImage, setSelectedImage] = useState("");
 
   //Effect
   useEffect(() => { 
     async function getAllRecipes() {
       listRecipes().then(data => setRecipes(data));
     }
+    // async function getAllImages() {
+    //   listImages().then(data => setImages(data));
+    // }
     getAllRecipes();
+    // getAllImages();
+    // console.log(images);
   });
 
   // handler function
@@ -32,18 +39,23 @@ function App() {
   let view;
   if(currentView === "HomeRecipes") {
     view = <HomeRecipes
+    images = {images}
     recipes = {recipes}
     setView = {setView}
     setSelectedRecipe = {setSelectedRecipe}
   />;
   }
-  if(currentView === "RecipeDetail") view = <RecipeDetail setView = {setView}
-  selectedRecipe = {selectedRecipe}
-  filteredRecipes = {filteredRecipes}/>
-  if(currentView === "SearchResult") view = <SearchResult filteredRecipes = {filteredRecipes}
-  setView = {setView}
-  setSelectedRecipe = {setSelectedRecipe}
+  if(currentView === "RecipeDetail") {
+    view = <RecipeDetail setView = {setView}
+    selectedRecipe = {selectedRecipe}
+    filteredRecipes = {filteredRecipes}/>
+  }
+  if(currentView === "SearchResult") {
+    view = <SearchResult filteredRecipes = {filteredRecipes}
+    setView = {setView}
+    setSelectedRecipe = {setSelectedRecipe}
   />
+  }
   if(currentView === "Admin") view = <Admin />
   if(currentView === "Edit") view = <Edit 
   selectedRecipe = {selectedRecipe}

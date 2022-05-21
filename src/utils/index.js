@@ -112,3 +112,10 @@ export async function addIngridentToRecipe (recipeID, req) {
       });
     console.log('Ingredient is added into a Recipe!', req)
 }
+
+// image function
+
+export async function listImages (recipeID, req) {
+    return await axios.get('https://picsum.photos/v2/list').then((res)=>res.data)
+    .catch(err=>console.log(err));
+}

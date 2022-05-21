@@ -32,6 +32,9 @@ body p {
 .home-recipes .one-recipe {
   margin-bottom: 40px;
 }
+.home-recipes .one-recipe img {
+  width: 300px;
+}
 .search-result .recipe-card {
   margin-bottom: 40px;
 }
