@@ -1,6 +1,9 @@
 body h2 {
   line-height: 100px;
 }
+body h3 {
+  line-height: 60px;
+}
 body h4 {
   line-height: 40px;
 }

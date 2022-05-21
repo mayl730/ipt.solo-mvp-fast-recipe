@@ -9,11 +9,11 @@ export default function NavBar(props) {
     <div className="nav-bar">
     <Container>
       <Row>
-        <Col sm={9}>
+        <Col>
      <p onClick={()=> {setView("HomeRecipes")}}>Fast Recipe</p>
      </Col>
-     <Col sm={3}>
-     <Button size="sm" onClick={()=> {setView("Admin")}}>Add Recipe +</Button>
+     <Col>
+     <Button className="float-end" size="sm" onClick={()=> {setView("Admin")}}>Add Recipe +</Button>
      </Col>
      </Row>
      </Container>

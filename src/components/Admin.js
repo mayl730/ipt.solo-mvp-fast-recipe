@@ -59,8 +59,7 @@ const sendAddRequest = async () => {
 }
   return (
     <div className="admin">
-       <h2>Admin Page</h2>
-       <h3>Add Recipe</h3>
+       <h2>Add Recipe</h2>
        <form>
       <label>Recipe Name: 
         <input type="text"

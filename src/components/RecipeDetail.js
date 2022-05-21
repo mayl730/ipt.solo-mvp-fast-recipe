@@ -27,15 +27,20 @@ export default function RecipeDetail(props) {
        <p>Ingridents: {selectedRecipe.ingredients}</p>
        <p>Calories: {selectedRecipe.calories}kcal</p></Col>
        </Row>
-       <Col>
-       <ul>
+     
+       <Container fluid="sm">
+  <Row>
+    <Col>
+    <ul>
          <li>Step1: orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
          <li>Step2: orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
          <li>Step3: orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
        </ul>
-       </Col>
+    </Col>
+  </Row>
+</Container>
        
-       {/* <button onClick={()=>setView("SearchResult")}>Back</button> */}
+    
        </Container>
     </div>
   );

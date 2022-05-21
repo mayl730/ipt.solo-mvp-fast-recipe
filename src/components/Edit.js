@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { editRecipe, findRecipeByID } from '../utils/index';
 
 export default function Edit(props) {
@@ -40,34 +41,47 @@ const sendRequest = async () => {
  return (
     <div className="edit">
      <h3>Edit a Recipe</h3>
-     <p>print {JSON.stringify(selectedRecipe)}</p>
-     <form>
-      <label>Recipe Name: 
-        <input type="text"
+<Container>
+    <Form>
+    <Form.Group className="mb-3">
+        <Form.Label>Recipe Name</Form.Label>
+        <Form.Control  type="text"
                value={title}
                onChange={getTitle}/>
-      </label>
-    
-      <label>Recipe description: 
-        <textarea type="text"
+    </Form.Group>
+    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label>Description</Form.Label>
+        <Form.Control as="textarea" rows={3} type="text"
                   value={description}
                   onChange={getDescription}/>
-      </label>
+    </Form.Group>
+    <Row>
+        <Col>
+            <Form.Group className="mb-3">
+            <Form.Label>Calories - kcal</Form.Label>
+            <Form.Control type="text"
+            value={calories}
+            onChange={getCalories}/>
+            </Form.Group>
+        </Col>
+        <Col>
+            <Form.Group className="mb-3">
+            <Form.Label>Type</Form.Label>
+            <Form.Control type="text"
+                          value={type}
+                          onChange={getType}/>
+            </Form.Group>
+        </Col>
+    </Row>
+    <Button
+           onClick={()=>{
+            sendRequest(); 
+       }}>
+            Confirm
+          </Button>
+    </Form>
+</Container>
 
-      <label>Calories - kcal
-        <input type="text"
-        value={calories}
-        onChange={getCalories}/>
-      </label>
-      <label>Type
-        <input type="text"
-        value={type}
-        onChange={getType}/>
-      </label>
-    </form>
-    <button onClick={()=>{
-         sendRequest(); 
-    }}>Confirm</button>
      </div>
  )
 }
