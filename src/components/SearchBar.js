@@ -55,44 +55,40 @@ export default function SearchBar(props) {
 
   return (
     <div className="search-bar">
-       <input type="text" placeholder="Search Recipe Name" onChange={getName}/>
-       <input type="text" placeholder="Ingrident" onChange={getIngredient}/>
-      <select onChange={getCalories}>
-        <option value="[null, null]">--Calories--</option>
+      <Container>
+        <Form>
+          <Row>
+          <Col sm={5}>
+          <Form.Group className="mb-3" controlId="search-name">
+            <Form.Control
+            type="text"
+            placeholder="Search Recipe Name"
+            onChange={getName}/>
+          </Form.Group>
+          </Col>
+
+          <Col sm={3}>
+          <Form.Group className="mb-3">
+            <Form.Control type="text"
+            placeholder="Ingrident"
+            onChange={getIngredient} />
+          </Form.Group>
+          </Col>
+          <Col sm={3}>
+          <Form.Select aria-label="Default select example"  onChange={getCalories}>
+            <option value="[null, null]">--Calories--</option>
         <option value="[400, 0]">Under 400kcal</option>
         <option value="[600, 400]">400 - 600kcal</option>
         <option value="[800, 600]">600 - 800kcal</option>
         <option value="[10000, 900]">Over 900kcal</option>
-      </select>
-
-      <button onClick={()=>{
-        getFilteredRecipes()
-        setView("SearchResult")
-        }}>Search</button>
-      <Container>
-        <Form>
-          <Row>
-          <Col>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control type="email" placeholder="Enter email" />
-          </Form.Group>
+          </Form.Select>
           </Col>
-
-          <Col>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-          </Col>
-          <Col>
-          <Form.Select aria-label="Default select example">
-  <option>Open this select menu</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
-</Form.Select>
-          </Col>
-          <Col>
-          <Button variant="primary" type="submit">
+          <Col sm={1}>
+          <Button
+          onClick={()=>{
+            getFilteredRecipes()
+            setView("SearchResult")
+            }}>
             Search
           </Button>
           </Col>

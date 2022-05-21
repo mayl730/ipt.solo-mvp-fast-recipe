@@ -20,7 +20,7 @@ export default function HomeRecipes(props) {
           )
        })
        }
-       <p>{JSON.stringify(recipes[0])}</p>
+       {/* <p>{JSON.stringify(recipes[0])}</p> */}
     </div>
   );
 }

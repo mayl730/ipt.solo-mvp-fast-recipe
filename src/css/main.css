@@ -1,3 +1,9 @@
+body h2 {
+  line-height: 100px;
+}
+body h4 {
+  line-height: 40px;
+}
 .nav-bar {
   position: fixed;
   top: 0;
@@ -15,6 +21,11 @@
   line-height: 30px;
 }
 .search-bar {
-  background-color: #92dc8d;
-  margin-top: 50px;
+  margin-top: 60px;
+}
+.home-recipes .one-recipe {
+  margin-bottom: 40px;
+}
+.search-result .recipe-card {
+  margin-bottom: 40px;
 }
