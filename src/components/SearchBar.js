@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { listRecipesByIds, listRecipesByIngredient, listRecipesByName, listRecipesByCalories } from '../utils/index';
 const _ = require('lodash');
 
@@ -68,6 +69,36 @@ export default function SearchBar(props) {
         getFilteredRecipes()
         setView("SearchResult")
         }}>Search</button>
+      <Container>
+        <Form>
+          <Row>
+          <Col>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Control type="email" placeholder="Enter email" />
+          </Form.Group>
+          </Col>
+
+          <Col>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Control type="password" placeholder="Password" />
+          </Form.Group>
+          </Col>
+          <Col>
+          <Form.Select aria-label="Default select example">
+  <option>Open this select menu</option>
+  <option value="1">One</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</Form.Select>
+          </Col>
+          <Col>
+          <Button variant="primary" type="submit">
+            Search
+          </Button>
+          </Col>
+          </Row>
+        </Form>
+      </Container>
 
 
     </div>
