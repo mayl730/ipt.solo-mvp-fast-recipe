@@ -41,7 +41,7 @@ const getAmount  = (event) => {
 
 const sendAddRequest = async () => {
   const allRecipes = await listRecipes().then(res=>res);
-  const recipeID = allRecipes.length+1;
+  const recipeID = allRecipes[allRecipes.length-1].id +1;
   const reqRecipe = { id: recipeID,
     userID: 999,
     title: title,
