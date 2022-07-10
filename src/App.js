@@ -25,12 +25,7 @@ function App() {
     async function getAllRecipes() {
       listRecipes().then(data => setRecipes(data));
     }
-    // async function getAllImages() {
-    //   listImages().then(data => setImages(data));
-    // }
     getAllRecipes();
-    // getAllImages();
-    // console.log(images);
   });
 
   // handler function
