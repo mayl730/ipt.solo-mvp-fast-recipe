@@ -10,8 +10,7 @@ export default function RecipeDetail(props) {
        <h2>Recipe Detail</h2>
        <Row>
          <Col>
-         <img src="https://picsum.photos/seed/picsum/360/260
-" alt="food"></img>
+         <img src={selectedRecipe.image} alt="food"></img>
         <br></br>
        </Col>
       <Col className="text-left">

@@ -16,7 +16,7 @@ export default function HomeRecipes(props) {
                    setView("RecipeDetail")
                   }}
                  >
-              <img src="https://picsum.photos/seed/picsum/360/260" alt="food"></img>
+              <img src={item.image} alt="food"></img>
               <h4>{item.title}</h4>
             </div>
           )
