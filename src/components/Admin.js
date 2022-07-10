@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react"
-import { Form, Col, Row, Container, Button, Alert } from 'react-bootstrap';
+import { Form, Col, Row, Container, Button} from 'react-bootstrap';
 import { listRecipes, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
+import storage from "../firebase.js";
 import {
   ref,
   uploadBytes,
+  uploadBytesResumable,
   getDownloadURL,
-  listAll,
-  list,
 } from "firebase/storage";
-import { storage } from "../firebase";
 import { v4 } from "uuid";
 
 export default function Admin(props) {
@@ -18,21 +17,26 @@ const [calories, setCalories] = useState("");
 const [type, setType] = useState("");
 const [ingredient, setIngredient] = useState("");
 const [amount, setAmount] = useState("");
-const [image, setImage] = useState("");
+const [imageURL, setImageURL] = useState("something");
 const [allIngredients, setAllIngredients] = useState([]);
 
-const [imageUpload, setImageUpload] = useState(null);
+const [imageUpload, setImageUpload] = useState("");
 
-  const imagesListRef = ref(storage, "recipe_image/");
-  const uploadFile = () => {
-    if (imageUpload == null) return;
-    const imageRef = ref(storage, `recipe_image/${imageUpload.name + v4()}`);
-    uploadBytes(imageRef, imageUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        console.log(url)
-      });
-    });
-  };
+const uploadFile = () => {
+ 
+  if (imageUpload == null) return;
+  const imageRef = ref(storage, `/recipe_image/${imageUpload.name + v4()}`);
+  const uploadTask = uploadBytes(imageRef, imageUpload);
+  
+  uploadTask.on("state_changed", (snapshot)=> {
+      getDownloadURL(snapshot.ref).then((url)=>alert(url));
+  })
+};
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+};
+
 
 
 useEffect(() => { 
@@ -68,6 +72,14 @@ const getImageUpload  = (event) => {
 }
 
 const sendAddRequest = async () => {
+  // if (imageUpload == null) return;
+  // const imageRef = ref(storage, `/recipe_image/${imageUpload.name + v4()}`);
+  // const uploadTask = uploadBytesResumable(imageRef, imageUpload);
+  
+  // uploadTask.on("state_changed", (snapshot)=> {
+  //     getDownloadURL(snapshot.ref).then((url)=>setImageURL(url));
+  // })
+
   const allRecipes = await listRecipes().then(res=>res);
   const recipeID = allRecipes[allRecipes.length-1].id +1;
   const reqRecipe = { id: recipeID,
@@ -76,7 +88,7 @@ const sendAddRequest = async () => {
     description: description,
     calories : calories,
     type: type,
-    image: image,
+    image: "https://firebasestorage.googleapis.com/v0/b/fast-recipe-7aa79.appspot.com/o/recipe_image%2Fsushi-egg.jpg?alt=media&token=d4fd11c0-5254-4073-bc90-ede230e38bc8",
     }
   const reqRecipeIngre =  {
     ingredientID: ingredient,
@@ -148,67 +160,34 @@ const sendAddRequest = async () => {
                 </Col>
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Upload Recipe image</Form.Label>
               <Form.Control type="file"
                             onChange={getImageUpload}/>
               </Form.Group>
+            </Row> */}
+            <Row>
+              {/* <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Test Image</Form.Label>
+              <Form.Control type="file"
+                            onChange={getImageUpload}/>
+              </Form.Group> */}
+              <form onSubmit={handleSubmit}>
+              <input
+                type="file"
+                onChange={getImageUpload}
+              />
+              <button type="submit" onClick={uploadFile}>Upload Image</button>
+              </form>
             </Row>
+            
             <Button onClick={sendAddRequest}>
               Submit
             </Button>
-
-            {/* <Alert key="success" variant="success">
-              Recipe is Added!
-            </Alert> */}
             
           </Form>
        </Container>
-
-
-       {/* <form>
-      <label>Recipe Name: 
-        <input type="text"
-               value={title}
-               onChange={getTitle}/>
-      </label>
-    
-      <label>Recipe description: 
-        <textarea type="text"
-                  value={description}
-                  onChange={getDescription}/>
-      </label>
-
-      <label>Calories - kcal
-        <input type="text"
-        value={calories}
-        onChange={getCalories}/>
-      </label>
-      <label>Type
-        <input type="text"
-        value={type}
-        onChange={getType}/>
-      </label>
-      <label> Ingrident
-      <select onChange={getIngredient}>
-        { allIngredients.map((item) => {
-          return (
-            <option value={item.id}>{item.name}</option>
-          )
-        })
-        }
-      </select>
-      </label>
-
-      <label>Amount
-        <input type="text"
-        value={amount}
-        onChange={getAmount}/>
-      </label>
-
-    </form>
-    <button onClick={sendAddRequest}>Confirm</button> */}
 
     </div>
   );
