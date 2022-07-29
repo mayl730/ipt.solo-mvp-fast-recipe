@@ -1,11 +1,20 @@
+import { useEffect } from 'react'
 import React from "react"
 import { Container, Button, Col, Row } from 'react-bootstrap';
 import { removeRecipe } from '../utils/index';
 
 export default function RecipeDetail(props) {
-  const { setView, selectedRecipe } = props
+  const { setView, selectedRecipe, selectedRecipeIngredients } = props
+   //Effect
+  //  useEffect(() => { 
+  //   async function getAllIngredients() {
+  //     listRecipeIngredientsByID(selectedRecipe.id).then(data => setSelectedRecipeIngredients(data));
+  //   }
+  //   getAllIngredients();
+  // });
   return (
-    <div className="recipe-detail">
+    <div className="recipe-detail"
+         key = {selectedRecipe.id}>
       <Container>
        <h2>Recipe Detail</h2>
        <Row>
@@ -21,20 +30,24 @@ export default function RecipeDetail(props) {
          removeRecipe(selectedRecipe.id)
          setView("HomeRecipes")
        }}>Delete</Button>
-      <h3>{selectedRecipe.title}</h3>
+       <h3>{selectedRecipe.title}</h3>
        <p>{selectedRecipe.description}</p>
-       <p>Ingridents: {selectedRecipe.ingredients.map(function(item){return item;}).join(', ')}</p>
+       <h4>Ingredients</h4>
+       { selectedRecipeIngredients.map((item) => {
+        return (
+          <div>
+            <span>{item.name}</span>
+            <span>{item.amount}</span>
+          </div>
+        )
+       }) }
        <p>Calories: {selectedRecipe.calories}kcal</p></Col>
        </Row>
      
        <Container fluid="sm">
   <Row>
     <Col>
-    <ul>
-         <li>Step1: orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
-         <li>Step2: orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
-         <li>Step3: orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
-       </ul>
+    <p>{selectedRecipe.instruction}</p>
     </Col>
   </Row>
 </Container>

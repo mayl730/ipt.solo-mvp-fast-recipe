@@ -26,9 +26,17 @@ export async function findRecipeByID (id) {
     return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe/${id}`)
                 .then((res)=>[res.data])
                 .catch(err=>console.log(err));
+
+
 }
 
+export async function listRecipeIngredientsByID (id) {
+    return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe/${id}/ingredients/`)
+                .then((res)=>[...res.data])
+                .catch(err=>console.log(err));
+}
 
+// Search feature
 export async function listRecipesByIngredient (name) {
     let result = [];
     if (name === "") {
@@ -68,6 +76,16 @@ export async function listRecipesByIds (arr) {
     return result;
 }
 
+// Recipe CRUD
+export async function addRecipe (req) {
+    axios({
+        method: 'post',
+        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/`,
+        data: req
+      });
+    console.log('Recipe Added!', req)
+}
+
 export async function editRecipe (req) {
     axios({
         method: 'patch',
@@ -92,16 +110,6 @@ export async function listIngredients () {
     return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/ingredient`)
                 .then((res)=>res.data)
                 .catch(err=>console.log(err));
-}
-
-
-export async function addRecipe (req) {
-    axios({
-        method: 'post',
-        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/`,
-        data: req
-      });
-    console.log('Recipe Added!', req)
 }
 
 export async function addIngridentToRecipe (recipeID, req) {

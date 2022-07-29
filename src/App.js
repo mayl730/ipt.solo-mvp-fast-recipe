@@ -1,6 +1,6 @@
 import './App.css';
 import './css/main.css';
-import { listRecipes, listImages } from './utils/index';
+import { listRecipes } from './utils/index';
 import { useEffect, useState } from 'react'
 import NavBar from "./components/NavBar";
 import SearchBar from "./components/SearchBar";
@@ -18,7 +18,7 @@ function App() {
   const [filteredID, setFilteredID] = useState({});
   const [currentView, setView] = useState("HomeRecipes");
   const [selectedRecipe, setSelectedRecipe] = useState("");
-  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedRecipeIngredients, setSelectedRecipeIngredients] = useState([]);
 
   //Effect
   useEffect(() => { 
@@ -28,8 +28,6 @@ function App() {
     getAllRecipes();
   });
 
-  // handler function
-
   // setView Statement
   let view;
   if(currentView === "HomeRecipes") {
@@ -38,17 +36,21 @@ function App() {
     recipes = {recipes}
     setView = {setView}
     setSelectedRecipe = {setSelectedRecipe}
+    setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
   />;
   }
   if(currentView === "RecipeDetail") {
     view = <RecipeDetail setView = {setView}
     selectedRecipe = {selectedRecipe}
-    filteredRecipes = {filteredRecipes}/>
+    filteredRecipes = {filteredRecipes}
+    selectedRecipeIngredients = {selectedRecipeIngredients}
+    />
   }
   if(currentView === "SearchResult") {
     view = <SearchResult filteredRecipes = {filteredRecipes}
     setView = {setView}
     setSelectedRecipe = {setSelectedRecipe}
+    selectedRecipeIngredients = {setSelectedRecipeIngredients}
   />
   }
   if(currentView === "Admin") view = <Admin />

@@ -168,18 +168,18 @@ const sendAddRequest = async () => {
               </Form.Group>
             </Row> */}
             <Row>
-              {/* <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Test Image</Form.Label>
+              <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Upload Image</Form.Label>
               <Form.Control type="file"
                             onChange={getImageUpload}/>
-              </Form.Group> */}
-              <form onSubmit={handleSubmit}>
+              </Form.Group>
+              {/* <form onSubmit={handleSubmit}>
               <input
                 type="file"
                 onChange={getImageUpload}
               />
               <button type="submit" onClick={uploadFile}>Upload Image</button>
-              </form>
+              </form> */}
             </Row>
             
             <Button onClick={sendAddRequest}>
