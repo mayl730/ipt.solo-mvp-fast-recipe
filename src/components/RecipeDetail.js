@@ -46,7 +46,7 @@ export default function RecipeDetail(props) {
        <Container fluid="sm">
   <Row>
     <Col>
-    <p>{selectedRecipe.instruction}</p>
+    <p class="recipe__instructions">{selectedRecipe.instruction}</p>
     </Col>
   </Row>
 </Container>
