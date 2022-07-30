@@ -1,11 +1,10 @@
-import { useEffect } from 'react'
 import { Link } from "react-router-dom";
 import React from "react"
 import { Container, Button, Col, Row } from 'react-bootstrap';
 import { removeRecipe } from '../utils/index';
 
 export default function RecipeDetail(props) {
-  const { setView, selectedRecipe, selectedRecipeIngredients } = props
+  const { selectedRecipe, selectedRecipeIngredients } = props
   return (
     <div className="recipe-detail"
          key = {selectedRecipe.id}>

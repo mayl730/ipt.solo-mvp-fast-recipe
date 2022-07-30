@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { listRecipeIngredientsByID } from '../utils/index';
 
 export default function HomeRecipes(props) {
-  const {recipes, setView, setSelectedRecipe, setSelectedRecipeIngredients} = props;
+  const {recipes, setSelectedRecipe, setSelectedRecipeIngredients} = props;
   return (
     <div className="home-recipes">
 

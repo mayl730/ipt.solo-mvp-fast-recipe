@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export default function NavBar(props) {
-  const { setView } = props;
   return (
     <div className="nav-bar">
     <Container>

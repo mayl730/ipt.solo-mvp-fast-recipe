@@ -19,7 +19,6 @@ function App() {
   const [images, setImages] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [filteredID, setFilteredID] = useState({});
-  const [currentView, setView] = useState("HomeRecipes");
   const [selectedRecipe, setSelectedRecipe] = useState("");
   const [selectedRecipeIngredients, setSelectedRecipeIngredients] = useState([]);
 
@@ -35,11 +34,8 @@ function App() {
 
     <div className="App">
         <Router>
-         <NavBar
-         setView = {setView}
-         />
+         <NavBar/>
          <SearchBar
-         setView = {setView}
          filteredID = {filteredID}
          setFilteredID = {setFilteredID}
          setFilteredRecipes = {setFilteredRecipes}
@@ -49,7 +45,6 @@ function App() {
             <Route path ="/" element = {<HomeRecipes
                   images = {images}
                   recipes = {recipes}
-                  setView = {setView}
                   setSelectedRecipe = {setSelectedRecipe}
                   setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
                 />} />
