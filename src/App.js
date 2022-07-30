@@ -85,9 +85,14 @@ function App() {
                 setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
               />} />
            <Route path="add-recipe" element={<Admin />} />
+           <Route path="recipe-detail" element={<RecipeDetail
+            selectedRecipe = {selectedRecipe}
+            filteredRecipes = {filteredRecipes}
+            selectedRecipeIngredients = {selectedRecipeIngredients}
+            />} />
          </Routes>
          </Router>
-         { view }   
+         {/* { view }    */}
     </div>
   
   );
