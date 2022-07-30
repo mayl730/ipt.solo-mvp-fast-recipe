@@ -1,17 +1,11 @@
 import { useEffect } from 'react'
+import { Link } from "react-router-dom";
 import React from "react"
 import { Container, Button, Col, Row } from 'react-bootstrap';
 import { removeRecipe } from '../utils/index';
 
 export default function RecipeDetail(props) {
   const { setView, selectedRecipe, selectedRecipeIngredients } = props
-   //Effect
-  //  useEffect(() => { 
-  //   async function getAllIngredients() {
-  //     listRecipeIngredientsByID(selectedRecipe.id).then(data => setSelectedRecipeIngredients(data));
-  //   }
-  //   getAllIngredients();
-  // });
   return (
     <div className="recipe-detail"
          key = {selectedRecipe.id}>
@@ -23,9 +17,11 @@ export default function RecipeDetail(props) {
         <br></br>
        </Col>
       <Col className="text-left">
+
+      <Link to="/edit">
       <Button variant="success" onClick={()=>{
-         setView("Edit")
-       }}>Edit</Button> {' '}
+       }}>Edit</Button>
+       </Link> {' '}
        <Button variant="danger" onClick={()=>{
          removeRecipe(selectedRecipe.id)
          setView("HomeRecipes")

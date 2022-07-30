@@ -95,6 +95,10 @@ function App() {
               setSelectedRecipe = {setSelectedRecipe}
               selectedRecipeIngredients = {setSelectedRecipeIngredients}
              />} />
+             <Route path="edit" element={<Edit 
+              selectedRecipe = {selectedRecipe}
+              setSelectedRecipe = {setSelectedRecipe}
+              />} />
           </Routes>
         </Router>
          {/* { view }    */}
