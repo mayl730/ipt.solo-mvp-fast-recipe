@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { listRecipesByIds, listRecipesByIngredient, listRecipesByName, listRecipesByCalories } from '../utils/index';
 const _ = require('lodash');
@@ -7,7 +8,7 @@ const _ = require('lodash');
 
 
 export default function SearchBar(props) {
-  const {setView, setFilteredRecipes} = props;
+  const {setFilteredRecipes} = props;
   // State
   const [ingredient, setIngredient] = useState("");
   const [recipeName, setRecipeName] = useState("");
@@ -84,13 +85,14 @@ export default function SearchBar(props) {
           </Form.Select>
           </Col>
           <Col sm={1}>
-          <Button
-          onClick={()=>{
-            getFilteredRecipes()
-            setView("SearchResult")
-            }}>
-            Search
-          </Button>
+          <Link to="search-result">
+            <Button
+            onClick={()=>{
+              getFilteredRecipes()
+              }}>
+              Search
+            </Button>
+          </Link>
           </Col>
           </Row>
         </Form>
