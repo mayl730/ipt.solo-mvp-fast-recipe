@@ -11,12 +11,10 @@ export default function NavBar(props) {
     <Container>
       <Row>
         <Col>
-     {/* <p onClick={()=> {setView("HomeRecipes")}}>Fast Recipe</p> */}
      <Link to="/"><p>Fast Recipe</p></Link>
      </Col>
      <Col>
-     <Button className="float-end" size="sm" onClick={()=> {setView("Admin")}}>Add Recipe +</Button>
-        <Link to="add-recipe">Add Recipe+</Link>
+        <Link to="add-recipe"><Button className="float-end" size="sm">Add Recipe +</Button></Link>
      </Col>
      </Row>
      </Container>
