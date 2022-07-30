@@ -9,6 +9,8 @@ import HomeRecipes from './components/HomeRecipes';
 import RecipeDetail from './components/RecipeDetail';
 import Admin from './components/Admin';
 import Edit from './components/Edit';
+import { BrowserRouter as Router, Routes, Route, Link} from "react-router-dom"; 
+
 
 function App() {
   //State
@@ -30,15 +32,15 @@ function App() {
 
   // setView Statement
   let view;
-  if(currentView === "HomeRecipes") {
-    view = <HomeRecipes
-    images = {images}
-    recipes = {recipes}
-    setView = {setView}
-    setSelectedRecipe = {setSelectedRecipe}
-    setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
-  />;
-  }
+  // if(currentView === "HomeRecipes") {
+  //   view = <HomeRecipes
+  //   images = {images}
+  //   recipes = {recipes}
+  //   setView = {setView}
+  //   setSelectedRecipe = {setSelectedRecipe}
+  //   setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
+  // />;
+  // }
   if(currentView === "RecipeDetail") {
     view = <RecipeDetail setView = {setView}
     selectedRecipe = {selectedRecipe}
@@ -62,7 +64,9 @@ function App() {
 
 
   return (
+
     <div className="App">
+          <Router>
          <NavBar
          setView = {setView}
          />
@@ -72,8 +76,20 @@ function App() {
          setFilteredID = {setFilteredID}
          setFilteredRecipes = {setFilteredRecipes}
          /> 
+         <Routes>
+           <Route path ="/" element = {<HomeRecipes
+                images = {images}
+                recipes = {recipes}
+                setView = {setView}
+                setSelectedRecipe = {setSelectedRecipe}
+                setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
+              />} />
+           <Route path="add-recipe" element={<Admin />} />
+         </Routes>
+         </Router>
          { view }   
     </div>
+  
   );
 }
 
