@@ -41,21 +41,21 @@ function App() {
   //   setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
   // />;
   // }
-  if(currentView === "RecipeDetail") {
-    view = <RecipeDetail setView = {setView}
-    selectedRecipe = {selectedRecipe}
-    filteredRecipes = {filteredRecipes}
-    selectedRecipeIngredients = {selectedRecipeIngredients}
-    />
-  }
-  if(currentView === "SearchResult") {
-    view = <SearchResult filteredRecipes = {filteredRecipes}
-    setView = {setView}
-    setSelectedRecipe = {setSelectedRecipe}
-    selectedRecipeIngredients = {setSelectedRecipeIngredients}
-  />
-  }
-  if(currentView === "Admin") view = <Admin />
+  // if(currentView === "RecipeDetail") {
+  //   view = <RecipeDetail setView = {setView}
+  //   selectedRecipe = {selectedRecipe}
+  //   filteredRecipes = {filteredRecipes}
+  //   selectedRecipeIngredients = {selectedRecipeIngredients}
+  //   />
+  // }
+  // if(currentView === "SearchResult") {
+  //   view = <SearchResult filteredRecipes = {filteredRecipes}
+  //   setView = {setView}
+  //   setSelectedRecipe = {setSelectedRecipe}
+  //   selectedRecipeIngredients = {setSelectedRecipeIngredients}
+  // />
+  // }
+  // if(currentView === "Admin") view = <Admin />
   if(currentView === "Edit") view = <Edit 
   selectedRecipe = {selectedRecipe}
   setView = {setView}
@@ -66,7 +66,7 @@ function App() {
   return (
 
     <div className="App">
-          <Router>
+        <Router>
          <NavBar
          setView = {setView}
          />
@@ -76,22 +76,27 @@ function App() {
          setFilteredID = {setFilteredID}
          setFilteredRecipes = {setFilteredRecipes}
          /> 
-         <Routes>
-           <Route path ="/" element = {<HomeRecipes
-                images = {images}
-                recipes = {recipes}
-                setView = {setView}
-                setSelectedRecipe = {setSelectedRecipe}
-                setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
+          <Routes>
+            <Route path ="/" element = {<HomeRecipes
+                  images = {images}
+                  recipes = {recipes}
+                  setView = {setView}
+                  setSelectedRecipe = {setSelectedRecipe}
+                  setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
+                />} />
+            <Route path="add-recipe" element={<Admin />} />
+            <Route path="recipe-detail" element={<RecipeDetail
+              selectedRecipe = {selectedRecipe}
+              filteredRecipes = {filteredRecipes}
+              selectedRecipeIngredients = {selectedRecipeIngredients}
               />} />
-           <Route path="add-recipe" element={<Admin />} />
-           <Route path="recipe-detail" element={<RecipeDetail
-            selectedRecipe = {selectedRecipe}
-            filteredRecipes = {filteredRecipes}
-            selectedRecipeIngredients = {selectedRecipeIngredients}
-            />} />
-         </Routes>
-         </Router>
+            <Route path="search-result" element={<SearchResult
+              filteredRecipes = {filteredRecipes}
+              setSelectedRecipe = {setSelectedRecipe}
+              selectedRecipeIngredients = {setSelectedRecipeIngredients}
+             />} />
+          </Routes>
+        </Router>
          {/* { view }    */}
     </div>
   
