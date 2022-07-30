@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { listRecipeIngredientsByID } from '../utils/index';
 
 export default function SearchResult(props) {
-  const {filteredRecipes, setView, setSelectedRecipe, setSelectedRecipeIngredients} = props
+  const {filteredRecipes, setSelectedRecipe, setSelectedRecipeIngredients} = props
   return (
     <div className="search-result">
        <h2>{filteredRecipes.length} Result(s)</h2>

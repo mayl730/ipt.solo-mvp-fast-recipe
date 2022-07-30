@@ -22,12 +22,16 @@ export default function RecipeDetail(props) {
       <Button variant="success" onClick={()=>{
        }}>Edit</Button>
        </Link> {' '}
+
+       <Link to="/delete">
        <Button variant="danger" onClick={()=>{
          removeRecipe(selectedRecipe.id)
-         setView("HomeRecipes")
        }}>Delete</Button>
+       </Link>
+
        <h3>{selectedRecipe.title}</h3>
        <p>{selectedRecipe.description}</p>
+
        <h4>Ingredients</h4>
        { selectedRecipeIngredients.map((item) => {
         return (

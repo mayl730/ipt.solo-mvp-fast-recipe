@@ -8,7 +8,7 @@ const _ = require('lodash');
 
 
 export default function SearchBar(props) {
-  const {setView, setFilteredRecipes} = props;
+  const {setFilteredRecipes} = props;
   // State
   const [ingredient, setIngredient] = useState("");
   const [recipeName, setRecipeName] = useState("");

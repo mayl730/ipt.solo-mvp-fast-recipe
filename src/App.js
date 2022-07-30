@@ -9,7 +9,8 @@ import HomeRecipes from './components/HomeRecipes';
 import RecipeDetail from './components/RecipeDetail';
 import Admin from './components/Admin';
 import Edit from './components/Edit';
-import { BrowserRouter as Router, Routes, Route, Link} from "react-router-dom"; 
+import Delete from './components/Delete';
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom"; 
 
 
 function App() {
@@ -30,39 +31,6 @@ function App() {
     getAllRecipes();
   });
 
-  // setView Statement
-  let view;
-  // if(currentView === "HomeRecipes") {
-  //   view = <HomeRecipes
-  //   images = {images}
-  //   recipes = {recipes}
-  //   setView = {setView}
-  //   setSelectedRecipe = {setSelectedRecipe}
-  //   setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
-  // />;
-  // }
-  // if(currentView === "RecipeDetail") {
-  //   view = <RecipeDetail setView = {setView}
-  //   selectedRecipe = {selectedRecipe}
-  //   filteredRecipes = {filteredRecipes}
-  //   selectedRecipeIngredients = {selectedRecipeIngredients}
-  //   />
-  // }
-  // if(currentView === "SearchResult") {
-  //   view = <SearchResult filteredRecipes = {filteredRecipes}
-  //   setView = {setView}
-  //   setSelectedRecipe = {setSelectedRecipe}
-  //   selectedRecipeIngredients = {setSelectedRecipeIngredients}
-  // />
-  // }
-  // if(currentView === "Admin") view = <Admin />
-  if(currentView === "Edit") view = <Edit 
-  selectedRecipe = {selectedRecipe}
-  setView = {setView}
-  setSelectedRecipe = {setSelectedRecipe}
-  />
-
-
   return (
 
     <div className="App">
@@ -77,6 +45,7 @@ function App() {
          setFilteredRecipes = {setFilteredRecipes}
          /> 
           <Routes>
+
             <Route path ="/" element = {<HomeRecipes
                   images = {images}
                   recipes = {recipes}
@@ -85,23 +54,27 @@ function App() {
                   setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
                 />} />
             <Route path="add-recipe" element={<Admin />} />
+
             <Route path="recipe-detail" element={<RecipeDetail
               selectedRecipe = {selectedRecipe}
               filteredRecipes = {filteredRecipes}
               selectedRecipeIngredients = {selectedRecipeIngredients}
               />} />
+
             <Route path="search-result" element={<SearchResult
               filteredRecipes = {filteredRecipes}
               setSelectedRecipe = {setSelectedRecipe}
               selectedRecipeIngredients = {setSelectedRecipeIngredients}
              />} />
+
              <Route path="edit" element={<Edit 
               selectedRecipe = {selectedRecipe}
               setSelectedRecipe = {setSelectedRecipe}
               />} />
+
+             <Route path="delete" element={<Delete />} />
           </Routes>
         </Router>
-         {/* { view }    */}
     </div>
   
   );
