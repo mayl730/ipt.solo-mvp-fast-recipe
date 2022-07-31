@@ -17,6 +17,7 @@ const [calories, setCalories] = useState("");
 const [type, setType] = useState("");
 const [ingredient, setIngredient] = useState("");
 const [amount, setAmount] = useState("");
+const [instruction, setInstruction] = useState("");
 const [imageURL, setImageURL] = useState("something");
 const [allIngredients, setAllIngredients] = useState([]);
 
@@ -36,8 +37,6 @@ const uploadFile = () => {
 const handleSubmit = (event) => {
   event.preventDefault();
 };
-
-
 
 useEffect(() => { 
   async function getAllIngredients() {
@@ -67,6 +66,10 @@ const getAmount  = (event) => {
   setAmount(event.target.value);
 }
 
+const getInstruction  = (event) => {
+  setInstruction(event.target.value);
+}
+
 const getImageUpload  = (event) => {
   setImageUpload(event.target.files[0]);
 }
@@ -80,25 +83,24 @@ const sendAddRequest = async () => {
   //     getDownloadURL(snapshot.ref).then((url)=>setImageURL(url));
   // })
 
-  const allRecipes = await listRecipes().then(res=>res);
-  const recipeID = allRecipes[allRecipes.length-1].id +1;
-  const reqRecipe = { id: recipeID,
+  // const allRecipes = await listRecipes().then(res=>res);
+  // const recipeID = allRecipes[allRecipes.length-1].id +1;
+  const reqRecipe = {
     userID: 999,
     title: title,
     description: description,
     calories : calories,
     type: type,
+    instruction: instruction,
     image: "https://firebasestorage.googleapis.com/v0/b/fast-recipe-7aa79.appspot.com/o/recipe_image%2Fsushi-egg.jpg?alt=media&token=d4fd11c0-5254-4073-bc90-ede230e38bc8",
     }
   const reqRecipeIngre =  {
     ingredientID: ingredient,
     amount: amount,
   }
-
-  await addRecipe(reqRecipe);
-  await addIngridentToRecipe(recipeID, reqRecipeIngre);
-  console.log('recipe added!', recipeID, reqRecipeIngre);
-
+  
+  await addRecipe(reqRecipe).then((id)=>{
+    addIngridentToRecipe(id, reqRecipeIngre)});
 }
   return (
     <div className="admin">
@@ -111,12 +113,24 @@ const sendAddRequest = async () => {
                       value={title}
                       onChange={getTitle}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>Description</Form.Label>
-                <Form.Control as="textarea" rows={3} type="text"
-                          value={description}
-                          onChange={getDescription}/>
-            </Form.Group>
+            <Row>
+              <Col>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control as="textarea" rows={3} type="text"
+                              value={description}
+                              onChange={getDescription}/>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Instruction</Form.Label>
+                    <Form.Control as="textarea" rows={3} type="text"
+                              value={instruction}
+                              onChange={getInstruction}/>
+                </Form.Group>
+              </Col>
+            </Row>
             <Row>
               <Col>
                   <Form.Group className="mb-3">

@@ -81,12 +81,13 @@ export async function listRecipesByIds (arr) {
 
 // Recipe CRUD
 export async function addRecipe (req) {
-    axios({
+    const res = await axios({
         method: 'post',
         url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/`,
         data: req
-      });
-    console.log('Recipe Added!', req)
+      }).then((res)=>res.data.id)
+        .catch(err=>console.log(err));
+    return res;
 }
 
 export async function editRecipe (req) {
