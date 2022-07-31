@@ -18,25 +18,9 @@ const [type, setType] = useState("");
 const [ingredient, setIngredient] = useState("");
 const [amount, setAmount] = useState("");
 const [instruction, setInstruction] = useState("");
-const [imageURL, setImageURL] = useState("something");
+const [image, setImage] = useState(null);
+const [imageURL, setImageURL] = useState("");
 const [allIngredients, setAllIngredients] = useState([]);
-
-const [imageUpload, setImageUpload] = useState("");
-
-const uploadFile = () => {
- 
-  if (imageUpload == null) return;
-  const imageRef = ref(storage, `/recipe_image/${imageUpload.name + v4()}`);
-  const uploadTask = uploadBytes(imageRef, imageUpload);
-  
-  uploadTask.on("state_changed", (snapshot)=> {
-      getDownloadURL(snapshot.ref).then((url)=>alert(url));
-  })
-};
-
-const handleSubmit = (event) => {
-  event.preventDefault();
-};
 
 useEffect(() => { 
   async function getAllIngredients() {
@@ -70,21 +54,13 @@ const getInstruction  = (event) => {
   setInstruction(event.target.value);
 }
 
-const getImageUpload  = (event) => {
-  setImageUpload(event.target.files[0]);
-}
+const handleImageChange = (event) => {
+  if (event.target.files[0]) {
+    setImage(event.target.files[0]);
+  }
+};
 
 const sendAddRequest = async () => {
-  // if (imageUpload == null) return;
-  // const imageRef = ref(storage, `/recipe_image/${imageUpload.name + v4()}`);
-  // const uploadTask = uploadBytesResumable(imageRef, imageUpload);
-  
-  // uploadTask.on("state_changed", (snapshot)=> {
-  //     getDownloadURL(snapshot.ref).then((url)=>setImageURL(url));
-  // })
-
-  // const allRecipes = await listRecipes().then(res=>res);
-  // const recipeID = allRecipes[allRecipes.length-1].id +1;
   const reqRecipe = {
     userID: 999,
     title: title,
@@ -92,7 +68,7 @@ const sendAddRequest = async () => {
     calories : calories,
     type: type,
     instruction: instruction,
-    image: "https://firebasestorage.googleapis.com/v0/b/fast-recipe-7aa79.appspot.com/o/recipe_image%2Fsushi-egg.jpg?alt=media&token=d4fd11c0-5254-4073-bc90-ede230e38bc8",
+    image: imageURL,
     }
   const reqRecipeIngre =  {
     ingredientID: ingredient,
@@ -102,6 +78,19 @@ const sendAddRequest = async () => {
   await addRecipe(reqRecipe).then((id)=>{
     addIngridentToRecipe(id, reqRecipeIngre)});
 }
+
+const handleUploadImage = () => {
+  if (image == null) return;
+  const imageRef = ref(storage, `images/${image.name + v4()}`);
+  uploadBytes(imageRef, image).then((snapshot) => {
+    getDownloadURL(snapshot.ref).then((url) => {
+      setImageURL(url);
+      console.log(imageURL);
+      sendAddRequest();
+    });
+  });
+};
+
   return (
     <div className="admin">
        <h2>Add Recipe</h2>
@@ -185,7 +174,7 @@ const sendAddRequest = async () => {
               <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Upload Image</Form.Label>
               <Form.Control type="file"
-                            onChange={getImageUpload}/>
+                            onChange={handleImageChange}/>
               </Form.Group>
               {/* <form onSubmit={handleSubmit}>
               <input
@@ -195,8 +184,10 @@ const sendAddRequest = async () => {
               <button type="submit" onClick={uploadFile}>Upload Image</button>
               </form> */}
             </Row>
-            
-            <Button onClick={sendAddRequest}>
+            {/* <Button onClick={handleUploadImage}>
+              UploadImage
+            </Button> */}
+            <Button onClick={handleUploadImage}>
               Submit
             </Button>
             
