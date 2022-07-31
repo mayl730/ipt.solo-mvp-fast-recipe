@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Form, Col, Row, Container, Button} from 'react-bootstrap';
-import { listRecipes, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
+import { resizeFile, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
 import storage from "../firebase.js";
 import {
   ref,
@@ -56,7 +56,10 @@ const getInstruction  = (event) => {
 
 const handleImageChange = (event) => {
   if (event.target.files[0]) {
-    setImage(event.target.files[0]);
+      resizeFile(event.target.files[0]).then((image) => {
+      return setImage(image);
+    })
+    console.log('image is resized!', image);
   }
 };
 
@@ -79,16 +82,18 @@ const sendAddRequest = async () => {
     addIngridentToRecipe(id, reqRecipeIngre)});
 }
 
-const handleUploadImage = () => {
+const handleUploadImage = async () => {
   if (image == null) return;
-  const imageRef = ref(storage, `images/${image.name + v4()}`);
+  const imageRef = ref(storage, `recipe_image/${image.name + v4()}`);
+  
   uploadBytes(imageRef, image).then((snapshot) => {
     getDownloadURL(snapshot.ref).then((url) => {
       setImageURL(url);
-      console.log(imageURL);
+      console.log('url', imageURL);
       sendAddRequest();
     });
   });
+
 };
 
   return (

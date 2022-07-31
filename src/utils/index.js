@@ -1,3 +1,4 @@
+import Resizer from "react-image-file-resizer";
 const axios = require('axios').default;
 
 // recipe functions
@@ -131,3 +132,23 @@ export async function listImages (recipeID, req) {
     return await axios.get('https://picsum.photos/v2/list').then((res)=>res.data)
     .catch(err=>console.log(err));
 }
+
+export function resizeFile (file) {
+    return new Promise((resolve) => {
+        Resizer.imageFileResizer(
+          file,
+          654,
+          404,
+          "JPG",
+          100,
+          0,
+          (uri) => {
+            resolve(uri);
+          },
+          "file",
+          327,
+          202
+        );
+      });
+}
+  
