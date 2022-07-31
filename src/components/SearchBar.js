@@ -38,16 +38,20 @@ export default function SearchBar(props) {
 
     let recipeIndex = await listRecipesByIngredient(ingredient).then(res=> res);
     let recipeIdByName = await listRecipesByName(recipeName).then(res => res);
-      
+    
+
+    // Get filtered recipe's ID
     let uniqIndexBefore = _.remove(_.uniq(_.concat(recipeIndex, recipeIdByName)), function(n){
       return n !== undefined;
     })
-
+    
+    // Filter result without calories is provided
     if(recipesByCalories.length === 0){
       await listRecipesByIds(uniqIndexBefore).then(res=> setFilteredRecipes(res));
       return;
     }
-
+   
+    // Filter result with calories
     let uniqIndexAfter = _.intersection(uniqIndexBefore, recipesByCalories);
     await listRecipesByIds(uniqIndexAfter).then(res=> setFilteredRecipes(res));
     return;
@@ -63,7 +67,7 @@ export default function SearchBar(props) {
           <Form.Group className="mb-3" controlId="search-name">
             <Form.Control
             type="text"
-            placeholder="Search Recipe Name"
+            placeholder="Search By Recipe Name"
             onChange={getName}/>
           </Form.Group>
           </Col>
@@ -78,10 +82,10 @@ export default function SearchBar(props) {
           <Col sm={3}>
           <Form.Select aria-label="Default select example"  onChange={getCalories}>
             <option value="[null, null]">--Calories--</option>
-        <option value="[400, 0]">Under 400kcal</option>
-        <option value="[600, 400]">400 - 600kcal</option>
-        <option value="[800, 600]">600 - 800kcal</option>
-        <option value="[10000, 900]">Over 900kcal</option>
+            <option value="[400, 0]">Under 400kcal</option>
+            <option value="[600, 400]">400 - 600kcal</option>
+            <option value="[800, 600]">600 - 800kcal</option>
+            <option value="[10000, 900]">Over 900kcal</option>
           </Form.Select>
           </Col>
           <Col sm={1}>

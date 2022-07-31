@@ -13,21 +13,24 @@ export async function listRecipes (n) {
                 .catch(err=>console.log(err));
 }
 
-export async function listRecipesByName (title) {
-    if (title === "") {
-        return [];
+export async function listRecipesByName (name) {
+    let result = [];
+    if (name === "") {
+        return result;
     }
-    return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe/${title}`)
-                .then((res)=>[res.data.id])
+    const res = await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe/${name}`)
+                .then((res)=>res.data)
                 .catch(err=>console.log(err));
+    res.forEach(item => {
+        result.push(item.id)
+    });
+    return result;
 }
 
 export async function findRecipeByID (id) {
     return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe/${id}`)
                 .then((res)=>[res.data])
                 .catch(err=>console.log(err));
-
-
 }
 
 export async function listRecipeIngredientsByID (id) {
