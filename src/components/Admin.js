@@ -147,7 +147,7 @@ const handleUploadImage = async () => {
                 onChange={getIngredient}>
                   { allIngredients.map((item) => {
                     return (
-                      <option value={item.id}>{item.name}</option>
+                      <option value={item.id} key={item.id}>{item.name}</option>
                     )
                   })
                   }
