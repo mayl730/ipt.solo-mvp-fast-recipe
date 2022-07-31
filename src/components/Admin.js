@@ -5,10 +5,10 @@ import storage from "../firebase.js";
 import {
   ref,
   uploadBytes,
-  uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
 import { v4 } from "uuid";
+
 
 export default function Admin(props) {
 const [title, setTitle] = useState("");
@@ -19,7 +19,6 @@ const [ingredient, setIngredient] = useState("");
 const [amount, setAmount] = useState("");
 const [instruction, setInstruction] = useState("");
 const [image, setImage] = useState(null);
-const [imageURL, setImageURL] = useState("");
 const [allIngredients, setAllIngredients] = useState([]);
 
 useEffect(() => { 
@@ -54,16 +53,18 @@ const getInstruction  = (event) => {
   setInstruction(event.target.value);
 }
 
-const handleImageChange = (event) => {
-  if (event.target.files[0]) {
-      resizeFile(event.target.files[0]).then((image) => {
-      return setImage(image);
-    })
-    console.log('image is resized!', image);
+const handleImageChange = async (event) => {
+  try {
+    const file = event.target.files[0];
+    const resizedImage = await resizeFile(file);
+    setImage(resizedImage);
+    console.log(image);
+  } catch (err) {
+    console.log(err);
   }
 };
 
-const sendAddRequest = async () => {
+const sendAddRequest = async (url) => {
   const reqRecipe = {
     userID: 999,
     title: title,
@@ -71,7 +72,7 @@ const sendAddRequest = async () => {
     calories : calories,
     type: type,
     instruction: instruction,
-    image: imageURL,
+    image: url,
     }
   const reqRecipeIngre =  {
     ingredientID: ingredient,
@@ -84,16 +85,12 @@ const sendAddRequest = async () => {
 
 const handleUploadImage = async () => {
   if (image == null) return;
-  const imageRef = ref(storage, `recipe_image/${image.name + v4()}`);
-  
-  uploadBytes(imageRef, image).then((snapshot) => {
+  const imageRef = ref(storage, `images/${image.name + v4()}`);
+  await uploadBytes(imageRef, image).then((snapshot) => {
     getDownloadURL(snapshot.ref).then((url) => {
-      setImageURL(url);
-      console.log('url', imageURL);
-      sendAddRequest();
-    });
+        return url
+    }).then(url=> sendAddRequest(url));
   });
-
 };
 
   return (
@@ -168,30 +165,15 @@ const handleUploadImage = async () => {
                 </Col>
               </Col>
             </Row>
-            {/* <Row>
-              <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Upload Recipe image</Form.Label>
-              <Form.Control type="file"
-                            onChange={getImageUpload}/>
-              </Form.Group>
-            </Row> */}
+           
             <Row>
               <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Upload Image</Form.Label>
               <Form.Control type="file"
                             onChange={handleImageChange}/>
               </Form.Group>
-              {/* <form onSubmit={handleSubmit}>
-              <input
-                type="file"
-                onChange={getImageUpload}
-              />
-              <button type="submit" onClick={uploadFile}>Upload Image</button>
-              </form> */}
+              
             </Row>
-            {/* <Button onClick={handleUploadImage}>
-              UploadImage
-            </Button> */}
             <Button onClick={handleUploadImage}>
               Submit
             </Button>
