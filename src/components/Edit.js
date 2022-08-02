@@ -8,6 +8,8 @@ const [title, setTitle] = useState(selectedRecipe.title);
 const [description, setDescription] = useState(selectedRecipe.description);
 const [calories, setCalories] = useState(selectedRecipe.calories);
 const [type, setType] = useState(selectedRecipe.type);
+const [instruction, setInstruction] = useState(selectedRecipe.instruction);
+const [image, setImage] = useState(null);
 
 const getTitle = (event) => {
     setTitle(event.target.value);
@@ -18,6 +20,12 @@ const getDescription  = (event) => {
 const getCalories  = (event) => {
     setCalories(event.target.value);
 }
+const getInstruction  = (event) => {
+    setInstruction(event.target.value);
+}
+const getImage  = (event) => {
+    setImage(event.target.value);
+}
 const getType  = (event) => {
     setType(event.target.value);
 }
@@ -25,11 +33,14 @@ const getType  = (event) => {
 // function
 const sendRequest = async () => {
     const req = { id: selectedRecipe.id,
-                    title: title,
-                    description: description,
-                    calories : calories,
-                    type: type,
-                    }
+        title: title,
+        description: description,
+        calories : calories,
+        type: type,
+        }
+    
+    
+    
     await editRecipe(req)
     setTimeout(async() => {
         const newRecipe = await findRecipeByID(selectedRecipe.id)

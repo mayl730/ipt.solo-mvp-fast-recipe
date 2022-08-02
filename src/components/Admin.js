@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Form, Col, Row, Container, Button} from 'react-bootstrap';
-import { resizeFile, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
+import { handleUploadImage, resizeFile, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
 import storage from "../firebase.js";
 import {
   ref,
@@ -82,17 +82,6 @@ const sendAddRequest = async (url) => {
   await addRecipe(reqRecipe).then((id)=>{
     addIngridentToRecipe(id, reqRecipeIngre)});
 }
-
-const handleUploadImage = async () => {
-  if (image == null) return;
-  const imageRef = ref(storage, `images/${image.name + v4()}`);
-  await uploadBytes(imageRef, image).then((snapshot) => {
-    getDownloadURL(snapshot.ref).then((url) => {
-        return url
-    }).then(url=> sendAddRequest(url));
-  });
-};
-
   return (
     <div className="admin">
        <h2>Add Recipe</h2>
@@ -174,7 +163,7 @@ const handleUploadImage = async () => {
               </Form.Group>
               
             </Row>
-            <Button onClick={handleUploadImage}>
+            <Button onClick={()=>handleUploadImage(image, sendAddRequest)}>
               Submit
             </Button>
             
