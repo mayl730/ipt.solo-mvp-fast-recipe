@@ -32,15 +32,17 @@ const getType  = (event) => {
 
 // function
 const sendRequest = async () => {
-    const req = { id: selectedRecipe.id,
+    const req = { 
+        id: selectedRecipe.id,
         title: title,
         description: description,
         calories : calories,
         type: type,
-        }
-    
-    
-    
+        instruction: instruction,
+    }
+    if (!image) {
+        req[image] = image
+    }
     await editRecipe(req)
     setTimeout(async() => {
         const newRecipe = await findRecipeByID(selectedRecipe.id)
