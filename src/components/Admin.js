@@ -58,7 +58,7 @@ const handleImageChange = async (event) => {
   }
 };
 
-const sendAddRequest = async (url) => {
+const sendPostRequest = async (url) => {
   const reqRecipe = {
     userID: 999,
     title: title,
@@ -157,7 +157,7 @@ const sendAddRequest = async (url) => {
               </Form.Group>
               
             </Row>
-            <Button onClick={()=>handleUploadImage(image, sendAddRequest)}>
+            <Button onClick={()=>handleUploadImage(image, sendPostRequest)}>
               Submit
             </Button>
             

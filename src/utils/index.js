@@ -160,7 +160,10 @@ export function resizeFile (file) {
 }
 
 export async function handleUploadImage (image, reqFunc) {
-    if (image == null) return;
+    if (image == null) {
+        reqFunc();
+        return;
+    }
     const imageRef = ref(storage, `images/${image.name + v4()}`);
     await uploadBytes(imageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
