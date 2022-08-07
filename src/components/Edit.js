@@ -6,41 +6,19 @@ export default function Edit(props) {
 const { setSelectedRecipe, selectedRecipe, setView } = props;
 const [request, setRequest] = useState(
     {
-        title: "",
-        description: "",
-        calories: "",
-        type: "",
-        instruction: "",
+        title: selectedRecipe.title,
+        description: selectedRecipe.description,
+        calories: selectedRecipe.calories,
+        type: selectedRecipe.type,
+        instruction: selectedRecipe.instruction,
     }
 )
-const [title, setTitle] = useState(selectedRecipe.title);
-const [description, setDescription] = useState(selectedRecipe.description);
-const [calories, setCalories] = useState(selectedRecipe.calories);
-const [type, setType] = useState(selectedRecipe.type);
-const [instruction, setInstruction] = useState(selectedRecipe.instruction);
+
 const [image, setImage] = useState(null);
 
-const getTitle = (event) => {
-    setTitle(event.target.value);
-}
-const getDescription  = (event) => {
-    setDescription(event.target.value);
-}
-const getCalories  = (event) => {
-    setCalories(event.target.value);
-}
-const getInstruction  = (event) => {
-    setInstruction(event.target.value);
-}
-const getImage  = (event) => {
-    setImage(event.target.value);
-}
-const getType  = (event) => {
-    setType(event.target.value);
-}
-
 const handleChange = (event) => {
-    setRequest(prev=>({...prev, [event.target.name]:event.target.value}))
+    setRequest(prev=>({...prev,
+                    [event.target.name]:event.target.value}))
 }
 const handleImageChange = async (event) => {
     try {
@@ -55,13 +33,8 @@ const handleImageChange = async (event) => {
 
 // function
 const sendRequest = async () => {
-    const req = { 
+    const req = { ...request,  
         id: selectedRecipe.id,
-        title: title,
-        description: description,
-        calories : calories,
-        instruction: instruction,
-        type: type,
     }
     if (!image) {
         req['image'] = image
@@ -84,45 +57,56 @@ const sendRequest = async () => {
         <Form.Control
                type="text"
                name="title"
-               value={title}
-               onChange={getTitle}/>
+               value={request.title}
+               onChange={handleChange}/>
     </Form.Group>
+
      <Row>
-            <Col>
+        <Col>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Description</Form.Label>
-                <Form.Control as="textarea" rows={3} type="text"
-                            value={description}
-                            onChange={getDescription}/>
+                <Form.Control as="textarea"
+                              rows={3}
+                              type="text"
+                              name="description"
+                              value={request.description}
+                              onChange={handleChange}/>
             </Form.Group>
-            </Col>
-              <Col>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Instruction</Form.Label>
-                    <Form.Control as="textarea" rows={3} type="text"
-                              value={instruction}
-                              onChange={getInstruction}/>
-                </Form.Group>
-              </Col>
-            </Row>
+        </Col>
+        <Col>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Instruction</Form.Label>
+                <Form.Control as="textarea"
+                              rows={3}
+                              type="text"
+                              name="instruction"
+                              value={request.instruction}
+                              onChange={handleChange}/>
+            </Form.Group>
+        </Col>
+    </Row>
+
     <Row>
         <Col>
             <Form.Group className="mb-3">
             <Form.Label>Calories - kcal</Form.Label>
             <Form.Control type="text"
-            value={calories}
-            onChange={getCalories}/>
+                          name="calories"
+                          value={request.calories}
+                          onChange={handleChange}/>
             </Form.Group>
         </Col>
         <Col>
             <Form.Group className="mb-3">
             <Form.Label>Type</Form.Label>
             <Form.Control type="text"
-                          value={type}
-                          onChange={getType}/>
+                          name="type"
+                          value={request.type}
+                          onChange={handleChange}/>
             </Form.Group>
         </Col>
     </Row>
+
     <Row>
               <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Upload Image</Form.Label>
@@ -143,5 +127,3 @@ const sendRequest = async () => {
      </div>
  )
 }
-
-// value={selectedRecipe.title}
