@@ -1,25 +1,32 @@
 import { useState, useEffect } from "react"
 import { Form, Col, Row, Container, Button} from 'react-bootstrap';
-import { resizeFile, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
-import storage from "../firebase.js";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from "firebase/storage";
-import { v4 } from "uuid";
+import { handleUploadImage, resizeFile, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
+import { Link } from "react-router-dom";
+
 
 
 export default function Admin(props) {
-const [title, setTitle] = useState("");
-const [description, setDescription] = useState("");
-const [calories, setCalories] = useState("");
-const [type, setType] = useState("");
-const [ingredient, setIngredient] = useState("");
-const [amount, setAmount] = useState("");
-const [instruction, setInstruction] = useState("");
+const { setMessage } = props;
 const [image, setImage] = useState(null);
 const [allIngredients, setAllIngredients] = useState([]);
+
+const [recipeRequest, setRequest] = useState(
+  {
+      title: "",
+      description: "",
+      calories: "",
+      type: "",
+      instruction: "",
+      image: null,
+  }
+)
+const [recipeIngredientRequest,
+       setRecipeIngredientRequest] = useState(
+  {
+      ingredientID: "",
+      amount: ""
+  }
+)
 
 useEffect(() => { 
   async function getAllIngredients() {
@@ -28,29 +35,16 @@ useEffect(() => {
   getAllIngredients();
 });
 
-const getTitle = (event) => {
-    setTitle(event.target.value);
-}
-const getDescription  = (event) => {
-    setDescription(event.target.value);
-}
-const getCalories  = (event) => {
-    setCalories(event.target.value);
-}
-const getType  = (event) => {
-    setType(event.target.value);
+// Handler Funciton
+
+const handleChange = (event) => {
+  setRequest(prev => ({...prev,
+                      [event.target.name]:event.target.value}))
 }
 
-const getIngredient  = (event) => {
-  setIngredient(event.target.value);
-}
-
-const getAmount  = (event) => {
-  setAmount(event.target.value);
-}
-
-const getInstruction  = (event) => {
-  setInstruction(event.target.value);
+const handleIngredientChange = (event) => {
+  setRecipeIngredientRequest(prev => ({...prev,
+                      [event.target.name]:event.target.value}))
 }
 
 const handleImageChange = async (event) => {
@@ -64,35 +58,13 @@ const handleImageChange = async (event) => {
   }
 };
 
-const sendAddRequest = async (url) => {
-  const reqRecipe = {
-    userID: 999,
-    title: title,
-    description: description,
-    calories : calories,
-    type: type,
-    instruction: instruction,
-    image: url,
-    }
-  const reqRecipeIngre =  {
-    ingredientID: ingredient,
-    amount: amount,
-  }
-  
+const sendPostRequest = async (url) => {
+  const reqRecipe = {...recipeRequest, image: url}
+  const reqRecipeIngre = {...recipeIngredientRequest}
+  setMessage("Created")
   await addRecipe(reqRecipe).then((id)=>{
     addIngridentToRecipe(id, reqRecipeIngre)});
 }
-
-const handleUploadImage = async () => {
-  if (image == null) return;
-  const imageRef = ref(storage, `images/${image.name + v4()}`);
-  await uploadBytes(imageRef, image).then((snapshot) => {
-    getDownloadURL(snapshot.ref).then((url) => {
-        return url
-    }).then(url=> sendAddRequest(url));
-  });
-};
-
   return (
     <div className="admin">
        <h2>Add Recipe</h2>
@@ -101,24 +73,27 @@ const handleUploadImage = async () => {
             <Form.Group className="mb-3">
                 <Form.Label>Recipe Name</Form.Label>
                 <Form.Control type="text"
-                      value={title}
-                      onChange={getTitle}/>
+                      name="title"
+                      value={recipeRequest.title}
+                      onChange={handleChange}/>
             </Form.Group>
             <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Description</Form.Label>
                     <Form.Control as="textarea" rows={3} type="text"
-                              value={description}
-                              onChange={getDescription}/>
+                              name="description"
+                              value={recipeRequest.description}
+                              onChange={handleChange}/>
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Instruction</Form.Label>
                     <Form.Control as="textarea" rows={3} type="text"
-                              value={instruction}
-                              onChange={getInstruction}/>
+                              name="instruction"
+                              value={recipeRequest.instruction}
+                              onChange={handleChange}/>
                 </Form.Group>
               </Col>
             </Row>
@@ -127,16 +102,18 @@ const handleUploadImage = async () => {
                   <Form.Group className="mb-3">
                   <Form.Label>Calories - kcal</Form.Label>
                   <Form.Control type="text"
-                  value={calories}
-                  onChange={getCalories}/>
+                                name="calories"
+                                value={recipeRequest.calories}
+                                onChange={handleChange}/>
                   </Form.Group>
               </Col>
               <Col>
                   <Form.Group className="mb-3">
                   <Form.Label>Type</Form.Label>
                   <Form.Control type="text"
-                                value={type}
-                                onChange={getType}/>
+                                name="type"
+                                value={recipeRequest.type}
+                                onChange={handleChange}/>
                   </Form.Group>
               </Col>
             </Row>
@@ -144,7 +121,8 @@ const handleUploadImage = async () => {
               <Col>
                 <Form.Label>Ingredient</Form.Label>
                 <Form.Select aria-label="Default select example"
-                onChange={getIngredient}>
+                             name="ingredientID"
+                             onChange={handleIngredientChange}>
                   { allIngredients.map((item) => {
                     return (
                       <option value={item.id} key={item.id}>{item.name}</option>
@@ -158,9 +136,10 @@ const handleUploadImage = async () => {
                 <Col>
                     <Form.Group className="mb-3">
                     <Form.Label>Amount</Form.Label>
-                    <Form.Control  type="text"
-                                  value={amount}
-                                  onChange={getAmount}/>
+                    <Form.Control type="text"
+                                  value={recipeIngredientRequest.amount}
+                                  name="amount"
+                                  onChange={handleIngredientChange}/>
                     </Form.Group>
                 </Col>
               </Col>
@@ -174,9 +153,11 @@ const handleUploadImage = async () => {
               </Form.Group>
               
             </Row>
-            <Button onClick={handleUploadImage}>
-              Submit
-            </Button>
+            <Link to="/done">
+              <Button onClick={()=>handleUploadImage(image, sendPostRequest)}>
+                Submit
+              </Button>
+            </Link>
             
           </Form>
        </Container>

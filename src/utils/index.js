@@ -1,4 +1,11 @@
 import Resizer from "react-image-file-resizer";
+import storage from "../firebase.js";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
+import { v4 } from "uuid";
 const axios = require('axios').default;
 
 // recipe functions
@@ -151,4 +158,18 @@ export function resizeFile (file) {
         );
       });
 }
+
+export async function handleUploadImage (image, reqFunc) {
+    if (image == null) {
+        reqFunc();
+        return;
+    }
+    const imageRef = ref(storage, `images/${image.name + v4()}`);
+    await uploadBytes(imageRef, image).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+          return url
+      }).then(url=> reqFunc(url));
+    });
+}
+
   

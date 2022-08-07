@@ -23,9 +23,9 @@ export default function RecipeDetail(props) {
        </Link> {' '}
 
        <Link to="/delete">
-       <Button variant="danger" onClick={()=>{
-         removeRecipe(selectedRecipe.id)
-       }}>Delete</Button>
+        <Button variant="danger" onClick={()=>{
+          removeRecipe(selectedRecipe.id)
+        }}>Delete</Button>
        </Link>
 
        <h3>{selectedRecipe.title}</h3>
@@ -52,7 +52,7 @@ export default function RecipeDetail(props) {
 </Container>
        
     
-       </Container>
+</Container>
     </div>
   );
 }

@@ -1,41 +1,50 @@
 import { useState } from "react"
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
-import { editRecipe, findRecipeByID } from '../utils/index';
+import { handleUploadImage, resizeFile, editRecipe } from '../utils/index';
+import { Link } from "react-router-dom";
 
 export default function Edit(props) {
-const { setSelectedRecipe, selectedRecipe, setView } = props;
-const [title, setTitle] = useState(selectedRecipe.title);
-const [description, setDescription] = useState(selectedRecipe.description);
-const [calories, setCalories] = useState(selectedRecipe.calories);
-const [type, setType] = useState(selectedRecipe.type);
+const { selectedRecipe, setMessage } = props;
+const [image, setImage] = useState(null);
+const [request, setRequest] = useState(
+    {
+        title: selectedRecipe.title,
+        description: selectedRecipe.description,
+        calories: selectedRecipe.calories,
+        type: selectedRecipe.type,
+        instruction: selectedRecipe.instruction,
+        image: selectedRecipe.url,
+    }
+)
 
-const getTitle = (event) => {
-    setTitle(event.target.value);
+// Handler Function
+const handleChange = (event) => {
+    setRequest(prev => ({...prev,
+                        [event.target.name]:event.target.value}))
 }
-const getDescription  = (event) => {
-    setDescription(event.target.value);
-}
-const getCalories  = (event) => {
-    setCalories(event.target.value);
-}
-const getType  = (event) => {
-    setType(event.target.value);
-}
+const handleImageChange = async (event) => {
+    try {
+      const file = event.target.files[0];
+      const resizedImage = await resizeFile(file);
+      setImage(resizedImage);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-// function
-const sendRequest = async () => {
-    const req = { id: selectedRecipe.id,
-                    title: title,
-                    description: description,
-                    calories : calories,
-                    type: type,
-                    }
-    await editRecipe(req)
-    setTimeout(async() => {
-        const newRecipe = await findRecipeByID(selectedRecipe.id)
-    setSelectedRecipe(...newRecipe);
-    setView("RecipeDetail");
-      }, "1000")
+// Send Patch Request
+const sendPatchRequest = async (url) => {
+    console.log('Send Patch Function')
+    await setMessage("Updated");
+    let req = { ...request,  
+        id: selectedRecipe.id,
+    }
+    if (image !== null) {
+        console.log('this is img url', url)
+        req = {...req, image: url}
+        console.log(req)
+    }
+    await editRecipe(req);
 }
 
  return (
@@ -45,40 +54,72 @@ const sendRequest = async () => {
     <Form>
     <Form.Group className="mb-3">
         <Form.Label>Recipe Name</Form.Label>
-        <Form.Control  type="text"
-               value={title}
-               onChange={getTitle}/>
+        <Form.Control
+               type="text"
+               name="title"
+               value={request.title}
+               onChange={handleChange}/>
     </Form.Group>
-    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label>Description</Form.Label>
-        <Form.Control as="textarea" rows={3} type="text"
-                  value={description}
-                  onChange={getDescription}/>
-    </Form.Group>
+
+     <Row>
+        <Col>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Description</Form.Label>
+                <Form.Control as="textarea"
+                              rows={3}
+                              type="text"
+                              name="description"
+                              value={request.description}
+                              onChange={handleChange}/>
+            </Form.Group>
+        </Col>
+        <Col>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Instruction</Form.Label>
+                <Form.Control as="textarea"
+                              rows={3}
+                              type="text"
+                              name="instruction"
+                              value={request.instruction}
+                              onChange={handleChange}/>
+            </Form.Group>
+        </Col>
+    </Row>
+
     <Row>
         <Col>
             <Form.Group className="mb-3">
             <Form.Label>Calories - kcal</Form.Label>
             <Form.Control type="text"
-            value={calories}
-            onChange={getCalories}/>
+                          name="calories"
+                          value={request.calories}
+                          onChange={handleChange}/>
             </Form.Group>
         </Col>
         <Col>
             <Form.Group className="mb-3">
             <Form.Label>Type</Form.Label>
             <Form.Control type="text"
-                          value={type}
-                          onChange={getType}/>
+                          name="type"
+                          value={request.type}
+                          onChange={handleChange}/>
             </Form.Group>
         </Col>
     </Row>
-    <Button
-           onClick={()=>{
-            sendRequest(); 
-       }}>
-            Confirm
-          </Button>
+
+    <Row>
+              <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Upload Image</Form.Label>
+              <Form.Control type="file"
+                            onChange={handleImageChange}/>
+              </Form.Group>
+              
+            </Row>
+        <Link to="/done">
+        <Button onClick={()=>handleUploadImage(image, sendPatchRequest)}>
+                Confirm
+            </Button>
+        </Link>
     </Form>
 </Container>
 
@@ -86,4 +127,3 @@ const sendRequest = async () => {
  )
 }
 
-// value={selectedRecipe.title}
