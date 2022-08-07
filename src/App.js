@@ -50,7 +50,7 @@ function App() {
                   setSelectedRecipe = {setSelectedRecipe}
                   setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
                 />} />
-            <Route path="add-recipe" element={<Admin />} />
+            <Route path="add-recipe" element={<Admin setMessage = {setMessage}/>} />
 
             <Route path="recipe-detail" element={<RecipeDetail
               selectedRecipe = {selectedRecipe}

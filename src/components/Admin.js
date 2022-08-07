@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react"
 import { Form, Col, Row, Container, Button} from 'react-bootstrap';
 import { handleUploadImage, resizeFile, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
+import { Link } from "react-router-dom";
 
 
 
 export default function Admin(props) {
+const { setMessage } = props;
 const [image, setImage] = useState(null);
 const [allIngredients, setAllIngredients] = useState([]);
 
@@ -59,8 +61,7 @@ const handleImageChange = async (event) => {
 const sendPostRequest = async (url) => {
   const reqRecipe = {...recipeRequest, image: url}
   const reqRecipeIngre = {...recipeIngredientRequest}
-  console.log(reqRecipe, reqRecipeIngre)
-  
+  setMessage("Created")
   await addRecipe(reqRecipe).then((id)=>{
     addIngridentToRecipe(id, reqRecipeIngre)});
 }
@@ -152,9 +153,11 @@ const sendPostRequest = async (url) => {
               </Form.Group>
               
             </Row>
-            <Button onClick={()=>handleUploadImage(image, sendPostRequest)}>
-              Submit
-            </Button>
+            <Link to="/done">
+              <Button onClick={()=>handleUploadImage(image, sendPostRequest)}>
+                Submit
+              </Button>
+            </Link>
             
           </Form>
        </Container>

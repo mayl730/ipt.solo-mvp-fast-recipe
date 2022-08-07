@@ -35,7 +35,7 @@ const handleImageChange = async (event) => {
 // Send Patch Request
 const sendPatchRequest = async (url) => {
     console.log('Send Patch Function')
-    setMessage("Updated");
+    await setMessage("Updated");
     let req = { ...request,  
         id: selectedRecipe.id,
     }
