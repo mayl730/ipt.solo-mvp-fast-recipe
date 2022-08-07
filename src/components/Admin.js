@@ -1,13 +1,7 @@
 import { useState, useEffect } from "react"
 import { Form, Col, Row, Container, Button} from 'react-bootstrap';
 import { handleUploadImage, resizeFile, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
-import storage from "../firebase.js";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from "firebase/storage";
-import { v4 } from "uuid";
+
 
 
 export default function Admin(props) {

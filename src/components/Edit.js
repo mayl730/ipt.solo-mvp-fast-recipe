@@ -1,9 +1,18 @@
 import { useState } from "react"
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
-import { editRecipe, findRecipeByID } from '../utils/index';
+import { handleUploadImage, resizeFile, editRecipe, findRecipeByID } from '../utils/index';
 
 export default function Edit(props) {
 const { setSelectedRecipe, selectedRecipe, setView } = props;
+const [request, setRequest] = useState(
+    {
+        title: "",
+        description: "",
+        calories: "",
+        type: "",
+        instruction: "",
+    }
+)
 const [title, setTitle] = useState(selectedRecipe.title);
 const [description, setDescription] = useState(selectedRecipe.description);
 const [calories, setCalories] = useState(selectedRecipe.calories);
@@ -30,6 +39,20 @@ const getType  = (event) => {
     setType(event.target.value);
 }
 
+const handleChange = (event) => {
+    setRequest(prev=>({...prev, [event.target.name]:event.target.value}))
+}
+const handleImageChange = async (event) => {
+    try {
+      const file = event.target.files[0];
+      const resizedImage = await resizeFile(file);
+      setImage(resizedImage);
+      console.log(image);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
 // function
 const sendRequest = async () => {
     const req = { 
@@ -37,11 +60,11 @@ const sendRequest = async () => {
         title: title,
         description: description,
         calories : calories,
-        type: type,
         instruction: instruction,
+        type: type,
     }
     if (!image) {
-        req[image] = image
+        req['image'] = image
     }
     await editRecipe(req)
     setTimeout(async() => {
@@ -58,16 +81,30 @@ const sendRequest = async () => {
     <Form>
     <Form.Group className="mb-3">
         <Form.Label>Recipe Name</Form.Label>
-        <Form.Control  type="text"
+        <Form.Control
+               type="text"
+               name="title"
                value={title}
                onChange={getTitle}/>
     </Form.Group>
-    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label>Description</Form.Label>
-        <Form.Control as="textarea" rows={3} type="text"
-                  value={description}
-                  onChange={getDescription}/>
-    </Form.Group>
+     <Row>
+            <Col>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Description</Form.Label>
+                <Form.Control as="textarea" rows={3} type="text"
+                            value={description}
+                            onChange={getDescription}/>
+            </Form.Group>
+            </Col>
+              <Col>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Instruction</Form.Label>
+                    <Form.Control as="textarea" rows={3} type="text"
+                              value={instruction}
+                              onChange={getInstruction}/>
+                </Form.Group>
+              </Col>
+            </Row>
     <Row>
         <Col>
             <Form.Group className="mb-3">
@@ -86,6 +123,14 @@ const sendRequest = async () => {
             </Form.Group>
         </Col>
     </Row>
+    <Row>
+              <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Upload Image</Form.Label>
+              <Form.Control type="file"
+                            onChange={handleImageChange}/>
+              </Form.Group>
+              
+            </Row>
     <Button
            onClick={()=>{
             sendRequest(); 
