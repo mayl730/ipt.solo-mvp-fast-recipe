@@ -10,7 +10,8 @@ import RecipeDetail from './components/RecipeDetail';
 import Admin from './components/Admin';
 import Edit from './components/Edit';
 import Delete from './components/Delete';
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom"; 
+import Done from './components/Done';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; 
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
   const [filteredID, setFilteredID] = useState({});
   const [selectedRecipe, setSelectedRecipe] = useState("");
   const [selectedRecipeIngredients, setSelectedRecipeIngredients] = useState([]);
+  const [message, setMessage] = useState("");
 
   //Effect
   useEffect(() => { 
@@ -65,9 +67,15 @@ function App() {
              <Route path="edit" element={<Edit 
               selectedRecipe = {selectedRecipe}
               setSelectedRecipe = {setSelectedRecipe}
+              setMessage = {setMessage}
               />} />
 
              <Route path="delete" element={<Delete />} />
+
+             <Route path="done" element={<Done 
+              message = {message}
+              setMessage = {setMessage}
+             />} />
           </Routes>
         </Router>
     </div>

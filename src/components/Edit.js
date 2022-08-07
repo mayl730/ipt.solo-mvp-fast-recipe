@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { handleUploadImage, resizeFile, editRecipe, findRecipeByID } from '../utils/index';
+import { Link } from "react-router-dom";
 
 export default function Edit(props) {
-const { setSelectedRecipe, selectedRecipe, setView } = props;
+const { setSelectedRecipe, selectedRecipe, setMessage } = props;
+const [image, setImage] = useState(null);
 const [request, setRequest] = useState(
     {
         title: selectedRecipe.title,
@@ -14,24 +16,22 @@ const [request, setRequest] = useState(
     }
 )
 
-const [image, setImage] = useState(null);
-
+// Handler Function
 const handleChange = (event) => {
-    setRequest(prev=>({...prev,
-                    [event.target.name]:event.target.value}))
+    setRequest(prev => ({...prev,
+                        [event.target.name]:event.target.value}))
 }
 const handleImageChange = async (event) => {
     try {
       const file = event.target.files[0];
       const resizedImage = await resizeFile(file);
       setImage(resizedImage);
-      console.log(image);
     } catch (err) {
       console.log(err);
     }
   };
 
-// function
+// Send Patch Request
 const sendRequest = async () => {
     const req = { ...request,  
         id: selectedRecipe.id,
@@ -43,8 +43,8 @@ const sendRequest = async () => {
     setTimeout(async() => {
         const newRecipe = await findRecipeByID(selectedRecipe.id)
     setSelectedRecipe(...newRecipe);
-    setView("RecipeDetail");
-      }, "1000")
+    setMessage("Updated");
+      }, "1")
 }
 
  return (
@@ -115,12 +115,11 @@ const sendRequest = async () => {
               </Form.Group>
               
             </Row>
-    <Button
-           onClick={()=>{
-            sendRequest(); 
-       }}>
-            Confirm
-          </Button>
+        <Link to="/done">
+            <Button onClick={()=>{ sendRequest()}}>
+                Confirm
+            </Button>
+        </Link>
     </Form>
 </Container>
 

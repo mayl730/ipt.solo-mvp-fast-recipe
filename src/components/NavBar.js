@@ -13,7 +13,9 @@ export default function NavBar(props) {
           <Link to="/"><p>Fast Recipe</p></Link>
         </Col>
      <Col>
-        <Link to="add-recipe"><Button className="float-end" size="sm">Add Recipe +</Button></Link>
+        <Link to="add-recipe">
+          <Button className="float-end" size="sm">Add Recipe +</Button>
+        </Link>
      </Col>
      </Row>
      </Container>
