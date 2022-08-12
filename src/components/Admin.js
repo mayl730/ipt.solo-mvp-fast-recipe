@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
-import { Form, Col, Row, Container, Button} from 'react-bootstrap';
+import RecipeIngredientEdit from "./RecipeIngredientEdit";
+import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { handleUploadImage, resizeFile, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
 import { Link } from "react-router-dom";
 
@@ -144,6 +145,27 @@ const sendPostRequest = async (url) => {
                 </Col>
               </Col>
             </Row>
+            
+            <Row>
+              <Col><Form.Label>Ingredient</Form.Label></Col>
+              <Col><Form.Label>Amount</Form.Label></Col>
+              <Col><Form.Label></Form.Label></Col>
+            </Row>
+            <Row>
+              <Col>
+                 <RecipeIngredientEdit />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                 <RecipeIngredientEdit />
+              </Col>
+            </Row>
+            <Col>
+              <Button>
+                Add Ingredient
+              </Button>
+              </Col>
            
             <Row>
               <Form.Group controlId="formFile" className="mb-3">
