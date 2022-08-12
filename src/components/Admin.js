@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react"
 import RecipeIngredientEdit from "./RecipeIngredientEdit";
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
-import { handleUploadImage, resizeFile, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
+import { handleUploadImage,
+         resizeFile,
+         listIngredients,
+         addRecipe,
+         addIngridentToRecipe,
+         getIngredientIDbyName } from '../utils/index';
 import { Link } from "react-router-dom";
 
 
@@ -180,6 +185,10 @@ const sendPostRequest = async (url) => {
                 Submit
               </Button>
             </Link>
+
+            <Button onClick={()=>console.log(getIngredientIDbyName('Water'))}>
+                Test
+              </Button>
             
           </Form>
        </Container>
