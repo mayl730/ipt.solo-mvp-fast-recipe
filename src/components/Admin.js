@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useState, useEffect } from "react"
 import RecipeIngredientEdit from "./RecipeIngredientEdit";
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
@@ -65,14 +66,6 @@ const handleIngredientChange = index => event => {
   setRecipeIngredientList(newArr);
 }
 
-const addIngrident = () => {
-  setRecipeIngredientList(
-    [...recipeIngredientList, {
-    name: "",
-    amount: ""
-    }])
-}
-
 const handleImageChange = async (event) => {
   try {
     const file = event.target.files[0];
@@ -83,6 +76,21 @@ const handleImageChange = async (event) => {
     console.log(err);
   }
 };
+
+// Other Function
+const addIngrident = () => {
+  setRecipeIngredientList(
+    [...recipeIngredientList, {
+    name: "",
+    amount: ""
+    }])
+}
+const removeIngredient = (index) => {
+  let newArr = recipeIngredientList;
+  _.pullAt(newArr, index)
+  setRecipeIngredientList(newArr);
+}
+
 
 const sendPostRequest = async (url) => {
   const reqRecipe = {...recipeRequest, image: url}
@@ -185,7 +193,8 @@ const sendPostRequest = async (url) => {
                     key = {index}
                     recipeIngredientRequest = {ingre}
                     handleIngredientChange={handleIngredientChange}
-                    index = {index}/>
+                    index = {index}
+                    removeIngredient={removeIngredient}/>
                   </Col>
                 </Row>
               </div>
@@ -214,10 +223,6 @@ const sendPostRequest = async (url) => {
 
             <Button onClick={()=>getIngredientIDbyName('Water').then((item)=> console.log(item))}>
                 Test
-              </Button>
-
-              <Button onClick={()=>getIngredientIDbyName('Water').then((item)=> console.log(item))}>
-                Test2
               </Button>
             
           </Form>
