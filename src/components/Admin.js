@@ -28,11 +28,21 @@ const [recipeRequest, setRequest] = useState(
 )
 const [recipeIngredientRequest,
        setRecipeIngredientRequest] = useState(
-  {
-      ingredientID: "",
-      amount: ""
-  }
+      {
+        ingredientID: "",
+        amount: ""
+      }
 )
+
+const [ingredientList, setIngredientList] = useState(["Default"])
+
+const [recipeIngredientList,
+       setRecipeIngredientList] = useState([
+        {
+          name: "",
+          amount: ""
+        }
+       ])
 
 useEffect(() => { 
   async function getAllIngredients() {
@@ -48,9 +58,19 @@ const handleChange = (event) => {
                       [event.target.name]:event.target.value}))
 }
 
-const handleIngredientChange = (event) => {
-  setRecipeIngredientRequest(prev => ({...prev,
-                      [event.target.name]:event.target.value}))
+const handleIngredientChange = index => event => {
+  console.log('index', index, 'value', event.target.value);
+  let newArr = [...recipeIngredientList];
+  newArr[index] = event.target.value;
+  setRecipeIngredientList(newArr);
+}
+
+const addIngrident = () => {
+  setRecipeIngredientList(
+    [...recipeIngredientList, {
+    name: "",
+    amount: ""
+    }])
 }
 
 const handleImageChange = async (event) => {
@@ -123,7 +143,7 @@ const sendPostRequest = async (url) => {
                   </Form.Group>
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col>
                 <Form.Label>Ingredient</Form.Label>
                 <Form.Select aria-label="Default select example"
@@ -149,25 +169,31 @@ const sendPostRequest = async (url) => {
                     </Form.Group>
                 </Col>
               </Col>
-            </Row>
+            </Row> */}
             
             <Row>
               <Col><Form.Label>Ingredient</Form.Label></Col>
               <Col><Form.Label>Amount</Form.Label></Col>
               <Col><Form.Label></Form.Label></Col>
             </Row>
-            <Row>
-              <Col>
-                 <RecipeIngredientEdit />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                 <RecipeIngredientEdit />
-              </Col>
-            </Row>
+
+            {recipeIngredientList.map((ingre, index) => (
+              <div>
+                <Row>
+                  <Col>
+                    <RecipeIngredientEdit 
+                    key = {index}
+                    recipeIngredientRequest = {ingre}
+                    handleIngredientChange={handleIngredientChange}
+                    index = {index}/>
+                  </Col>
+                </Row>
+              </div>
+            ))}
+            
+           
             <Col>
-              <Button>
+              <Button onClick={()=>addIngrident()}>
                 Add Ingredient
               </Button>
               </Col>
@@ -186,8 +212,12 @@ const sendPostRequest = async (url) => {
               </Button>
             </Link>
 
-            <Button onClick={()=>console.log(getIngredientIDbyName('Water'))}>
+            <Button onClick={()=>getIngredientIDbyName('Water').then((item)=> console.log(item))}>
                 Test
+              </Button>
+
+              <Button onClick={()=>getIngredientIDbyName('Water').then((item)=> console.log(item))}>
+                Test2
               </Button>
             
           </Form>

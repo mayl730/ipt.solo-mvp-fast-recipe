@@ -146,6 +146,15 @@ export async function addIngridentToRecipe (recipeID, req) {
     console.log('Ingredient is added into a Recipe!', req)
 }
 
+export async function addIngridentsToRecipe (recipeID, req) {
+    axios({
+        method: 'post',
+        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
+        data: req
+      });
+    console.log('Ingredient is added into a Recipe!', req)
+}
+
 export async function editIngridentToRecipe (recipeToIngreID, req) {
     axios({
         method: 'patch',
