@@ -8,6 +8,7 @@ import { handleUploadImage,
          addRecipe,
          addIngredient,
          addIngredientToRecipe,
+         addIngredientsToRecipe,
          getIngredientIDbyName } from '../utils/index';
 import { Link } from "react-router-dom";
 
@@ -59,9 +60,8 @@ const handleChange = (event) => {
 }
 
 const handleIngredientChange = index => event => {
-  console.log('index', index, 'value', event.target.value);
   let newArr = [...recipeIngredientList];
-  newArr[index] = event.target.value;
+  newArr[index] = {...newArr[index], [event.target.name]:event.target.value}
   setRecipeIngredientList(newArr);
 }
 
@@ -90,42 +90,43 @@ const removeIngredient = (index) => {
   setRecipeIngredientList(newArr);
 }
 
-const handleAddIngredientsToRecipe = (list) => {
-
+const handleAddIngredientsToRecipe = async (recipeID, list) => {
+  console.log(recipeID, list)
   // Create new Ingredient List for API Request
   let newList = list.map((item) => {
     let requestID;
-    getIngredientIDbyName(item.name).then(data => {
+     getIngredientIDbyName(item.name).then(data => {
         if(!data) {
-          requestID = data
+          requestID = data;
         } else {
-          requestID = data[0].id
+          requestID = data[0].id;
         }
       })
 
-      // Create Ingredient
+      // Create Ingredient when it's not exist in the database
       if(!requestID) { addIngredient({name: item.name})
-                      .then(data =>{ requestID = data.id })}
+                      .then(data =>{ requestID = data})}
       return {
         ingredientID: requestID,
         amount: item.amount
       }
   })
 
-  // Make API call
-  newList.forEach(item => {
-    
-  })
-  
+  // Make API calls
+  await addIngredientsToRecipe(recipeID, newList);
+}
+
+const test = async() => {
+  addIngredient({name: 'someshit6'}).then(data =>{ console.log('somethingAdded', data) })
 }
 
 
 const sendPostRequest = async (url) => {
   const reqRecipe = {...recipeRequest, image: url}
-  const reqRecipeIngre = {...recipeIngredientRequest}
+  // const reqRecipeIngre = {...recipeIngredientRequest}
   setMessage("Created")
   await addRecipe(reqRecipe).then((id)=>{
-    addIngredientToRecipe(id, reqRecipeIngre)});
+    handleAddIngredientsToRecipe(id, recipeIngredientList)});
 }
   return (
     <div className="admin">
@@ -219,7 +220,7 @@ const sendPostRequest = async (url) => {
                   <Col>
                     <RecipeIngredientEdit 
                     key = {index}
-                    recipeIngredientRequest = {ingre}
+                    recipeIngredientList = {recipeIngredientList}
                     handleIngredientChange={handleIngredientChange}
                     index = {index}
                     removeIngredient={removeIngredient}/>
@@ -249,7 +250,7 @@ const sendPostRequest = async (url) => {
               </Button>
             </Link>
 
-            <Button onClick={()=>getIngredientIDbyName('Water').then((item)=> console.log(item))}>
+            <Button onClick={()=>test()}>
                 Test
               </Button>
             

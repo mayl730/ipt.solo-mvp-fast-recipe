@@ -156,7 +156,7 @@ export async function addIngredientsToRecipe (recipeID, reqList) {
             data: req
           });
     })
-    console.log('Ingredient is added into a Recipe!', reqList)
+    console.log('Ingredients are added into a Recipe!', reqList)
 }
 
 export async function editIngridentToRecipe (recipeToIngreID, req) {
@@ -177,15 +177,19 @@ export async function removeIngridentToRecipe (id) {
 }
 
 export async function addIngredient (req) {
-    axios({
-        method: 'post',
-        url: `https://fast-recipe-api-psql.herokuapp.com/api/ingredient`,
-        data: req
-      }).then((res)=>res.data.id)
-        .catch(err=>console.log(err));
-    console.log('Ingredient is added!', req)
+    return axios.post('https://fast-recipe-api-psql.herokuapp.com/api/ingredient', req)
+      .then((res)=>res.data.id)
+      .catch((error) =>{
+        console.log(error);
+      });
+
+    
 }
 
+
+// return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe?limit=${n}`)
+//                 .then((res)=>res.data)
+//                 .catch(err=>console.log(err));
 // image function
 
 export function resizeFile (file) {

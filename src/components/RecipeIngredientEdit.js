@@ -3,7 +3,7 @@ import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 
 
 export default function RecipeIngredientEdit(props) {
-    const {recipeIngredientRequest,
+    const {recipeIngredientList,
             handleIngredientChange,
             removeIngredient,
             index} = props;
@@ -12,9 +12,9 @@ export default function RecipeIngredientEdit(props) {
         <Row>
             <Col>
                 <Form.Control
-                name="ingredient"
+                name="name"
                 type="text"
-                value= {recipeIngredientRequest.name}
+                value= {recipeIngredientList[index].name}
                 onChange={handleIngredientChange(index)}
                 />
             </Col>
@@ -22,7 +22,7 @@ export default function RecipeIngredientEdit(props) {
                 <Form.Control
                 name="amount"
                 type="text"
-                value={recipeIngredientRequest.amount}
+                value={recipeIngredientList[index].amount}
                 onChange={handleIngredientChange(index)}
                 />
             </Col>
