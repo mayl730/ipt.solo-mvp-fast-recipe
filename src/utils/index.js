@@ -116,7 +116,7 @@ export async function removeRecipe (id) {
 }
 
 
-// ingredient fucntions
+// ingredient functions
 
 export async function listIngredients () {
     return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/ingredient`)
@@ -137,7 +137,7 @@ export async function getIngredientIDbyName (name) {
                 .catch(err=>console.log(err));
 }
 
-export async function addIngridentToRecipe (recipeID, req) {
+export async function addIngredientToRecipe (recipeID, req) {
     axios({
         method: 'post',
         url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
@@ -146,13 +146,17 @@ export async function addIngridentToRecipe (recipeID, req) {
     console.log('Ingredient is added into a Recipe!', req)
 }
 
-export async function addIngridentsToRecipe (recipeID, req) {
-    axios({
-        method: 'post',
-        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
-        data: req
-      });
-    console.log('Ingredient is added into a Recipe!', req)
+// Add Multiple Ingredients to a recipe
+export async function addIngredientsToRecipe (recipeID, reqList) {
+
+    reqList.forEach((req) => {
+        axios({
+            method: 'post',
+            url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
+            data: req
+          });
+    })
+    console.log('Ingredient is added into a Recipe!', reqList)
 }
 
 export async function editIngridentToRecipe (recipeToIngreID, req) {
@@ -172,12 +176,13 @@ export async function removeIngridentToRecipe (id) {
       console.log('removeIngridentToRecipe!', id)
 }
 
-export async function addIngrident (req) {
+export async function addIngredient (req) {
     axios({
         method: 'post',
         url: `https://fast-recipe-api-psql.herokuapp.com/api/ingredient`,
         data: req
-      });
+      }).then((res)=>res.data.id)
+        .catch(err=>console.log(err));
     console.log('Ingredient is added!', req)
 }
 

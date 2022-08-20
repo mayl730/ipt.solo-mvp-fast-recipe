@@ -6,7 +6,8 @@ import { handleUploadImage,
          resizeFile,
          listIngredients,
          addRecipe,
-         addIngridentToRecipe,
+         addIngredient,
+         addIngredientToRecipe,
          getIngredientIDbyName } from '../utils/index';
 import { Link } from "react-router-dom";
 
@@ -34,8 +35,6 @@ const [recipeIngredientRequest,
         amount: ""
       }
 )
-
-const [ingredientList, setIngredientList] = useState(["Default"])
 
 const [recipeIngredientList,
        setRecipeIngredientList] = useState([
@@ -78,7 +77,7 @@ const handleImageChange = async (event) => {
 };
 
 // Other Function
-const addIngrident = () => {
+const handleAddIngredient = () => {
   setRecipeIngredientList(
     [...recipeIngredientList, {
     name: "",
@@ -91,13 +90,42 @@ const removeIngredient = (index) => {
   setRecipeIngredientList(newArr);
 }
 
+const handleAddIngredientsToRecipe = (list) => {
+
+  // Create new Ingredient List for API Request
+  let newList = list.map((item) => {
+    let requestID;
+    getIngredientIDbyName(item.name).then(data => {
+        if(!data) {
+          requestID = data
+        } else {
+          requestID = data[0].id
+        }
+      })
+
+      // Create Ingredient
+      if(!requestID) { addIngredient({name: item.name})
+                      .then(data =>{ requestID = data.id })}
+      return {
+        ingredientID: requestID,
+        amount: item.amount
+      }
+  })
+
+  // Make API call
+  newList.forEach(item => {
+    
+  })
+  
+}
+
 
 const sendPostRequest = async (url) => {
   const reqRecipe = {...recipeRequest, image: url}
   const reqRecipeIngre = {...recipeIngredientRequest}
   setMessage("Created")
   await addRecipe(reqRecipe).then((id)=>{
-    addIngridentToRecipe(id, reqRecipeIngre)});
+    addIngredientToRecipe(id, reqRecipeIngre)});
 }
   return (
     <div className="admin">
@@ -202,7 +230,7 @@ const sendPostRequest = async (url) => {
             
            
             <Col>
-              <Button onClick={()=>addIngrident()}>
+              <Button onClick={()=>handleAddIngredient()}>
                 Add Ingredient
               </Button>
               </Col>
