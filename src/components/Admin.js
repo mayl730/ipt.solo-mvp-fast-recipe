@@ -73,6 +73,7 @@ const removeIngredient = (index) => {
 const handleAddIngredientsToRecipe = async (recipeID, list) => {
   // Create new Ingredient List for API Request
   const newList = []
+  if (list.length <= 0) return newList;
 
   for (let i = 0; i < list.length; i++) {
     let id = await getIngredientIDbyName(list[i].name);

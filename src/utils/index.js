@@ -148,7 +148,17 @@ export async function addIngredientToRecipe (recipeID, req) {
 
 // Add Multiple Ingredients to a recipe
 export async function addIngredientsToRecipe (recipeID, reqList) {
-    console.log('Add Multiple ingredients', recipeID, reqList)
+    if (reqList.length <= 0 ) {
+        axios({
+            method: 'post',
+            url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
+            data: {
+                ingredientID: 11,
+                amount: "N/A"
+            }
+          });
+        return;
+    }
     reqList.forEach((req) => {
         axios({
             method: 'post',
