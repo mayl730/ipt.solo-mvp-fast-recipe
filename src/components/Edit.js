@@ -1,6 +1,11 @@
 import { useState } from "react"
+import _ from 'lodash';
+import RecipeIngredientEdit from "./RecipeIngredientEdit";
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
-import { handleUploadImage, resizeFile, editRecipe } from '../utils/index';
+import { handleUploadImage,
+         resizeFile,
+         editRecipe,
+         } from '../utils/index';
 import { Link } from "react-router-dom";
 
 export default function Edit(props) {
@@ -16,12 +21,31 @@ const [request, setRequest] = useState(
         image: selectedRecipe.url,
     }
 )
+const [recipeIngredientList,
+    setRecipeIngredientList] = useState([
+     {
+       name: "",
+       amount: ""
+     }
+    ])
 
 // Handler Function
 const handleChange = (event) => {
     setRequest(prev => ({...prev,
                         [event.target.name]:event.target.value}))
 }
+
+const handleIngredientChange = index => event => {
+    let newArr = [...recipeIngredientList];
+    newArr[index] = {...newArr[index], [event.target.name]:event.target.value}
+    setRecipeIngredientList(newArr);
+  }
+  const removeIngredient = (index) => {
+    let newArr = recipeIngredientList;
+    _.pullAt(newArr, index)
+    setRecipeIngredientList(newArr);
+  }
+
 const handleImageChange = async (event) => {
     try {
       const file = event.target.files[0];
@@ -31,6 +55,7 @@ const handleImageChange = async (event) => {
       console.log(err);
     }
   };
+
 
 // Send Patch Request
 const sendPatchRequest = async (url) => {
@@ -106,6 +131,27 @@ const sendPatchRequest = async (url) => {
             </Form.Group>
         </Col>
     </Row>
+
+               
+    <Row>
+        <Col><Form.Label>Ingredient</Form.Label></Col>
+        <Col><Form.Label>Amount</Form.Label></Col>
+        <Col><Form.Label></Form.Label></Col>
+    </Row>
+    {recipeIngredientList.map((ingre, index) => (
+              <div>
+                <Row>
+                  <Col>
+                    <RecipeIngredientEdit 
+                    key = {index}
+                    recipeIngredientList = {recipeIngredientList}
+                    handleIngredientChange={handleIngredientChange}
+                    index = {index}
+                    removeIngredient={removeIngredient}/>
+                  </Col>
+                </Row>
+              </div>
+        ))}
 
     <Row>
               <Form.Group controlId="formFile" className="mb-3">
