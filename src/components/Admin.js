@@ -76,24 +76,26 @@ const handleAddIngredientsToRecipe = async (recipeID, list) => {
   if (list.length <= 0) return newList;
 
   for (let i = 0; i < list.length; i++) {
-    let id = await getIngredientIDbyName(list[i].name);
+    if(list[i].name) {
+      let id = await getIngredientIDbyName(list[i].name);
 
-    if (id) {
-      newList.push({
-        ingredientID: id,
-        amount: list[i].amount
-      });
-      console.log('No new ingredient', id);}
+      if (id) {
+        newList.push({
+          ingredientID: id,
+          amount: list[i].amount
+        });
+        console.log('No new ingredient', id);}
 
-    if (!id) { 
-      let newID = await addIngredient({ name: list[i].name })
-      
-      newList.push({
-        ingredientID: newID,
-        amount: list[i].amount }); 
+      if (!id) { 
+        let newID = await addIngredient({ name: list[i].name })
+        
+        newList.push({
+          ingredientID: newID,
+          amount: list[i].amount }); 
 
-      console.log('New Ingredient', newID)
-    }   
+        console.log('New Ingredient', newID)
+      } 
+    }  
   }
   return newList;
 }
