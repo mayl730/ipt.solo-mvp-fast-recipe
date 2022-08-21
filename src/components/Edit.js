@@ -116,7 +116,7 @@ const sendPatchRequest = async (url) => {
               
             </Row>
         <Link to="/done">
-        <Button onClick={()=>handleUploadImage(image, sendPatchRequest)}>
+        <Button onClick={()=>handleUploadImage(image, sendPatchRequest, true)}>
                 Confirm
             </Button>
         </Link>
