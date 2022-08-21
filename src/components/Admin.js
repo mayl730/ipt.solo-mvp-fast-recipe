@@ -50,7 +50,6 @@ const handleImageChange = async (event) => {
     const file = event.target.files[0];
     const resizedImage = await resizeFile(file);
     setImage(resizedImage);
-    console.log(image);
   } catch (err) {
     console.log(err);
   }
