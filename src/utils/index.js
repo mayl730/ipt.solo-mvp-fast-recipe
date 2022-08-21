@@ -116,7 +116,7 @@ export async function removeRecipe (id) {
 }
 
 
-// ingredient fucntions
+// ingredient functions
 
 export async function listIngredients () {
     return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/ingredient`)
@@ -124,21 +124,81 @@ export async function listIngredients () {
                 .catch(err=>console.log(err));
 }
 
-export async function addIngridentToRecipe (recipeID, req) {
+export async function getIngredientIDbyName (name) {
+    return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/ingredient/${name}`)
+                .then((res)=>{
+                    if(res.data.length <= 0){
+                        return false;
+                    }
+                    if(res.data[0].id) {
+                        return res.data[0].id;
+                    }   
+                })
+                .catch(err=>console.log(err));
+}
+
+export async function addIngredientToRecipe (recipeID, req) {
     axios({
         method: 'post',
         url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
         data: req
       });
-    console.log('Ingredient is added into a Recipe!', req)
+    // console.log('Ingredient is added into a Recipe!', req)
 }
 
+// Add Multiple Ingredients to a recipe
+export async function addIngredientsToRecipe (recipeID, reqList) {
+    
+    if (reqList.length <= 0 ) {
+        axios({
+            method: 'post',
+            url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
+            data: {
+                ingredientID: 11,
+                amount: "N/A"
+            }
+          });
+        return;
+    }
+    reqList.forEach((req, index) => {
+        axios({
+            method: 'post',
+            url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
+            data: req
+            });
+    })
+}
+
+export async function editIngridentToRecipe (recipeToIngreID, req) {
+    axios({
+        method: 'patch',
+        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/ingredient/${recipeToIngreID}`,
+        data: req
+      });
+      console.log('editIngredientToRecipe!', req)
+}
+
+export async function removeIngridentToRecipe (id) {
+    axios({
+        method: 'delete',
+        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/ingredient/${id}`
+      });
+      console.log('removeIngridentToRecipe!', id)
+}
+
+export async function addIngredient (req) {
+    return axios.post('https://fast-recipe-api-psql.herokuapp.com/api/ingredient', req)
+      .then((res)=>res.data.id)
+      .catch((error) =>{
+        console.log(error);
+      }); 
+}
+
+
+// return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe?limit=${n}`)
+//                 .then((res)=>res.data)
+//                 .catch(err=>console.log(err));
 // image function
-
-export async function listImages (recipeID, req) {
-    return await axios.get('https://picsum.photos/v2/list').then((res)=>res.data)
-    .catch(err=>console.log(err));
-}
 
 export function resizeFile (file) {
     return new Promise((resolve) => {
@@ -161,7 +221,7 @@ export function resizeFile (file) {
 
 export async function handleUploadImage (image, reqFunc) {
     if (image == null) {
-        reqFunc();
+        reqFunc('https://firebasestorage.googleapis.com/v0/b/fast-recipe-7aa79.appspot.com/o/recipe_image%2Fno-image.png?alt=media&token=dcbede3d-a115-4785-bfb9-1d91054b277f');
         return;
     }
     const imageRef = ref(storage, `images/${image.name + v4()}`);

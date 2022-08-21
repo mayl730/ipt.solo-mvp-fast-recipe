@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react"
-import { Form, Col, Row, Container, Button} from 'react-bootstrap';
-import { handleUploadImage, resizeFile, listIngredients, addRecipe, addIngridentToRecipe } from '../utils/index';
+import _ from 'lodash';
+import { useState } from "react"
+import RecipeIngredientEdit from "./RecipeIngredientEdit";
+import { Form, Col, Row, Container, Button } from 'react-bootstrap';
+import { handleUploadImage,
+         resizeFile,
+         addRecipe,
+         addIngredient,
+         addIngredientsToRecipe,
+         getIngredientIDbyName } from '../utils/index';
 import { Link } from "react-router-dom";
-
-
 
 export default function Admin(props) {
 const { setMessage } = props;
 const [image, setImage] = useState(null);
-const [allIngredients, setAllIngredients] = useState([]);
 
 const [recipeRequest, setRequest] = useState(
   {
@@ -20,20 +24,13 @@ const [recipeRequest, setRequest] = useState(
       image: null,
   }
 )
-const [recipeIngredientRequest,
-       setRecipeIngredientRequest] = useState(
-  {
-      ingredientID: "",
-      amount: ""
-  }
-)
-
-useEffect(() => { 
-  async function getAllIngredients() {
-    listIngredients().then(data => setAllIngredients(data));
-  }
-  getAllIngredients();
-});
+const [recipeIngredientList,
+       setRecipeIngredientList] = useState([
+        {
+          name: "",
+          amount: ""
+        }
+       ])
 
 // Handler Funciton
 
@@ -42,9 +39,10 @@ const handleChange = (event) => {
                       [event.target.name]:event.target.value}))
 }
 
-const handleIngredientChange = (event) => {
-  setRecipeIngredientRequest(prev => ({...prev,
-                      [event.target.name]:event.target.value}))
+const handleIngredientChange = index => event => {
+  let newArr = [...recipeIngredientList];
+  newArr[index] = {...newArr[index], [event.target.name]:event.target.value}
+  setRecipeIngredientList(newArr);
 }
 
 const handleImageChange = async (event) => {
@@ -52,18 +50,60 @@ const handleImageChange = async (event) => {
     const file = event.target.files[0];
     const resizedImage = await resizeFile(file);
     setImage(resizedImage);
-    console.log(image);
   } catch (err) {
     console.log(err);
   }
 };
 
+// Other Function
+const handleAddIngredient = () => {
+  setRecipeIngredientList(
+    [...recipeIngredientList, {
+    name: "",
+    amount: ""
+    }])
+}
+const removeIngredient = (index) => {
+  let newArr = recipeIngredientList;
+  _.pullAt(newArr, index)
+  setRecipeIngredientList(newArr);
+}
+
+const handleAddIngredientsToRecipe = async (recipeID, list) => {
+  // Create new Ingredient List for API Request
+  const newList = []
+  if (list.length <= 0) return newList;
+
+  for (let i = 0; i < list.length; i++) {
+    if(list[i].name) {
+      let id = await getIngredientIDbyName(list[i].name);
+
+      if (id) {
+        newList.push({
+          ingredientID: id,
+          amount: list[i].amount
+        });
+      }
+
+      if (!id) { 
+        let newID = await addIngredient({ name: list[i].name })
+        
+        newList.push({
+          ingredientID: newID,
+          amount: list[i].amount }); 
+      } 
+    }  
+  }
+  return newList;
+}
+
 const sendPostRequest = async (url) => {
-  const reqRecipe = {...recipeRequest, image: url}
-  const reqRecipeIngre = {...recipeIngredientRequest}
   setMessage("Created")
-  await addRecipe(reqRecipe).then((id)=>{
-    addIngridentToRecipe(id, reqRecipeIngre)});
+  const reqRecipe = {...recipeRequest, image: url}
+  const recipeID = await addRecipe(reqRecipe);
+  const newList = await handleAddIngredientsToRecipe(recipeID, recipeIngredientList)
+  await addIngredientsToRecipe(recipeID, newList);
+
 }
   return (
     <div className="admin">
@@ -117,33 +157,34 @@ const sendPostRequest = async (url) => {
                   </Form.Group>
               </Col>
             </Row>
+                 
             <Row>
-              <Col>
-                <Form.Label>Ingredient</Form.Label>
-                <Form.Select aria-label="Default select example"
-                             name="ingredientID"
-                             onChange={handleIngredientChange}>
-                  { allIngredients.map((item) => {
-                    return (
-                      <option value={item.id} key={item.id}>{item.name}</option>
-                    )
-                  })
-                  }
-                </Form.Select>
-              </Col>
-
-              <Col>
-                <Col>
-                    <Form.Group className="mb-3">
-                    <Form.Label>Amount</Form.Label>
-                    <Form.Control type="text"
-                                  value={recipeIngredientRequest.amount}
-                                  name="amount"
-                                  onChange={handleIngredientChange}/>
-                    </Form.Group>
-                </Col>
-              </Col>
+              <Col><Form.Label>Ingredient</Form.Label></Col>
+              <Col><Form.Label>Amount</Form.Label></Col>
+              <Col><Form.Label></Form.Label></Col>
             </Row>
+
+            {recipeIngredientList.map((ingre, index) => (
+              <div>
+                <Row>
+                  <Col>
+                    <RecipeIngredientEdit 
+                    key = {index}
+                    recipeIngredientList = {recipeIngredientList}
+                    handleIngredientChange={handleIngredientChange}
+                    index = {index}
+                    removeIngredient={removeIngredient}/>
+                  </Col>
+                </Row>
+              </div>
+            ))}
+            
+           
+            <Col>
+              <Button onClick={()=>handleAddIngredient()}>
+                Add Ingredient
+              </Button>
+              </Col>
            
             <Row>
               <Form.Group controlId="formFile" className="mb-3">
