@@ -90,34 +90,49 @@ const removeIngredient = (index) => {
   setRecipeIngredientList(newArr);
 }
 
+// const result = await Promise.all(array.map(async (v)=>{
+//   const dummy = await dummyAsync(true);
+//   return dummy;
+// }));
+
 const handleAddIngredientsToRecipe = async (recipeID, list) => {
   console.log(recipeID, list)
   // Create new Ingredient List for API Request
-  let newList = list.map((item) => {
-    let requestID;
-     getIngredientIDbyName(item.name).then(data => {
-        if(!data) {
-          requestID = data;
-        } else {
-          requestID = data[0].id;
-        }
-      })
+  const newList = []
 
-      // Create Ingredient when it's not exist in the database
-      if(!requestID) { addIngredient({name: item.name})
-                      .then(data =>{ requestID = data})}
-      return {
-        ingredientID: requestID,
-        amount: item.amount
+  for (let i = 0; i < list.length; i++) {
+    await getIngredientIDbyName(list[i].name).then(data => {
+      if (data) {
+        newList.push({
+          ingredientID: data,
+          amount: list[i].amount
+        });
+        console.log('No new ingredient', data);
       }
-  })
+      if (!data) { 
+        addIngredient({ name: list[i].name })
+        .then((data) =>{ 
+          newList.push({
+            ingredientID: data,
+            amount: list[i].amount
+          }); 
+          console.log('Add Ingredient function ran!', data)
+        })
+      }   
+    })
+  }
 
-  // Make API calls
+  setRecipeIngredientList(newList);
   await addIngredientsToRecipe(recipeID, newList);
 }
 
 const test = async() => {
-  addIngredient({name: 'someshit6'}).then(data =>{ console.log('somethingAdded', data) })
+  // let requestID = 'hi';
+  // await getIngredientIDbyName('Water').then(data => {
+  //   requestID = data;
+  //   console.log(requestID);
+  // })
+
 }
 
 
@@ -126,7 +141,7 @@ const sendPostRequest = async (url) => {
   // const reqRecipeIngre = {...recipeIngredientRequest}
   setMessage("Created")
   await addRecipe(reqRecipe).then((id)=>{
-    handleAddIngredientsToRecipe(id, recipeIngredientList)});
+    handleAddIngredientsToRecipe(id, recipeIngredientList)}).then((id)=>console.log('recipe id', id));
 }
   return (
     <div className="admin">
@@ -250,7 +265,7 @@ const sendPostRequest = async (url) => {
               </Button>
             </Link>
 
-            <Button onClick={()=>test()}>
+            <Button onClick={()=>handleAddIngredientsToRecipe(1, recipeIngredientList)}>
                 Test
               </Button>
             

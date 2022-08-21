@@ -181,9 +181,7 @@ export async function addIngredient (req) {
       .then((res)=>res.data.id)
       .catch((error) =>{
         console.log(error);
-      });
-
-    
+      }); 
 }
 
 
