@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useState} from "react"
+import { useState } from "react"
 import RecipeIngredientEdit from "./RecipeIngredientEdit";
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { handleUploadImage,
@@ -83,7 +83,7 @@ const handleAddIngredientsToRecipe = async (recipeID, list) => {
           ingredientID: id,
           amount: list[i].amount
         });
-        console.log('No new ingredient', id);}
+      }
 
       if (!id) { 
         let newID = await addIngredient({ name: list[i].name })
@@ -91,8 +91,6 @@ const handleAddIngredientsToRecipe = async (recipeID, list) => {
         newList.push({
           ingredientID: newID,
           amount: list[i].amount }); 
-
-        console.log('New Ingredient', newID)
       } 
     }  
   }
@@ -201,10 +199,6 @@ const sendPostRequest = async (url) => {
                 Submit
               </Button>
             </Link>
-
-            <Button onClick={()=>handleAddIngredientsToRecipe(1, recipeIngredientList)}>
-                Test
-            </Button>
             
           </Form>
        </Container>
