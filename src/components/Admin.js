@@ -29,13 +29,6 @@ const [recipeRequest, setRequest] = useState(
       image: null,
   }
 )
-const [recipeIngredientRequest,
-       setRecipeIngredientRequest] = useState(
-      {
-        ingredientID: "",
-        amount: ""
-      }
-)
 
 const [recipeIngredientList,
        setRecipeIngredientList] = useState([
@@ -44,13 +37,6 @@ const [recipeIngredientList,
           amount: ""
         }
        ])
-
-useEffect(() => { 
-  async function getAllIngredients() {
-    listIngredients().then(data => setAllIngredients(data));
-  }
-  getAllIngredients();
-});
 
 // Handler Funciton
 
@@ -90,58 +76,40 @@ const removeIngredient = (index) => {
   setRecipeIngredientList(newArr);
 }
 
-// const result = await Promise.all(array.map(async (v)=>{
-//   const dummy = await dummyAsync(true);
-//   return dummy;
-// }));
-
 const handleAddIngredientsToRecipe = async (recipeID, list) => {
-  console.log(recipeID, list)
   // Create new Ingredient List for API Request
   const newList = []
 
   for (let i = 0; i < list.length; i++) {
-    await getIngredientIDbyName(list[i].name).then(data => {
-      if (data) {
-        newList.push({
-          ingredientID: data,
-          amount: list[i].amount
-        });
-        console.log('No new ingredient', data);
-      }
-      if (!data) { 
-        addIngredient({ name: list[i].name })
-        .then((data) =>{ 
-          newList.push({
-            ingredientID: data,
-            amount: list[i].amount
-          }); 
-          console.log('Add Ingredient function ran!', data)
-        })
-      }   
-    })
+    let id = await getIngredientIDbyName(list[i].name);
+
+    if (id) {
+      newList.push({
+        ingredientID: id,
+        amount: list[i].amount
+      });
+      console.log('No new ingredient', id);}
+
+    if (!id) { 
+      let newID = await addIngredient({ name: list[i].name })
+      
+      newList.push({
+        ingredientID: newID,
+        amount: list[i].amount }); 
+
+      console.log('New Ingredient', newID)
+    }   
   }
-
-  setRecipeIngredientList(newList);
-  await addIngredientsToRecipe(recipeID, newList);
+  return newList;
 }
-
-const test = async() => {
-  // let requestID = 'hi';
-  // await getIngredientIDbyName('Water').then(data => {
-  //   requestID = data;
-  //   console.log(requestID);
-  // })
-
-}
-
 
 const sendPostRequest = async (url) => {
-  const reqRecipe = {...recipeRequest, image: url}
-  // const reqRecipeIngre = {...recipeIngredientRequest}
   setMessage("Created")
-  await addRecipe(reqRecipe).then((id)=>{
-    handleAddIngredientsToRecipe(id, recipeIngredientList)}).then((id)=>console.log('recipe id', id));
+  const reqRecipe = {...recipeRequest, image: url}
+  const recipeID = await addRecipe(reqRecipe);
+  const newList = await handleAddIngredientsToRecipe(recipeID, recipeIngredientList)
+  await addIngredientsToRecipe(recipeID, newList);
+
 }
   return (
     <div className="admin">
