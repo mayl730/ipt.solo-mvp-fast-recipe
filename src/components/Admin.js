@@ -1,23 +1,18 @@
 import _ from 'lodash';
-import { useState, useEffect } from "react"
+import { useState} from "react"
 import RecipeIngredientEdit from "./RecipeIngredientEdit";
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { handleUploadImage,
          resizeFile,
-         listIngredients,
          addRecipe,
          addIngredient,
-         addIngredientToRecipe,
          addIngredientsToRecipe,
          getIngredientIDbyName } from '../utils/index';
 import { Link } from "react-router-dom";
 
-
-
 export default function Admin(props) {
 const { setMessage } = props;
 const [image, setImage] = useState(null);
-const [allIngredients, setAllIngredients] = useState([]);
 
 const [recipeRequest, setRequest] = useState(
   {
@@ -29,7 +24,6 @@ const [recipeRequest, setRequest] = useState(
       image: null,
   }
 )
-
 const [recipeIngredientList,
        setRecipeIngredientList] = useState([
         {
@@ -163,34 +157,7 @@ const sendPostRequest = async (url) => {
                   </Form.Group>
               </Col>
             </Row>
-            {/* <Row>
-              <Col>
-                <Form.Label>Ingredient</Form.Label>
-                <Form.Select aria-label="Default select example"
-                             name="ingredientID"
-                             onChange={handleIngredientChange}>
-                  { allIngredients.map((item) => {
-                    return (
-                      <option value={item.id} key={item.id}>{item.name}</option>
-                    )
-                  })
-                  }
-                </Form.Select>
-              </Col>
-
-              <Col>
-                <Col>
-                    <Form.Group className="mb-3">
-                    <Form.Label>Amount</Form.Label>
-                    <Form.Control type="text"
-                                  value={recipeIngredientRequest.amount}
-                                  name="amount"
-                                  onChange={handleIngredientChange}/>
-                    </Form.Group>
-                </Col>
-              </Col>
-            </Row> */}
-            
+                 
             <Row>
               <Col><Form.Label>Ingredient</Form.Label></Col>
               <Col><Form.Label>Amount</Form.Label></Col>
@@ -235,7 +202,7 @@ const sendPostRequest = async (url) => {
 
             <Button onClick={()=>handleAddIngredientsToRecipe(1, recipeIngredientList)}>
                 Test
-              </Button>
+            </Button>
             
           </Form>
        </Container>
