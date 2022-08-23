@@ -137,13 +137,18 @@ export async function getIngredientIDbyName (name) {
                 .catch(err=>console.log(err));
 }
 
+export async function getIngredientsByRecipeID (id) {
+    return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe/${id}/ingredients/`)
+                    .then((res)=>res.data)
+                    .catch(err=>console.log(err));
+}
+
 export async function addIngredientToRecipe (recipeID, req) {
     axios({
         method: 'post',
         url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
         data: req
       });
-    // console.log('Ingredient is added into a Recipe!', req)
 }
 
 // Add Multiple Ingredients to a recipe
@@ -160,7 +165,7 @@ export async function addIngredientsToRecipe (recipeID, reqList) {
           });
         return;
     }
-    reqList.forEach((req, index) => {
+    reqList.forEach((req) => {
         axios({
             method: 'post',
             url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
@@ -216,7 +221,7 @@ export function resizeFile (file) {
 }
 
 export async function handleUploadImage (image, reqFunc, isEdit) {
-    
+
     if (isEdit) {
         reqFunc();
         return; 

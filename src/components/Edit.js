@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import _ from 'lodash';
 import RecipeIngredientEdit from "./RecipeIngredientEdit";
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { handleUploadImage,
          resizeFile,
          editRecipe,
+         getIngredientsByRecipeID,
          } from '../utils/index';
 import { Link } from "react-router-dom";
 
@@ -28,6 +29,16 @@ const [recipeIngredientList,
        amount: ""
      }
     ])
+
+  //useEffect
+  useEffect(() => { 
+    async function getRecipeIngredients() {
+    getIngredientsByRecipeID(selectedRecipe.id)
+    .then(data => setRecipeIngredientList(data));
+    }
+    getRecipeIngredients();
+  });
+
 
 // Handler Function
 const handleChange = (event) => {
