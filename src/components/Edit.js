@@ -6,6 +6,9 @@ import { handleUploadImage,
          resizeFile,
          editRecipe,
          getIngredientsByRecipeID,
+         getIngredientIDbyName,
+         addIngredient,
+         removeIngridentsToRecipe
          } from '../utils/index';
 import { Link } from "react-router-dom";
 
@@ -61,6 +64,34 @@ const handleIngredientChange = index => event => {
     let newArr = recipeIngredientList;
     _.pullAt(newArr, index)
     setRecipeIngredientList(newArr);
+  }
+
+  const handleAddIngredientsToRecipe = async (recipeID, list) => {
+    // Create new Ingredient List for API Request
+    const newList = []
+    if (list.length <= 0) return newList;
+  
+    for (let i = 0; i < list.length; i++) {
+      if(list[i].name) {
+        let id = await getIngredientIDbyName(list[i].name);
+  
+        if (id) {
+          newList.push({
+            ingredientID: id,
+            amount: list[i].amount
+          });
+        }
+  
+        if (!id) { 
+          let newID = await addIngredient({ name: list[i].name })
+          
+          newList.push({
+            ingredientID: newID,
+            amount: list[i].amount }); 
+        } 
+      }  
+    }
+    return newList;
   }
 
 const handleImageChange = async (event) => {
@@ -189,7 +220,7 @@ const sendPatchRequest = async (url) => {
             </Button>
         </Link>
 
-        <Button onClick={()=>test()}>
+        <Button onClick={()=>removeIngridentsToRecipe([197])}>
                     test
             </Button>
     </Form>

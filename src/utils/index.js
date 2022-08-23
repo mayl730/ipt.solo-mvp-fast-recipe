@@ -191,6 +191,10 @@ export async function removeIngridentToRecipe (recipeToIngreID) {
       console.log('removeIngridentToRecipe!', recipeToIngreID)
 }
 
+export async function removeIngridentsToRecipe (arr) {
+    arr.forEach(recipeToIngreID => removeIngridentToRecipe(recipeToIngreID));
+}
+
 export async function addIngredient (req) {
     return axios.post('https://fast-recipe-api-psql.herokuapp.com/api/ingredient', req)
       .then((res)=>res.data.id)
@@ -198,6 +202,7 @@ export async function addIngredient (req) {
         console.log(error);
       }); 
 }
+
 
 // image function
 
