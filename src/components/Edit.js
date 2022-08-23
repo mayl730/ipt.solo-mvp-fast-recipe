@@ -29,15 +29,21 @@ const [recipeIngredientList,
        amount: ""
      }
     ])
+    const [recipeIngredientHistory,
+        setRecipeIngredientHistory] = useState([])
 
   //useEffect
   useEffect(() => { 
     async function getRecipeIngredients() {
-    getIngredientsByRecipeID(selectedRecipe.id)
-    .then(data => setRecipeIngredientList(data));
+        getIngredientsByRecipeID(selectedRecipe.id)
+        .then((data) => {
+            setRecipeIngredientList(data);
+            let historyIDs = data.map(item => item.id)
+            setRecipeIngredientHistory(historyIDs)
+        })
     }
-    getRecipeIngredients();
-  });
+    getRecipeIngredients();;            
+  }, []);
 
 
 // Handler Function
@@ -65,6 +71,11 @@ const handleImageChange = async (event) => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const test = () => {
+    console.log(recipeIngredientHistory);
+    return;
   };
 
 
@@ -173,10 +184,14 @@ const sendPatchRequest = async (url) => {
               
             </Row>
         <Link to="/done">
-        <Button onClick={()=>handleUploadImage(image, sendPatchRequest, true)}>
-                Confirm
+            <Button onClick={()=>handleUploadImage(image, sendPatchRequest, true)}>
+                    Confirm
             </Button>
         </Link>
+
+        <Button onClick={()=>test()}>
+                    test
+            </Button>
     </Form>
 </Container>
 

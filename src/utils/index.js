@@ -183,12 +183,12 @@ export async function editIngridentToRecipe (recipeToIngreID, req) {
       console.log('editIngredientToRecipe!', req)
 }
 
-export async function removeIngridentToRecipe (id) {
+export async function removeIngridentToRecipe (recipeToIngreID) {
     axios({
         method: 'delete',
-        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/ingredient/${id}`
+        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/ingredient/${recipeToIngreID}`
       });
-      console.log('removeIngridentToRecipe!', id)
+      console.log('removeIngridentToRecipe!', recipeToIngreID)
 }
 
 export async function addIngredient (req) {
