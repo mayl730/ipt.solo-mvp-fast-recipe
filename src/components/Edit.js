@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 export default function Edit(props) {
 const { selectedRecipe, setMessage } = props;
 const [image, setImage] = useState(null);
+const [recipeIngredientHistory, setRecipeIngredientHistory] = useState([])
 const [request, setRequest] = useState(
     {
         title: selectedRecipe.title,
@@ -32,8 +33,6 @@ const [recipeIngredientList,
        amount: ""
      }
     ])
-    const [recipeIngredientHistory,
-        setRecipeIngredientHistory] = useState([])
 
   //useEffect
   useEffect(() => { 
@@ -66,32 +65,14 @@ const handleIngredientChange = index => event => {
     setRecipeIngredientList(newArr);
   }
 
-  const handleAddIngredientsToRecipe = async (recipeID, list) => {
-    // Create new Ingredient List for API Request
-    const newList = []
-    if (list.length <= 0) return newList;
-  
+  const handleIngredientsToRecipe = async (recipeID, list) => {
+        console.log(recipeID, list);
     for (let i = 0; i < list.length; i++) {
-      if(list[i].name) {
-        let id = await getIngredientIDbyName(list[i].name);
-  
-        if (id) {
-          newList.push({
-            ingredientID: id,
-            amount: list[i].amount
-          });
-        }
-  
-        if (!id) { 
-          let newID = await addIngredient({ name: list[i].name })
-          
-          newList.push({
-            ingredientID: newID,
-            amount: list[i].amount }); 
-        } 
-      }  
+        if(list.length === 0) {}
     }
-    return newList;
+    //if id exist, patch it & remove that number in history arr
+    //if no id, run "add ingredient to recipe" funciton.
+    // remove ingrident to recipe relationship (base on numbers in history arr)
   }
 
 const handleImageChange = async (event) => {
@@ -220,7 +201,7 @@ const sendPatchRequest = async (url) => {
             </Button>
         </Link>
 
-        <Button onClick={()=>removeIngridentsToRecipe([197])}>
+        <Button onClick={()=>handleIngredientsToRecipe(selectedRecipe.id, recipeIngredientList)}>
                     test
             </Button>
     </Form>

@@ -203,6 +203,26 @@ export async function addIngredient (req) {
       }); 
 }
 
+export async function addIngredientWhenNotExist (item) {
+    if(item.name) {
+        let id = await getIngredientIDbyName(item.name);
+  
+        if (id) {
+          return {
+            ingredientID: id,
+            amount: item.amount
+          }
+        }
+  
+        if (!id) { 
+          let newID = await addIngredient({ name: item.name })
+          return {
+            ingredientID: newID,
+            amount: item.amount }
+        } 
+      } 
+    return;
+}
 
 // image function
 
