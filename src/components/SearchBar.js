@@ -75,7 +75,7 @@ export default function SearchBar(props) {
           <Col sm={3}>
           <Form.Group className="mb-3">
             <Form.Control type="text"
-            placeholder="Ingrident"
+            placeholder="Ingredient"
             onChange={getIngredient} />
           </Form.Group>
           </Col>
