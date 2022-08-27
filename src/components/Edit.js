@@ -101,9 +101,16 @@ const handleIngredientChange = index => event => {
     }
     let itemsToBeRemoved = _.difference(recipeIngredientHistory, editHistory)
     await removeIngredientsToRecipe(itemsToBeRemoved);
-    console.log('itemToBeRemoved', itemsToBeRemoved)
-    await addIngredientsToRecipe(recipeID, newList)
-    // remove ingrident to recipe relationship (base on numbers in history arr)
+    // console.log('itemToBeRemoved', itemsToBeRemoved)
+
+    // list.length > 0 but newList.length <= 0
+    if(list.length > 0){
+        if(newList.length <=0) return;
+        await addIngredientsToRecipe(recipeID, newList)
+    }
+    if(list.length <= 0) {
+        await addIngredientsToRecipe(recipeID, newList)
+    }
   }
 
 const handleImageChange = async (event) => {
