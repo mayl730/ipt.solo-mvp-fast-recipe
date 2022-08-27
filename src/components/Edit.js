@@ -11,6 +11,7 @@ import { handleUploadImage,
          removeIngredientsToRecipe,
          addIngredientsToRecipe,
          editIngridentToRecipe,
+         addIngredientToRecipe,
          addIngredientWhenNotExist
          } from '../utils/index';
 import { Link } from "react-router-dom";
@@ -57,6 +58,14 @@ const handleChange = (event) => {
                         [event.target.name]:event.target.value}))
 }
 
+const handleAddIngredient = () => {
+    setRecipeIngredientList(
+      [...recipeIngredientList, {
+      name: "",
+      amount: ""
+      }])
+  }
+
 const handleIngredientChange = index => event => {
     let newArr = [...recipeIngredientList];
     newArr[index] = {...newArr[index], [event.target.name]:event.target.value}
@@ -73,28 +82,27 @@ const handleIngredientChange = index => event => {
     let newList = [];
     let editHistory = [];
     for (let i = 0; i < list.length; i++) {
-        // if(list[i].random) {
-        //     console.log('true!')
-        // }
         
         if(list.length === 0) {
             if(recipeIngredientHistory.length > 0){
                 removeIngredientsToRecipe(recipeIngredientHistory)
             }
         }
-         //if id exist, patch it & remove that number in history arr
+         let newIngredient = await addIngredientWhenNotExist(list[i]);
        if(list[i].id) {
-            let newIngredient = await addIngredientWhenNotExist(list[i]);
+        //if id exist, patch it & remove that number in history arr
             await editIngridentToRecipe(list[i].id, newIngredient);
             editHistory.push(list[i].id)
-            // console.log(recipeIngredientHistory)
-       }   
+       }  
+       if(!list[i].id) {
+        //if no id, run "add ingredient to recipe" funciton.
+            newList.push(newIngredient)
+        }
     }
     let itemsToBeRemoved = _.difference(recipeIngredientHistory, editHistory)
     await removeIngredientsToRecipe(itemsToBeRemoved);
     console.log('itemToBeRemoved', itemsToBeRemoved)
-   
-    //if no id, run "add ingredient to recipe" funciton.
+    await addIngredientsToRecipe(recipeID, newList)
     // remove ingrident to recipe relationship (base on numbers in history arr)
   }
 
@@ -209,6 +217,11 @@ const sendPatchRequest = async (url) => {
                 </Row>
               </div>
         ))}
+        <Col>
+              <Button onClick={()=>handleAddIngredient()}>
+                Add Ingredient
+              </Button>
+        </Col>
 
     <Row>
               <Form.Group controlId="formFile" className="mb-3">

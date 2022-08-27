@@ -169,7 +169,7 @@ const sendPostRequest = async (url) => {
               <Button onClick={()=>handleAddIngredient()}>
                 Add Ingredient
               </Button>
-              </Col>
+            </Col>
            
             <Row>
               <Form.Group controlId="formFile" className="mb-3">
