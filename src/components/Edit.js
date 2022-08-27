@@ -8,7 +8,10 @@ import { handleUploadImage,
          getIngredientsByRecipeID,
          getIngredientIDbyName,
          addIngredient,
-         removeIngridentsToRecipe
+         removeIngredientsToRecipe,
+         addIngredientsToRecipe,
+         editIngridentToRecipe,
+         addIngredientWhenNotExist
          } from '../utils/index';
 import { Link } from "react-router-dom";
 
@@ -67,10 +70,30 @@ const handleIngredientChange = index => event => {
 
   const handleIngredientsToRecipe = async (recipeID, list) => {
         console.log(recipeID, list);
+    let newList = [];
+    let editHistory = [];
     for (let i = 0; i < list.length; i++) {
-        if(list.length === 0) {}
+        // if(list[i].random) {
+        //     console.log('true!')
+        // }
+        
+        if(list.length === 0) {
+            if(recipeIngredientHistory.length > 0){
+                removeIngredientsToRecipe(recipeIngredientHistory)
+            }
+        }
+         //if id exist, patch it & remove that number in history arr
+       if(list[i].id) {
+            let newIngredient = await addIngredientWhenNotExist(list[i]);
+            await editIngridentToRecipe(list[i].id, newIngredient);
+            editHistory.push(list[i].id)
+            // console.log(recipeIngredientHistory)
+       }   
     }
-    //if id exist, patch it & remove that number in history arr
+    let itemsToBeRemoved = _.difference(recipeIngredientHistory, editHistory)
+    await removeIngredientsToRecipe(itemsToBeRemoved);
+    console.log('itemToBeRemoved', itemsToBeRemoved)
+   
     //if no id, run "add ingredient to recipe" funciton.
     // remove ingrident to recipe relationship (base on numbers in history arr)
   }
@@ -203,6 +226,9 @@ const sendPatchRequest = async (url) => {
 
         <Button onClick={()=>handleIngredientsToRecipe(selectedRecipe.id, recipeIngredientList)}>
                     test
+            </Button>
+            <Button onClick={()=>test()}>
+                    test2
             </Button>
     </Form>
 </Container>

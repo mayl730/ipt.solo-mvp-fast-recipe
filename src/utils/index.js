@@ -191,7 +191,7 @@ export async function removeIngridentToRecipe (recipeToIngreID) {
       console.log('removeIngridentToRecipe!', recipeToIngreID)
 }
 
-export async function removeIngridentsToRecipe (arr) {
+export async function removeIngredientsToRecipe (arr) {
     arr.forEach(recipeToIngreID => removeIngridentToRecipe(recipeToIngreID));
 }
 
