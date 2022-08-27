@@ -75,7 +75,6 @@ const handleIngredientChange = index => event => {
   }
 
   const handleIngredientsToRecipe = async (recipeID, list) => {
-        console.log(recipeID, list);
     let newList = [];
     let editHistory = [];
     for (let i = 0; i < list.length; i++) {
@@ -137,6 +136,7 @@ const sendPatchRequest = async (url) => {
         console.log(req)
     }
     await editRecipe(req);
+    await handleIngredientsToRecipe(selectedRecipe.id, recipeIngredientList);
 }
 
  return (
@@ -238,13 +238,6 @@ const sendPatchRequest = async (url) => {
                     Confirm
             </Button>
         </Link>
-
-        <Button onClick={()=>handleIngredientsToRecipe(selectedRecipe.id, recipeIngredientList)}>
-                    test
-            </Button>
-            <Button onClick={()=>test()}>
-                    test2
-            </Button>
     </Form>
 </Container>
 
