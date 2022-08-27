@@ -5,9 +5,8 @@ import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { handleUploadImage,
          resizeFile,
          addRecipe,
-         addIngredient,
          addIngredientsToRecipe,
-         getIngredientIDbyName } from '../utils/index';
+         addIngredientWhenNotExist } from '../utils/index';
 import { Link } from "react-router-dom";
 
 export default function Admin(props) {
@@ -75,24 +74,8 @@ const handleAddIngredientsToRecipe = async (recipeID, list) => {
   if (list.length <= 0) return newList;
 
   for (let i = 0; i < list.length; i++) {
-    if(list[i].name) {
-      let id = await getIngredientIDbyName(list[i].name);
-
-      if (id) {
-        newList.push({
-          ingredientID: id,
-          amount: list[i].amount
-        });
-      }
-
-      if (!id) { 
-        let newID = await addIngredient({ name: list[i].name })
-        
-        newList.push({
-          ingredientID: newID,
-          amount: list[i].amount }); 
-      } 
-    }  
+    let newItem = await addIngredientWhenNotExist(list[i]);
+    newList.push(newItem); 
   }
   return newList;
 }
@@ -184,7 +167,7 @@ const sendPostRequest = async (url) => {
               <Button onClick={()=>handleAddIngredient()}>
                 Add Ingredient
               </Button>
-              </Col>
+            </Col>
            
             <Row>
               <Form.Group controlId="formFile" className="mb-3">

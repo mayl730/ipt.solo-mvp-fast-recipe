@@ -1,11 +1,22 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import _ from 'lodash';
+import RecipeIngredientEdit from "./RecipeIngredientEdit";
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
-import { handleUploadImage, resizeFile, editRecipe } from '../utils/index';
+import { handleUploadImage,
+         resizeFile,
+         editRecipe,
+         getIngredientsByRecipeID,
+         removeIngredientsToRecipe,
+         addIngredientsToRecipe,
+         editIngredientToRecipe,
+         addIngredientWhenNotExist
+         } from '../utils/index';
 import { Link } from "react-router-dom";
 
 export default function Edit(props) {
 const { selectedRecipe, setMessage } = props;
 const [image, setImage] = useState(null);
+const [recipeIngredientHistory, setRecipeIngredientHistory] = useState([])
 const [request, setRequest] = useState(
     {
         title: selectedRecipe.title,
@@ -16,12 +27,86 @@ const [request, setRequest] = useState(
         image: selectedRecipe.url,
     }
 )
+const [recipeIngredientList,
+    setRecipeIngredientList] = useState([
+     {
+       name: "",
+       amount: ""
+     }
+    ])
+
+  //useEffect
+  useEffect(() => { 
+    async function getRecipeIngredients() {
+        getIngredientsByRecipeID(selectedRecipe.id)
+        .then((data) => {
+            setRecipeIngredientList(data);
+            let historyIDs = data.map(item => item.id)
+            setRecipeIngredientHistory(historyIDs)
+        })
+    }
+    getRecipeIngredients();;            
+  }, []);
+
 
 // Handler Function
 const handleChange = (event) => {
     setRequest(prev => ({...prev,
                         [event.target.name]:event.target.value}))
 }
+
+const handleAddIngredient = () => {
+    setRecipeIngredientList(
+      [...recipeIngredientList, {
+      name: "",
+      amount: ""
+      }])
+  }
+
+const handleIngredientChange = index => event => {
+    let newArr = [...recipeIngredientList];
+    newArr[index] = {...newArr[index], [event.target.name]:event.target.value}
+    setRecipeIngredientList(newArr);
+  }
+  const removeIngredient = (index) => {
+    let newArr = recipeIngredientList;
+    _.pullAt(newArr, index)
+    setRecipeIngredientList(newArr);
+  }
+
+  const handleIngredientsToRecipe = async (recipeID, list) => {
+    let newList = [];
+    let editHistory = [];
+    for (let i = 0; i < list.length; i++) {
+        
+        if(list.length === 0) {
+            if(recipeIngredientHistory.length > 0){
+                removeIngredientsToRecipe(recipeIngredientHistory)
+            }
+        }
+         let newIngredient = await addIngredientWhenNotExist(list[i]);
+       if(list[i].id) {
+        //if id exist, patch it & remove that number in history arr
+            await editIngredientToRecipe(list[i].id, newIngredient);
+            editHistory.push(list[i].id)
+       }  
+       if(!list[i].id) {
+        //if no id, run "add ingredient to recipe" funciton.
+            newList.push(newIngredient)
+        }
+    }
+    let itemsToBeRemoved = _.difference(recipeIngredientHistory, editHistory)
+    await removeIngredientsToRecipe(itemsToBeRemoved);
+
+    if(list.length > 0){
+        if(newList.length <=0) return;
+        await addIngredientsToRecipe(recipeID, newList)
+    }
+    if(list.length <= 0) {
+        await addIngredientsToRecipe(recipeID, newList)
+    }
+  }
+
 const handleImageChange = async (event) => {
     try {
       const file = event.target.files[0];
@@ -31,6 +116,12 @@ const handleImageChange = async (event) => {
       console.log(err);
     }
   };
+
+  const test = () => {
+    console.log(recipeIngredientHistory);
+    return;
+  };
+
 
 // Send Patch Request
 const sendPatchRequest = async (url) => {
@@ -45,6 +136,7 @@ const sendPatchRequest = async (url) => {
         console.log(req)
     }
     await editRecipe(req);
+    await handleIngredientsToRecipe(selectedRecipe.id, recipeIngredientList);
 }
 
  return (
@@ -107,6 +199,32 @@ const sendPatchRequest = async (url) => {
         </Col>
     </Row>
 
+               
+    <Row>
+        <Col><Form.Label>Ingredient</Form.Label></Col>
+        <Col><Form.Label>Amount</Form.Label></Col>
+        <Col><Form.Label></Form.Label></Col>
+    </Row>
+    {recipeIngredientList.map((ingre, index) => (
+              <div>
+                <Row>
+                  <Col>
+                    <RecipeIngredientEdit 
+                    key = {index}
+                    recipeIngredientList = {recipeIngredientList}
+                    handleIngredientChange={handleIngredientChange}
+                    index = {index}
+                    removeIngredient={removeIngredient}/>
+                  </Col>
+                </Row>
+              </div>
+        ))}
+        <Col>
+              <Button onClick={()=>handleAddIngredient()}>
+                Add Ingredient
+              </Button>
+        </Col>
+
     <Row>
               <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Upload Image</Form.Label>
@@ -116,8 +234,8 @@ const sendPatchRequest = async (url) => {
               
             </Row>
         <Link to="/done">
-        <Button onClick={()=>handleUploadImage(image, sendPatchRequest, true)}>
-                Confirm
+            <Button onClick={()=>handleUploadImage(image, sendPatchRequest, true)}>
+                    Confirm
             </Button>
         </Link>
     </Form>

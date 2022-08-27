@@ -24,7 +24,7 @@ function App() {
   const [selectedRecipeIngredients, setSelectedRecipeIngredients] = useState([]);
   const [message, setMessage] = useState("");
 
-  //Effect
+  //useEffect
   useEffect(() => { 
     async function getAllRecipes() {
       listRecipes().then(data => setRecipes(data));
@@ -68,6 +68,7 @@ function App() {
              <Route path="edit" element={<Edit 
               selectedRecipe = {selectedRecipe}
               setSelectedRecipe = {setSelectedRecipe}
+              selectedRecipeIngredients = {selectedRecipeIngredients}
               setMessage = {setMessage}
               />} />
 

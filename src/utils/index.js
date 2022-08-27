@@ -137,13 +137,18 @@ export async function getIngredientIDbyName (name) {
                 .catch(err=>console.log(err));
 }
 
+export async function getIngredientsByRecipeID (id) {
+    return await axios.get(`https://fast-recipe-api-psql.herokuapp.com/api/recipe/${id}/ingredients/`)
+                    .then((res)=>res.data)
+                    .catch(err=>console.log(err));
+}
+
 export async function addIngredientToRecipe (recipeID, req) {
     axios({
         method: 'post',
         url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
         data: req
       });
-    // console.log('Ingredient is added into a Recipe!', req)
 }
 
 // Add Multiple Ingredients to a recipe
@@ -160,7 +165,7 @@ export async function addIngredientsToRecipe (recipeID, reqList) {
           });
         return;
     }
-    reqList.forEach((req, index) => {
+    reqList.forEach((req) => {
         axios({
             method: 'post',
             url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/${recipeID}/ingredient`,
@@ -169,7 +174,7 @@ export async function addIngredientsToRecipe (recipeID, reqList) {
     })
 }
 
-export async function editIngridentToRecipe (recipeToIngreID, req) {
+export async function editIngredientToRecipe (recipeToIngreID, req) {
     axios({
         method: 'patch',
         url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/ingredient/${recipeToIngreID}`,
@@ -178,12 +183,16 @@ export async function editIngridentToRecipe (recipeToIngreID, req) {
       console.log('editIngredientToRecipe!', req)
 }
 
-export async function removeIngridentToRecipe (id) {
+export async function removeIngredientToRecipe (recipeToIngreID) {
     axios({
         method: 'delete',
-        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/ingredient/${id}`
+        url: `https://fast-recipe-api-psql.herokuapp.com/api/recipe/ingredient/${recipeToIngreID}`
       });
-      console.log('removeIngridentToRecipe!', id)
+      console.log('removeIngridentToRecipe!', recipeToIngreID)
+}
+
+export async function removeIngredientsToRecipe (arr) {
+    arr.forEach(recipeToIngreID => removeIngredientToRecipe(recipeToIngreID));
 }
 
 export async function addIngredient (req) {
@@ -192,6 +201,27 @@ export async function addIngredient (req) {
       .catch((error) =>{
         console.log(error);
       }); 
+}
+
+export async function addIngredientWhenNotExist (item) {
+    if(item.name) {
+        let id = await getIngredientIDbyName(item.name);
+  
+        if (id) {
+          return {
+            ingredientID: id,
+            amount: item.amount
+          }
+        }
+  
+        if (!id) { 
+          let newID = await addIngredient({ name: item.name })
+          return {
+            ingredientID: newID,
+            amount: item.amount }
+        } 
+      } 
+    return;
 }
 
 // image function
@@ -216,7 +246,7 @@ export function resizeFile (file) {
 }
 
 export async function handleUploadImage (image, reqFunc, isEdit) {
-    
+
     if (isEdit) {
         reqFunc();
         return; 
