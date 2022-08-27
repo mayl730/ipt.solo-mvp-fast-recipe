@@ -6,12 +6,9 @@ import { handleUploadImage,
          resizeFile,
          editRecipe,
          getIngredientsByRecipeID,
-         getIngredientIDbyName,
-         addIngredient,
          removeIngredientsToRecipe,
          addIngredientsToRecipe,
-         editIngridentToRecipe,
-         addIngredientToRecipe,
+         editIngredientToRecipe,
          addIngredientWhenNotExist
          } from '../utils/index';
 import { Link } from "react-router-dom";
@@ -91,7 +88,7 @@ const handleIngredientChange = index => event => {
          let newIngredient = await addIngredientWhenNotExist(list[i]);
        if(list[i].id) {
         //if id exist, patch it & remove that number in history arr
-            await editIngridentToRecipe(list[i].id, newIngredient);
+            await editIngredientToRecipe(list[i].id, newIngredient);
             editHistory.push(list[i].id)
        }  
        if(!list[i].id) {
@@ -101,9 +98,7 @@ const handleIngredientChange = index => event => {
     }
     let itemsToBeRemoved = _.difference(recipeIngredientHistory, editHistory)
     await removeIngredientsToRecipe(itemsToBeRemoved);
-    // console.log('itemToBeRemoved', itemsToBeRemoved)
 
-    // list.length > 0 but newList.length <= 0
     if(list.length > 0){
         if(newList.length <=0) return;
         await addIngredientsToRecipe(recipeID, newList)

@@ -5,9 +5,7 @@ import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { handleUploadImage,
          resizeFile,
          addRecipe,
-         addIngredient,
          addIngredientsToRecipe,
-         getIngredientIDbyName,
          addIngredientWhenNotExist } from '../utils/index';
 import { Link } from "react-router-dom";
 
