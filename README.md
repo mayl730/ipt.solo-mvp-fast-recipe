@@ -10,9 +10,13 @@ Fast Recipe is a web app built by React & Bootstrap.\
 You can try the deployed version on:\
 [Heroku](https://fast-recipe-app.herokuapp.com/)
 
+You can see a video demo on: \
+[Video Demo for Fast Recipe](https://youtu.be/X603t6MLHkE)
+
 The backend is supported by API calls to handle the CRUD function for the recipe database.\
 Please check my repository at: \
 [Recipe API: Find Recipe with Calories or Ingredients](https://github.com/mayl730/ccp4-ipt.api-solo-project-recipe)
+
 
 
 ## Screen Shots
