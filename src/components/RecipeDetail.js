@@ -9,7 +9,7 @@ export default function RecipeDetail(props) {
     <div className="recipe-detail"
          key = {selectedRecipe.id}>
       <Container>
-       <h2>Recipe Detail</h2>
+       <h2>{selectedRecipe.title}</h2>
        <Row>
          <Col>
          <img src={selectedRecipe.image} alt="food"></img>
@@ -28,7 +28,7 @@ export default function RecipeDetail(props) {
         }}>Delete</Button>
        </Link>
 
-       <h3>{selectedRecipe.title}</h3>
+       <h4>Description</h4>
        <p>{selectedRecipe.description}</p>
 
        <h4>Ingredients</h4>
@@ -48,6 +48,7 @@ export default function RecipeDetail(props) {
        <Container fluid="sm">
   <Row>
     <Col>
+    <h4>Instruction</h4>
     <p class="recipe__instructions">{selectedRecipe.instruction}</p>
     </Col>
   </Row>
