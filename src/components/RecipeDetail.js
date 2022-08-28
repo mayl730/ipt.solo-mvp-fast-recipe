@@ -41,7 +41,8 @@ export default function RecipeDetail(props) {
           </div>
         )
        }) }
-       <p>Calories: {selectedRecipe.calories}kcal</p></Col>
+       <h4>Calories</h4>
+       <p>{selectedRecipe.calories}kcal</p></Col>
        </Row>
      
        <Container fluid="sm">
