@@ -6,11 +6,12 @@ This project was created during my time as a student at Code Chrysalis.
 What if there is a way to search for your favorite recipe with only keywords or ingredients, and you can filter out with the calorie value?
 Fast Recipe may be your best solution!
 
-Fast Recipe is a web app built by React & Bootstrap.
-You can try the deployed version on:
+Fast Recipe is a web app built by React & Bootstrap.\
+You can try the deployed version on:\
 [Heroku](https://fast-recipe-app.herokuapp.com/)
 
-The backend is supported by API calls to handle the CRUD function for the recipe database. Please check my repository at: 
+The backend is supported by API calls to handle the CRUD function for the recipe database.\
+Please check my repository at: \
 [Recipe API: Find Recipe with Calories or Ingredients](https://github.com/mayl730/ccp4-ipt.api-solo-project-recipe)
 
 
