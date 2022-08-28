@@ -37,6 +37,7 @@ Please check my repository at: \
 ## Future Release
 1. Style the CSS with Tailwind CSS.
 2. Login would be required for the Admin features (Add recipes, Edit & Delete recipes) 
+3. Bug fix for crashing when accessing recipe-detail or edit directory directly.
 
 ## Available Scripts
 
@@ -49,4 +50,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
- 
