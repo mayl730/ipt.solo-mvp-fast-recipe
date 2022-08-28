@@ -13,6 +13,13 @@ You can try the deployed version on:
 The backend is supported by API calls to handle the CRUD function for the recipe database. Please check my repository at: 
 [Recipe API: Find Recipe with Calories or Ingredients](https://github.com/mayl730/ccp4-ipt.api-solo-project-recipe)
 
+
+## Screen Shots
+![image](./public/screen_shot_fast_recipe_v1.png)
+![image](./public/screen_shot_detail.png)
+![image](./public/screen_shot_edit.png)
+
+
 ## Current Features
 1. List of Recipes
 2. Search the Recipe with keywords/ingredients, and the result can be further filtered with calories.
