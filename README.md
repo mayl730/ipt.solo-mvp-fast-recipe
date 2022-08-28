@@ -7,7 +7,7 @@ What if there is a way to search for your favorite recipe with only keywords or 
 Fast Recipe may be your best solution!
 
 Fast Recipe is a web app built by React & Bootstrap.
-You can browse & try to use the deployed version on:
+You can try the deployed version on:
 [Heroku](https://fast-recipe-app.herokuapp.com/)
 
 The backend is supported by API calls to handle the CRUD function for the recipe database. Please check my repository at: 
