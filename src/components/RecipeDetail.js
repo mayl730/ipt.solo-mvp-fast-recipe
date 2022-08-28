@@ -36,6 +36,7 @@ export default function RecipeDetail(props) {
         return (
           <div>
             <span>{item.name}</span>
+            <span>: </span>
             <span>{item.amount}</span>
           </div>
         )
