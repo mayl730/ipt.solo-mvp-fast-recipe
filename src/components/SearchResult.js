@@ -17,7 +17,7 @@ export default function SearchResult(props) {
                 }}
            >
              <img src={item.image} alt="food"></img>
-             <h4>{item.title} id: {item.id}</h4>
+             <h4>{item.title}</h4>
             <p>Ingridents: {item.ingredients.map(function(item){return item;}).join(', ')}</p>
             <p>Calories: {JSON.stringify(item.calories)}</p>
            </div>

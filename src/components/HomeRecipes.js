@@ -19,7 +19,7 @@ export default function HomeRecipes(props) {
                     }}
                   >
                 <img src={item.image} alt="food"></img>
-                <h4>{item.title} {item.id}</h4>
+                <h4>{item.title}</h4>
               </div>
             </Link>
           )
