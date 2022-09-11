@@ -34,7 +34,7 @@ function App() {
 
   return (
 
-    <div className="App">
+    <div className="bg-[url('/src/assets/img_bg1.png')] bg-no-repeat">
         <Router>
          <NavBar/>
          <SearchBar

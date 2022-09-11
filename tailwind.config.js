@@ -4,7 +4,11 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'hero': "url('https://cdn.pixabay.com/photo/2017/10/04/09/56/laboratory-2815641_1280.jpg')",
+      }
+    },
     colors: {
       transparent: 'transparent',
       black: '#000',

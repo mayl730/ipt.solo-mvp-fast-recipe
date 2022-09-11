@@ -13,12 +13,12 @@ export default function ButtonIcon({
     <button
       type={type}
       className={
-        ` text-orange-200 hover:text-orange-100 font-bold py-2 px-1 text-xs ` + className
+        ` text-orange-200 hover:text-orange-100 font-bold py-2 px-1 text-base ` + className
       }
       disabled={processing}
     >
    
- <MdAdd className="inline w-4 h-4 align-middle" /><span className="align-middle">{children}</span>
+ <MdAdd className="inline w-5 h-5 align-middle" /><span className="align-middle">{children}</span>
 
      
     </button>
