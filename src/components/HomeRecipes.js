@@ -6,7 +6,7 @@ export default function HomeRecipes(props) {
   const {recipes, setSelectedRecipe, setSelectedRecipeIngredients} = props;
   return (
     <div className="home-recipes">
-       <h2>Latest Recipes</h2>
+       <h2 className="text-3xl font-bold underline">Latest Recipes</h2>
        { recipes.map((item, index) => {
           return (
             <Link to="recipe-detail">
