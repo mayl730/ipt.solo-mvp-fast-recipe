@@ -5,7 +5,7 @@ import { listRecipeIngredientsByID } from '../utils/index';
 export default function HomeRecipes(props) {
   const {recipes, setSelectedRecipe, setSelectedRecipeIngredients} = props;
   return (
-    <div className="home-recipes">
+    <div className="home-recipes container">
        <h2 className="text-3xl font-bold underline">Latest Recipes</h2>
        { recipes.map((item, index) => {
           return (
