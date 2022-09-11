@@ -1,5 +1,7 @@
 import React from 'react';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { MdAdd } from "react-icons/md";
+
+
 
 export default function ButtonIcon({
   type = 'submit',
@@ -11,12 +13,14 @@ export default function ButtonIcon({
     <button
       type={type}
       className={
-        `bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ` + className
+        ` text-orange-200 hover:text-orange-100 font-bold py-2 px-1 text-xs ` + className
       }
       disabled={processing}
     >
-  
-      <span>{children}</span>
+   
+ <MdAdd className="inline w-4 h-4 align-middle" /><span className="align-middle">{children}</span>
+
+     
     </button>
   );
 }

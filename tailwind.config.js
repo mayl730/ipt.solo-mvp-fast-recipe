@@ -5,6 +5,15 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    colors: {
+      transparent: 'transparent',
+      black: '#000',
+      white: '#fff',
+      orange: {
+        100: '#FFA95B',
+        200: '#FF871C',
+      }
+    },
     screens: {
       'tablet': '640px',
       // => @media (min-width: 640px) { ... }

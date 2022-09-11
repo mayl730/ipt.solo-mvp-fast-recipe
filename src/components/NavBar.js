@@ -22,16 +22,17 @@ export default function NavBar(props) {
     //  </Container>
     // </div>
     <header>
-      <nav class="bg-black border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+      <nav class="border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link to="/">
           <img src={require('../assets/img_logo1.png')} class="mr-3 h-6 sm:h-9" alt="fast recipe Logo" />
           </Link>
-        </div>
+        
         <Link to="add-recipe">
           <ButtonIcon>Add Recipe</ButtonIcon>
         </Link>
        
+        </div>
       </nav>
     </header>
   );
