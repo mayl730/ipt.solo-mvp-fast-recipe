@@ -3,6 +3,7 @@ import './css/main.css';
 import { listRecipes } from './utils/index';
 import { useEffect, useState } from 'react'
 import NavBar from "./components/NavBar";
+import HomeKV from "./components/HomeKV";
 import SearchBar from "./components/SearchBar";
 import SearchResult from "./components/SearchResult";
 import HomeRecipes from './components/HomeRecipes';
@@ -37,6 +38,7 @@ function App() {
     <div className="bg-[url('/src/assets/img_bg1.png')] bg-no-repeat">
         <Router>
          <NavBar/>
+         <HomeKV/>
          <SearchBar
          filteredID = {filteredID}
          setFilteredID = {setFilteredID}
