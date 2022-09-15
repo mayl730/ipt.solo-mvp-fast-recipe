@@ -18,7 +18,7 @@ export default function ButtonIcon({
       disabled={processing}
     >
    
- <MdAdd className="inline w-5 h-5 align-middle" /><span className="align-middle">{children}</span>
+ <MdAdd className="inline w-5 h-4 align-middle" /><span className="align-middle text-sm	desktop:text-base">{children}</span>
 
      
     </button>
