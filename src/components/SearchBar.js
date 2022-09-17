@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Form, Col, Row, Container, Button } from 'react-bootstrap';
+// import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { listRecipesByIds, listRecipesByIngredient, listRecipesByName, listRecipesByCalories } from '../utils/index';
 import { ButtonConfirm } from './ui/Buttons';
 import { Input, Select } from './ui/Forms';
@@ -62,31 +62,46 @@ export default function SearchBar(props) {
 
 
   return (
-    <div className="container search-bar grid grid-cols-1 desktop:grid-cols-3 desktop:gap-4">
-      <form>
-      <Input placeholder="Search Recipe by Name (e.g. Pasta)"
+    <div className="container mx-auto">
+      <div className="flex flex-col desktop:flex-row desktop:space-x-4">
+        <div className="mx-5 mb-5 desktop:basis-4/12 desktop:mx-0 desktop:mb-0">
+         <Input placeholder="Search Recipe by Name (e.g. Pasta)"
               type="text"
-              onChange={getName}></Input>
-      <Input type="text"
-              placeholder="Ingredient"
-              onChange={getIngredient}></Input>
+              onChange={getName}>
+         </Input>
+        </div>
 
-      <Select onChange={getCalories}>
+      <div className="mx-5 mb-5 desktop:basis-3/12 desktop:mx-0 desktop:mb-0">
+        <Input type="text"
+                placeholder="Ingredient"
+                onChange={getIngredient}>
+        </Input>
+      </div>
+
+      <div className="mx-5 mb-5 desktop:basis-3/12 desktop:mx-0 desktop:mb-0">
+        <Select onChange={getCalories}>
             <option value="[null, null]">--Calories--</option>
             <option value="[400, 0]">Under 400kcal</option>
             <option value="[600, 400]">400 - 600kcal</option>
             <option value="[800, 600]">600 - 800kcal</option>
             <option value="[10000, 900]">Over 900kcal</option>
-      </Select>
+       </Select>
+      </div>
 
+    <div className="mx-5 mb-5">
       <Link to="search-result">
-        <ButtonConfirm onClick={()=>{
-          getFilteredRecipes()
-          }}><MdOutlineSearch className="inline w-5 h-4" />Search
-        </ButtonConfirm>
-      </Link>
-      </form>
+          <ButtonConfirm 
+          className="mx-5 mb-5 w-full"
+          onClick={()=>{
+            getFilteredRecipes()
+            }}><MdOutlineSearch className="inline w-5 h-4" />Search
+          </ButtonConfirm>
+        </Link>
+    </div>
+     
 
+      </div>
+{/* 
       <Container>
         <Form>
           <Row>
@@ -120,7 +135,7 @@ export default function SearchBar(props) {
           </Col>
           </Row>
         </Form>
-      </Container>
+      </Container> */}
 
 
     </div>

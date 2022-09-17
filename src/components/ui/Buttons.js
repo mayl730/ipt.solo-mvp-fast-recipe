@@ -32,7 +32,8 @@ function ButtonConfirm({
     <button
       type={type}
       className={
-        `bg-orange-200 hover:bg-orange-100 text-white font-bold py-2 px-4 rounded-full inline text-base` + className
+        `bg-orange-200 hover:bg-orange-100 text-white font-bold py-2 px-5 rounded-full
+        block text-base` + className
       }
       onClick={onClick}>
 
