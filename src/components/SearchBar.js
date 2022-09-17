@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { listRecipesByIds, listRecipesByIngredient, listRecipesByName, listRecipesByCalories } from '../utils/index';
 import { ButtonConfirm } from './ui/Buttons';
 import { Input, Select } from './ui/Forms';
@@ -98,46 +97,8 @@ export default function SearchBar(props) {
           </ButtonConfirm>
         </Link>
     </div>
-     
-
+    
       </div>
-{/* 
-      <Container>
-        <Form>
-          <Row>
-          <Col sm={5}>
-          <Form.Group className="mb-3" controlId="search-name">
-            <Form.Control
-            type="text"
-            placeholder="Search By Recipe Name"
-            onChange={getName}/>
-          </Form.Group>
-          </Col>
-
-          <Col sm={3}>
-          <Form.Group className="mb-3">
-            <Form.Control type="text"
-            placeholder="Ingredient"
-            onChange={getIngredient} />
-          </Form.Group>
-          </Col>
-          <Col sm={3}>
-          <Form.Select aria-label="Default select example"  onChange={getCalories}>
-            <option value="[null, null]">--Calories--</option>
-            <option value="[400, 0]">Under 400kcal</option>
-            <option value="[600, 400]">400 - 600kcal</option>
-            <option value="[800, 600]">600 - 800kcal</option>
-            <option value="[10000, 900]">Over 900kcal</option>
-          </Form.Select>
-          </Col>
-          <Col sm={1}>
-            
-          </Col>
-          </Row>
-        </Form>
-      </Container> */}
-
-
     </div>
   );
 }
