@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function HomeKV(props) {
   return (
-    <div className="container grid grid-cols-1 desktop:grid-cols-3 desktop:gap-4">
+    <div className="container mx-auto grid grid-cols-1 desktop:grid-cols-3 desktop:gap-4">
         <div className="col-span-3 container desktop:col-span-1">
             <img src={require('../assets/img_kv_food.png')} alt="fast recipe Logo" />
         </div>

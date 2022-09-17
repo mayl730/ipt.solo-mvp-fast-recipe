@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { listRecipesByIds, listRecipesByIngredient, listRecipesByName, listRecipesByCalories } from '../utils/index';
-import Button1 from './Button1';
+import { ButtonConfirm } from './ui/Buttons';
+import { Input, Select } from './ui/Forms';
+import { MdOutlineSearch } from "react-icons/md";
 const _ = require('lodash');
 
 // handler function
@@ -60,7 +62,31 @@ export default function SearchBar(props) {
 
 
   return (
-    <div className="search-bar">
+    <div className="container search-bar grid grid-cols-1 desktop:grid-cols-3 desktop:gap-4">
+      <form>
+      <Input placeholder="Search Recipe by Name (e.g. Pasta)"
+              type="text"
+              onChange={getName}></Input>
+      <Input type="text"
+              placeholder="Ingredient"
+              onChange={getIngredient}></Input>
+
+      <Select onChange={getCalories}>
+            <option value="[null, null]">--Calories--</option>
+            <option value="[400, 0]">Under 400kcal</option>
+            <option value="[600, 400]">400 - 600kcal</option>
+            <option value="[800, 600]">600 - 800kcal</option>
+            <option value="[10000, 900]">Over 900kcal</option>
+      </Select>
+
+      <Link to="search-result">
+        <ButtonConfirm onClick={()=>{
+          getFilteredRecipes()
+          }}><MdOutlineSearch className="inline w-5 h-4" />Search
+        </ButtonConfirm>
+      </Link>
+      </form>
+
       <Container>
         <Form>
           <Row>
@@ -91,13 +117,6 @@ export default function SearchBar(props) {
           </Col>
           <Col sm={1}>
             
-          <Link to="search-result">
-
-            <Button1 onClick={()=>{
-              getFilteredRecipes()
-              }}>Search</Button1>
-
-          </Link>
           </Col>
           </Row>
         </Form>

@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import { Container, Button, Col, Row } from 'react-bootstrap';
-import ButtonIcon from './ButtonIcon';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import {ButtonIcon} from './ui/Buttons';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export default function NavBar(props) {

@@ -11,6 +11,9 @@ module.exports = {
     },
     colors: {
       transparent: 'transparent',
+      gray: {
+        100: '#F5F5F5',
+      },
       black: {
         800: '#444444',
         900: '#000',
@@ -33,5 +36,5 @@ module.exports = {
       'cabin': ['Cabin', 'sans-serif']
     }
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms'),],
 }
