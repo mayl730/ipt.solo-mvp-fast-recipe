@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { listRecipesByIds, listRecipesByIngredient, listRecipesByName, listRecipesByCalories } from '../utils/index';
+import Button1 from './Button1';
 const _ = require('lodash');
 
 // handler function
@@ -89,13 +90,13 @@ export default function SearchBar(props) {
           </Form.Select>
           </Col>
           <Col sm={1}>
+            
           <Link to="search-result">
-            <Button
-            onClick={()=>{
+
+            <Button1 onClick={()=>{
               getFilteredRecipes()
-              }}>
-              Search
-            </Button>
+              }}>Search</Button1>
+
           </Link>
           </Col>
           </Row>
