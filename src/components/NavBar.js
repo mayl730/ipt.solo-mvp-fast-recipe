@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {ButtonIcon} from './ui/Buttons';
+import { ButtonIcon } from './ui/Buttons';
 import { MdAdd } from "react-icons/md";
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
