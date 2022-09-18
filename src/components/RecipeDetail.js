@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import React from "react"
-import { Container, Button, Col, Row } from 'react-bootstrap';
-import { ButtonConfirm, ButtonIcon } from './ui/Buttons';
+import { ButtonIcon } from './ui/Buttons';
 import { removeRecipe } from '../utils/index';
 import { MdModeEdit, MdDeleteForever, MdAccessTime } from "react-icons/md";
 
