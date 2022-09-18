@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import _ from 'lodash';
 import RecipeIngredientEdit from "./RecipeIngredientEdit";
-import { Form, Col, Row, Container, Button } from 'react-bootstrap';
+import { Form, Col, Row, Button } from 'react-bootstrap';
 import { handleUploadImage,
          resizeFile,
          editRecipe,
@@ -13,7 +13,8 @@ import { handleUploadImage,
          } from '../utils/index';
 import { Link } from "react-router-dom";
 import { H3 } from './ui/Fonts';
-import { Label, Input } from './ui/Forms';
+import { Label, Input, InputFile } from './ui/Forms';
+import { ButtonConfirm } from './ui/Buttons';
 
 export default function Edit(props) {
 const { selectedRecipe, setMessage } = props;
@@ -144,112 +145,96 @@ const sendPatchRequest = async (url) => {
  return (
     <div className="edit container mx-auto">
      <H3 className="text-center">Edit a Recipe</H3>
-     <div></div>
-<Container>
-    <Form>
-    <Form.Group className="mb-3">
+    
+
+   
+ <div className="container mx-auto">
+
+    <div className="mb-6">
       <Label>Recipe Name</Label>
       <Input
       type="text"
       name="title"
       value={request.title}
       onChange={handleChange}
-      ></Input>
+      />
+    </div>
 
-        <Form.Control
-               type="text"
-               name="title"
-               value={request.title}
-               onChange={handleChange}/>
-    </Form.Group>
+    <div className="mb-6">
+      <Label>Description</Label>
+      <Input as="textarea"
+              rows={3}
+              type="text"
+              name="description"
+              value={request.description}
+              onChange={handleChange}/>
+    </div>
 
-     <Row>
-        <Col>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>Description</Form.Label>
-                <Form.Control as="textarea"
-                              rows={3}
-                              type="text"
-                              name="description"
-                              value={request.description}
-                              onChange={handleChange}/>
-            </Form.Group>
-        </Col>
-        <Col>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>Instruction</Form.Label>
-                <Form.Control as="textarea"
-                              rows={3}
-                              type="text"
-                              name="instruction"
-                              value={request.instruction}
-                              onChange={handleChange}/>
-            </Form.Group>
-        </Col>
-    </Row>
+    <div className="mb-6">
+      <Label>Instruction</Label>
+      <Input as="textarea"
+              rows={3}
+              type="text"
+              name="instruction"
+              value={request.instruction}
+              onChange={handleChange}/>
+    </div>
+     
 
-    <Row>
-        <Col>
-            <Form.Group className="mb-3">
-            <Form.Label>Calories - kcal</Form.Label>
-            <Form.Control type="text"
+
+
+
+
+        <div className="mb-6">
+            <Label>Calories - kcal</Label>
+            <Input  type="text"
                           name="calories"
                           value={request.calories}
                           onChange={handleChange}/>
-            </Form.Group>
-        </Col>
-        <Col>
-            <Form.Group className="mb-3">
-            <Form.Label>Type</Form.Label>
-            <Form.Control type="text"
+        </div>
+        <div className="mb-6">
+            <Label>Type</Label>
+            <Input  type="text"
                           name="type"
                           value={request.type}
                           onChange={handleChange}/>
-            </Form.Group>
-        </Col>
-    </Row>
+        </div >
 
-               
-    <Row>
-        <Col><Form.Label>Ingredient</Form.Label></Col>
-        <Col><Form.Label>Amount</Form.Label></Col>
-        <Col><Form.Label></Form.Label></Col>
-    </Row>
+        <div>
+          <Label>Ingredient</Label>
+          <Label>Amount</Label>
+          <Label></Label>
+        </div>
     {recipeIngredientList.map((ingre, index) => (
               <div>
-                <Row>
-                  <Col>
                     <RecipeIngredientEdit 
                     key = {index}
                     recipeIngredientList = {recipeIngredientList}
                     handleIngredientChange={handleIngredientChange}
                     index = {index}
                     removeIngredient={removeIngredient}/>
-                  </Col>
-                </Row>
               </div>
         ))}
-        <Col>
-              <Button onClick={()=>handleAddIngredient()}>
-                Add Ingredient
-              </Button>
-        </Col>
 
-    <Row>
-              <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Upload Image</Form.Label>
-              <Form.Control type="file"
+              <ButtonConfirm type="button" onClick={()=>handleAddIngredient()}>
+                Add Ingredient
+              </ButtonConfirm>
+
+
+              <div>
+              <Label>Upload Image</Label>
+              <InputFile type="file"
                             onChange={handleImageChange}/>
-              </Form.Group>
-              
-            </Row>
+              </div>
+        
+
         <Link to="/done">
-            <Button onClick={()=>handleUploadImage(image, sendPatchRequest, true)}>
+            <ButtonConfirm onClick={()=>handleUploadImage(image, sendPatchRequest, true)}>
                     Confirm
-            </Button>
+            </ButtonConfirm>
         </Link>
-    </Form>
-</Container>
+
+    </div>
 
      </div>
  )
