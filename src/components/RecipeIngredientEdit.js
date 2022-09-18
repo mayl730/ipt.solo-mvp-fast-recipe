@@ -11,7 +11,7 @@ export default function RecipeIngredientEdit(props) {
             index} = props;
   return (
     <>
-            <div>
+            <div className='flex flex-row space-x-2'>
                <Input
                 name="name"
                 type="text"

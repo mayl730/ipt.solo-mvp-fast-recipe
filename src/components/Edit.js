@@ -13,7 +13,7 @@ import { handleUploadImage,
          } from '../utils/index';
 import { Link } from "react-router-dom";
 import { H3 } from './ui/Fonts';
-import { Label, Input, InputFile } from './ui/Forms';
+import { Label, Input, InputFile, Textarea } from './ui/Forms';
 import { ButtonConfirm } from './ui/Buttons';
 
 export default function Edit(props) {
@@ -148,7 +148,7 @@ const sendPatchRequest = async (url) => {
     
 
    
- <div className="container mx-auto">
+ <div className="container mx-auto px-5 desktop:w-1/2">
 
     <div className="mb-6">
       <Label>Recipe Name</Label>
@@ -162,8 +162,8 @@ const sendPatchRequest = async (url) => {
 
     <div className="mb-6">
       <Label>Description</Label>
-      <Input as="textarea"
-              rows={3}
+      <Textarea as="textarea"
+              rows={4}
               type="text"
               name="description"
               value={request.description}
@@ -172,18 +172,14 @@ const sendPatchRequest = async (url) => {
 
     <div className="mb-6">
       <Label>Instruction</Label>
-      <Input as="textarea"
-              rows={3}
+      <Textarea as="textarea"
+              rows={4}
               type="text"
               name="instruction"
               value={request.instruction}
               onChange={handleChange}/>
     </div>
      
-
-
-
-
 
         <div className="mb-6">
             <Label>Calories - kcal</Label>
@@ -200,28 +196,31 @@ const sendPatchRequest = async (url) => {
                           onChange={handleChange}/>
         </div >
 
-        <div>
-          <Label>Ingredient</Label>
-          <Label>Amount</Label>
-          <Label></Label>
+        <div className="flex flex-row">
+          <Label className="w-3/6">Ingredient</Label>
+          <Label className="w-2/6">Amount</Label>
+          <Label className="w-1/6"></Label>
         </div>
-    {recipeIngredientList.map((ingre, index) => (
-              <div>
-                    <RecipeIngredientEdit 
-                    key = {index}
-                    recipeIngredientList = {recipeIngredientList}
-                    handleIngredientChange={handleIngredientChange}
-                    index = {index}
-                    removeIngredient={removeIngredient}/>
-              </div>
-        ))}
+
+        <div className="grid grid-cols-1 gap-3 mb-5">
+          {recipeIngredientList.map((ingre, index) => (
+                    <div>
+                          <RecipeIngredientEdit 
+                          key = {index}
+                          recipeIngredientList = {recipeIngredientList}
+                          handleIngredientChange={handleIngredientChange}
+                          index = {index}
+                          removeIngredient={removeIngredient}/>
+                    </div>
+              ))}
+        </div>
 
               <ButtonConfirm type="button" onClick={()=>handleAddIngredient()}>
                 Add Ingredient
               </ButtonConfirm>
 
 
-              <div>
+              <div className="my-10">
               <Label>Upload Image</Label>
               <InputFile type="file"
                             onChange={handleImageChange}/>

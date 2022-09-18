@@ -7,11 +7,27 @@ function Input({
   className = '',
   placeholder='',
   as='',
+  rows,
   onChange
 }) {
   return (
-    <input type={type} className={`bg-white border-gray-200	text-gray-900 text-sm rounded-full focus:ring-orange-200 focus:bg-gray-100 focus:border-solid focus:border-orange-200 block w-full p-8.5` + ' ' + className} placeholder={placeholder} onChange={onChange} value = {value} name = {name} as = {as}>
+    <input type={type} className={`bg-white border-gray-200	text-gray-900 text-sm rounded-full focus:ring-orange-200 focus:bg-gray-100 focus:border-solid focus:border-orange-200 block w-full p-8.5` + ' ' + className} placeholder={placeholder} onChange={onChange} value = {value} name = {name} as = {as} rows = {rows}>
     </input>
+  );
+}
+
+function Textarea({
+  type = '',
+  name = '',
+  value = '',
+  className = '',
+  as = '',
+  rows,
+  onChange
+}) {
+  return (
+    <textarea id="message" rows={rows} class={`block p-2.5 w-full text-gray-900 bg-white border-gray-200 rounded-lg border focus:ring-orange-200 focus:bg-gray-100 focus:border-orange-200 ` + className } as = {as} type = {type} name = {name} value = {value} onChange = {onChange}></textarea>
+
   );
 }
 
@@ -43,7 +59,7 @@ function Label({
   children
 }) {
   return (
-    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{children}</label>
+    <label class={`block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 ` + className}>{children}</label>
   );
 }
 
@@ -59,4 +75,4 @@ function Select({
   );
 }
 
-export {Label, Input, Select, InputFile};
+export {Label, Input, Select, InputFile, Textarea};
