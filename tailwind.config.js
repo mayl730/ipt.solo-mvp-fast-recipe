@@ -23,7 +23,13 @@ module.exports = {
       orange: {
         100: '#FFA95B',
         200: '#FF871C',
-      }
+      }, 
+      lime: {
+        500: '#84CC16',
+      },
+      rose: {
+        500: '#F43F5E',
+      },
     },
     screens: {
       'tablet': '640px',

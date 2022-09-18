@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {ButtonIcon} from './ui/Buttons';
+import { MdAdd } from "react-icons/md";
+
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -14,7 +16,7 @@ export default function NavBar(props) {
           </Link>
         
         <Link to="add-recipe">
-          <ButtonIcon>Add Recipe</ButtonIcon>
+          <ButtonIcon><MdAdd className="inline w-5 h-4 align-middle" />Add Recipe</ButtonIcon>
         </Link>
        
         </div>

@@ -7,17 +7,18 @@ function ButtonIcon({
   className = '',
   processing,
   children,
+  color = 'text-orange-200',
 }) {
   return (
     <button
       type={type}
       className={
-        ` text-orange-200 hover:text-orange-100 font-bold py-2 px-1 text-base ` + className
+        color + ` hover:text-orange-100 font-bold py-2 px-1 text-base ` + className
       }
       disabled={processing}
     >
    
-    <MdAdd className="inline w-5 h-4 align-middle" /><span className="align-middle text-sm	desktop:text-base">{children}</span> 
+    <span className="align-middle text-sm desktop:text-base">{children}</span> 
     </button>
   );
 }
@@ -26,13 +27,14 @@ function ButtonConfirm({
   type = "submit",
   className = "",
   children,
-  onClick
+  onClick,
+  color = "bg-orange-200",
 }) {
   return (
     <button
       type={type}
       className={
-        `bg-orange-200 hover:bg-orange-100 text-white font-bold py-2 px-5 rounded-full
+        color + ` hover:opacity-80 text-white font-bold py-2 px-5 rounded-full
         block text-base` + className
       }
       onClick={onClick}>

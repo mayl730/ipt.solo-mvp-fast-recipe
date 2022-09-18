@@ -30,17 +30,6 @@ export default function HomeRecipes(props) {
                     </figcaption>
                   </figure>
                 </div>
-                {/* <figure class="relative max-w-sm transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0"
-                    key={item.id}
-                    onClick={()=>{
-                      setSelectedRecipe(item)
-                      listRecipeIngredientsByID(item.id)
-                      .then(data =>setSelectedRecipeIngredients(data))
-                      }}>
-      
-                        <img src={item.image} alt="food" className="absolute inset-0 h-full w-full object-cover rounded-2xl"></img>
-                     
-                </figure> */}
               </Link>
             )
         })
