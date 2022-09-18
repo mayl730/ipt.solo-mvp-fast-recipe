@@ -62,7 +62,7 @@ export default function SearchBar(props) {
 
   return (
     <div className="container mx-auto">
-      <div className="flex flex-col desktop:flex-row desktop:space-x-4">
+      <div className="flex flex-col mt-5 desktop:flex-row desktop:space-x-5">
         <div className="mx-5 mb-5 desktop:basis-4/12 desktop:mx-0 desktop:mb-0">
          <Input placeholder="Search Recipe by Name (e.g. Pasta)"
               type="text"
@@ -72,7 +72,7 @@ export default function SearchBar(props) {
 
       <div className="mx-5 mb-5 desktop:basis-3/12 desktop:mx-0 desktop:mb-0">
         <Input type="text"
-                placeholder="Ingredient"
+                placeholder="Ingredient (e.g. Egg)"
                 onChange={getIngredient}>
         </Input>
       </div>

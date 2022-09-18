@@ -12,7 +12,7 @@ import Admin from './components/Admin';
 import Edit from './components/Edit';
 import Delete from './components/Delete';
 import Done from './components/Done';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; 
+import { BrowserRouter as Router, Routes, Route, Fragment, useLocation } from "react-router-dom"; 
 
 
 function App() {
@@ -38,20 +38,25 @@ function App() {
     <div className="bg-[url('/src/assets/img_bg1.png')] bg-no-repeat">
         <Router>
          <NavBar/>
-         <HomeKV/>
          <SearchBar
-         filteredID = {filteredID}
-         setFilteredID = {setFilteredID}
-         setFilteredRecipes = {setFilteredRecipes}
-         /> 
+            filteredID = {filteredID}
+            setFilteredID = {setFilteredID}
+            setFilteredRecipes = {setFilteredRecipes}
+            /> 
+        
           <Routes>
 
-            <Route path ="/" element = {<HomeRecipes
+            <Route exact path ="/" element = {
+            <>
+            <HomeKV/>
+             <HomeRecipes
                   images = {images}
                   recipes = {recipes}
                   setSelectedRecipe = {setSelectedRecipe}
                   setSelectedRecipeIngredients = {setSelectedRecipeIngredients}
-                />} />
+                />
+            </>
+            } />
             <Route path="add-recipe" element={<Admin
             setMessage = {setMessage}/>} />
 
