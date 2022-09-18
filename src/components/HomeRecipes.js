@@ -2,12 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { listRecipeIngredientsByID } from '../utils/index';
 import { MdAccessTime } from "react-icons/md";
+import { H2} from './ui/Fonts';
 
 export default function HomeRecipes(props) {
   const {recipes, setSelectedRecipe, setSelectedRecipeIngredients} = props;
   return (
     <div className="container mx-auto mt-5 mb-10">
-       <h2 className="text-3xl font-montserrat font-bold text-center text-black-800 my-7">Latest Recipes</h2>
+      <H2 className="text-center">Latest Recipes</H2>
        <div className="grid grid-cols-1 gap-8 mx-5 desktop:grid-cols-2 relative">
         { recipes.map((item, index) => {
             return (

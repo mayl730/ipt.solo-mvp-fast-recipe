@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react"
 import { ButtonIcon } from './ui/Buttons';
+import { H3, H4 } from './ui/Fonts';
 import { removeRecipe } from '../utils/index';
 import { MdModeEdit, MdDeleteForever, MdAccessTime } from "react-icons/md";
 
@@ -11,7 +12,7 @@ export default function RecipeDetail(props) {
          key = {selectedRecipe.id}>
  
         <div className="mx-5 flex flex-col mt-0 desktop:flex-row desktop:space-x-5">
-          <h3 className="font-montserrat text-4xl text-black-800 desktop:my-7">{selectedRecipe.title}</h3>  
+          <H3>{selectedRecipe.title}</H3>
           <div className="desktop:my-6">
             <Link to="/edit">
                 <ButtonIcon
@@ -44,7 +45,7 @@ export default function RecipeDetail(props) {
         <div className="mx-5 mb-10">
           <img src={selectedRecipe.image} alt="food" className="rounded-2xl"></img>
           <p className="font-cabin text-lg text-black-800 leading-8 mt-5">{selectedRecipe.description}</p>
-          <h4 className="font-montserrat text-2xl text-black-800 my-5">Ingredients</h4>
+          <H4>Ingredients</H4>
           
           <ul class="tracking-wide font-cabin text-lg text-black-800 max-w-md divide-y divide-gray-200 dark:divide-gray-700">
           { selectedRecipeIngredients.map((item, index) => {
@@ -75,7 +76,7 @@ export default function RecipeDetail(props) {
         </div>
 
         <div className="mx-5 mb-10">
-           <h4 className="font-montserrat text-2xl text-black-800 my-5">Instructions</h4>
+           <H4>Instructions</H4>
            <p className="font-cabin text-lg text-black-800 leading-8 mt-5 whitespace-pre-wrap">{selectedRecipe.instruction}</p>
         </div>
         

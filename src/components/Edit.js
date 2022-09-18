@@ -12,6 +12,8 @@ import { handleUploadImage,
          addIngredientWhenNotExist
          } from '../utils/index';
 import { Link } from "react-router-dom";
+import { H3 } from './ui/Fonts';
+import { Label, Input } from './ui/Forms';
 
 export default function Edit(props) {
 const { selectedRecipe, setMessage } = props;
@@ -140,12 +142,20 @@ const sendPatchRequest = async (url) => {
 }
 
  return (
-    <div className="edit">
-     <h3>Edit a Recipe</h3>
+    <div className="edit container mx-auto">
+     <H3 className="text-center">Edit a Recipe</H3>
+     <div></div>
 <Container>
     <Form>
     <Form.Group className="mb-3">
-        <Form.Label>Recipe Name</Form.Label>
+      <Label>Recipe Name</Label>
+      <Input
+      type="text"
+      name="title"
+      value={request.title}
+      onChange={handleChange}
+      ></Input>
+
         <Form.Control
                type="text"
                name="title"
