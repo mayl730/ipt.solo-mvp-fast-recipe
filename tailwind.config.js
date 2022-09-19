@@ -30,6 +30,9 @@ module.exports = {
       rose: {
         500: '#F43F5E',
       },
+      yellow: {
+        100: '#FFE753',
+      }
     },
     screens: {
       'tablet': '640px',

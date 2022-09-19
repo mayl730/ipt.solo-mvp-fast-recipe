@@ -24,7 +24,7 @@ function H3({
     children
   }) {
     return (
-    <h3 className={`font-montserrat text-4xl text-black-800 desktop:my-7` + ' ' + className}>{children}</h3> 
+    <h3 className={`font-montserrat text-4xl text-black-800 my-5 desktop:my-7` + ' ' + className}>{children}</h3> 
     );
   }
 

@@ -11,9 +11,9 @@ export default function RecipeDetail(props) {
     <div className="container mx-auto mb-10"
          key = {selectedRecipe.id}>
  
-        <div className="mx-5 flex flex-col mt-0 desktop:flex-row desktop:space-x-5">
+        <div className="mx-5 flex flex-col my-0 desktop:flex-row desktop:space-x-5">
           <H3>{selectedRecipe.title}</H3>
-          <div className="desktop:my-6">
+          <div className="-mt-4 desktop:my-6">
             <Link to="/edit">
                 <ButtonIcon
                       className="mr-2"
@@ -35,7 +35,7 @@ export default function RecipeDetail(props) {
           </div>
         </div>
         
-        <div className="mx-5 desktop:mb-10 text-base font-cabin text-black-800">
+        <div className="mx-5 mb-5 desktop:mb-10 text-base font-cabin text-black-800">
           <MdAccessTime className="inline mr-1.5"></MdAccessTime>
           <span className="inline align-middle">38 minutes</span>
           <p className="inline align-middle mx-5">|</p>

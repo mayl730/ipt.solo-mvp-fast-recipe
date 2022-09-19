@@ -13,6 +13,7 @@ import Admin from './components/Admin';
 import Edit from './components/Edit';
 import Delete from './components/Delete';
 import Done from './components/Done';
+import Footer from './components/Footer';
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom"; 
 
 
@@ -89,6 +90,7 @@ function App() {
               setMessage = {setMessage}
              />} />
           </Routes>
+          <Footer />
         </Router>
     </div>
   
