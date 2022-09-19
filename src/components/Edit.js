@@ -119,23 +119,16 @@ const handleImageChange = async (event) => {
     }
   };
 
-  const test = () => {
-    console.log(recipeIngredientHistory);
-    return;
-  };
-
-
 // Send Patch Request
 const sendPatchRequest = async (url) => {
-    console.log('Send Patch Function')
+    console.log('Send Patch Function, and this is the url:', url)
     await setMessage("Updated");
     let req = { ...request,  
         id: selectedRecipe.id,
     }
     if (image !== null) {
-        console.log('this is img url', url)
         req = {...req, image: url}
-        console.log(req)
+        console.log('change image request', req)
     }
     await editRecipe(req);
     await handleIngredientsToRecipe(selectedRecipe.id, recipeIngredientList);
