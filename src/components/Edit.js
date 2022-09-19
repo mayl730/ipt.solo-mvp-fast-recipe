@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import _ from 'lodash';
 import RecipeIngredientEdit from "./RecipeIngredientEdit";
-import { Form, Col, Row, Button } from 'react-bootstrap';
 import { handleUploadImage,
          resizeFile,
          editRecipe,
@@ -11,10 +10,10 @@ import { handleUploadImage,
          editIngredientToRecipe,
          addIngredientWhenNotExist
          } from '../utils/index';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { H3 } from './ui/Fonts';
 import { Label, Input, InputFile, Textarea } from './ui/Forms';
-import { ButtonConfirm } from './ui/Buttons';
+import { ButtonConfirm, ButtonIcon } from './ui/Buttons';
 
 export default function Edit(props) {
 const { selectedRecipe, setMessage } = props;
@@ -142,13 +141,16 @@ const sendPatchRequest = async (url) => {
     await handleIngredientsToRecipe(selectedRecipe.id, recipeIngredientList);
 }
 
+// React Router Funciton
+const navigate = useNavigate();
+
  return (
     <div className="edit container mx-auto">
      <H3 className="text-center">Edit a Recipe</H3>
     
 
    
- <div className="container mx-auto px-5 desktop:w-1/2">
+ <div className="container mx-auto px-5 mb-5 desktop:w-1/2">
 
     <div className="mb-6">
       <Label>Recipe Name</Label>
@@ -227,11 +229,18 @@ const sendPatchRequest = async (url) => {
               </div>
         
 
-        <Link to="/done">
-            <ButtonConfirm onClick={()=>handleUploadImage(image, sendPatchRequest, true)}>
-                    Confirm
-            </ButtonConfirm>
-        </Link>
+            <div className="grid grid-cols-1">
+            <Link to="/done">
+              <ButtonConfirm 
+                      className="container mx-auto w-full px-25 py-3 mb-5"
+                      onClick={()=>handleUploadImage(image, sendPatchRequest, true)}>
+                      Confirm
+              </ButtonConfirm>
+            </Link>
+            <ButtonIcon 
+                      className="container mx-auto"
+                      onClick={() => navigate(-1)}>Back</ButtonIcon>
+            </div>
 
     </div>
 

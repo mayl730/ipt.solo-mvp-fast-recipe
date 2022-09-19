@@ -44,7 +44,10 @@ export default function RecipeDetail(props) {
 
         <div className="mx-5 mb-10">
           <img src={selectedRecipe.image} alt="food" className="rounded-2xl"></img>
-          <p className="font-cabin text-lg text-black-800 leading-8 mt-5">{selectedRecipe.description}</p>
+          <div className="w-5/6">
+           <p className="font-cabin text-lg text-black-800 leading-8 mt-5">{selectedRecipe.description}</p>
+          </div>
+  
           <H4>Ingredients</H4>
           
           <ul class="tracking-wide font-cabin text-lg text-black-800 max-w-md divide-y divide-gray-200 dark:divide-gray-700">

@@ -7,11 +7,22 @@ function Input({
   className = '',
   placeholder='',
   as='',
-  rows,
   onChange
 }) {
   return (
-    <input type={type} className={`bg-white border-gray-200	text-gray-900 text-sm rounded-full focus:ring-orange-200 focus:bg-gray-100 focus:border-solid focus:border-orange-200 block w-full p-8.5` + ' ' + className} placeholder={placeholder} onChange={onChange} value = {value} name = {name} as = {as} rows = {rows}>
+    <input type={type} className={`bg-white border-gray-200	text-gray-900 text-sm rounded-full focus:ring-orange-200 focus:bg-gray-100 focus:border-solid focus:border-orange-200 block w-full p-8.5 ` + className} placeholder={placeholder} onChange={onChange}  value = {value} name = {name} as = {as}>
+    </input>
+  );
+}
+
+function SearchInput({
+  type = '',
+  className = '',
+  placeholder='',
+  onChange
+}) {
+  return (
+    <input type={type} className={`bg-white border-gray-200	text-gray-900 text-sm rounded-full focus:ring-orange-200 focus:bg-gray-100 focus:border-solid focus:border-orange-200 block w-full p-8.5 ` + className} placeholder={placeholder} onChange={onChange}>
     </input>
   );
 }
@@ -75,4 +86,4 @@ function Select({
   );
 }
 
-export {Label, Input, Select, InputFile, Textarea};
+export {Label, Input, SearchInput, Select, InputFile, Textarea};

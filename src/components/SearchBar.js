@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { listRecipesByIds, listRecipesByIngredient, listRecipesByName, listRecipesByCalories } from '../utils/index';
 import { ButtonConfirm } from './ui/Buttons';
-import { Input, Select } from './ui/Forms';
+import { SearchInput, Select } from './ui/Forms';
 import { MdOutlineSearch } from "react-icons/md";
 const _ = require('lodash');
 
@@ -64,17 +64,17 @@ export default function SearchBar(props) {
     <div className="container mx-auto">
       <div className="flex flex-col mt-5 desktop:flex-row desktop:space-x-5">
         <div className="mx-5 mb-5 desktop:basis-4/12 desktop:mx-0 desktop:mb-0">
-         <Input placeholder="Search Recipe by Name (e.g. Pasta)"
+         <SearchInput placeholder="Search Recipe by Name (e.g. Pasta)"
               type="text"
               onChange={getName}>
-         </Input>
+         </SearchInput>
         </div>
 
       <div className="mx-5 mb-5 desktop:basis-3/12 desktop:mx-0 desktop:mb-0">
-        <Input type="text"
+        <SearchInput type="text"
                 placeholder="Ingredient (e.g. Egg)"
                 onChange={getIngredient}>
-        </Input>
+        </SearchInput>
       </div>
 
       <div className="mx-5 mb-5 desktop:basis-3/12 desktop:mx-0 desktop:mb-0">
