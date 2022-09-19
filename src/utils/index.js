@@ -246,10 +246,11 @@ export function resizeFile (file) {
 }
 
 export async function handleUploadImage (image, reqFunc, isEdit) {
-
     if (isEdit) {
-        reqFunc();
-        return; 
+        if (image == null) {
+            reqFunc();
+            return; 
+        }
     }
     if (image == null) {
         reqFunc('https://firebasestorage.googleapis.com/v0/b/fast-recipe-7aa79.appspot.com/o/recipe_image%2Fno-image.png?alt=media&token=dcbede3d-a115-4785-bfb9-1d91054b277f');

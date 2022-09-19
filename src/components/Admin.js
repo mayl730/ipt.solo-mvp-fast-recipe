@@ -1,13 +1,15 @@
 import _ from 'lodash';
 import { useState } from "react"
 import RecipeIngredientEdit from "./RecipeIngredientEdit";
-import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { handleUploadImage,
          resizeFile,
          addRecipe,
          addIngredientsToRecipe,
          addIngredientWhenNotExist } from '../utils/index';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { H3 } from './ui/Fonts';
+import { Label, Input, InputFile, Textarea } from './ui/Forms';
+import { ButtonConfirm, ButtonIcon } from './ui/Buttons';
 
 export default function Admin(props) {
 const { setMessage } = props;
@@ -86,105 +88,109 @@ const sendPostRequest = async (url) => {
   const recipeID = await addRecipe(reqRecipe);
   const newList = await handleAddIngredientsToRecipe(recipeID, recipeIngredientList)
   await addIngredientsToRecipe(recipeID, newList);
-
 }
+
+// React Router Funciton
+const navigate = useNavigate();
+
   return (
-    <div className="admin">
-       <h2>Add Recipe</h2>
-       <Container>
-          <Form>
-            <Form.Group className="mb-3">
-                <Form.Label>Recipe Name</Form.Label>
-                <Form.Control type="text"
+    <div className="edit container mx-auto">
+     <H3 className="text-center">Add a Recipe</H3>
+     <div className="container mx-auto px-5 mb-5 desktop:w-1/2">
+    
+            <div className="mb-6">
+                <Label>Recipe Name</Label>
+                <Input type="text"
                       name="title"
                       value={recipeRequest.title}
                       onChange={handleChange}/>
-            </Form.Group>
-            <Row>
-              <Col>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control as="textarea" rows={3} type="text"
+            </div>
+  
+        
+                <div className="mb-6" controlId="exampleForm.ControlTextarea1">
+                    <Label>Description</Label>
+                    <Textarea as="textarea"
+                              rows={4}
+                              type="text"
                               name="description"
                               value={recipeRequest.description}
                               onChange={handleChange}/>
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Instruction</Form.Label>
-                    <Form.Control as="textarea" rows={3} type="text"
+                </div>
+           
+            
+                <div className="mb-6" controlId="exampleForm.ControlTextarea1">
+                    <Label>Instruction</Label>
+                    <Textarea as="textarea"
+                              rows={4}
+                              type="text"
                               name="instruction"
                               value={recipeRequest.instruction}
                               onChange={handleChange}/>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                  <Form.Group className="mb-3">
-                  <Form.Label>Calories - kcal</Form.Label>
-                  <Form.Control type="text"
+                </div>
+         
+      
+     
+                  <div className="mb-6">
+                  <Label>Calories - kcal</Label>
+                  <Input type="text"
                                 name="calories"
                                 value={recipeRequest.calories}
                                 onChange={handleChange}/>
-                  </Form.Group>
-              </Col>
-              <Col>
-                  <Form.Group className="mb-3">
-                  <Form.Label>Type</Form.Label>
-                  <Form.Control type="text"
+                  </div>
+     
+                  <div className="mb-6">
+                  <Label>Type</Label>
+                  <Input type="text"
                                 name="type"
                                 value={recipeRequest.type}
                                 onChange={handleChange}/>
-                  </Form.Group>
-              </Col>
-            </Row>
+                  </div>
+          
                  
-            <Row>
-              <Col><Form.Label>Ingredient</Form.Label></Col>
-              <Col><Form.Label>Amount</Form.Label></Col>
-              <Col><Form.Label></Form.Label></Col>
-            </Row>
-
-            {recipeIngredientList.map((ingre, index) => (
-              <div>
-                <Row>
-                  <Col>
-                    <RecipeIngredientEdit 
-                    key = {index}
-                    recipeIngredientList = {recipeIngredientList}
-                    handleIngredientChange={handleIngredientChange}
-                    index = {index}
-                    removeIngredient={removeIngredient}/>
-                  </Col>
-                </Row>
+             <div className="flex flex-row">
+                <Label className="w-3/6">Ingredient</Label>
+                <Label className="w-2/6">Amount</Label>
+                <Label className="w-1/6"></Label>
               </div>
-            ))}
+              <div className="grid grid-cols-1 gap-3 mb-5">
+                {recipeIngredientList.map((ingre, index) => (
+                  <div>
+                        <RecipeIngredientEdit 
+                        key = {index}
+                        recipeIngredientList = {recipeIngredientList}
+                        handleIngredientChange={handleIngredientChange}
+                        index = {index}
+                        removeIngredient={removeIngredient}/>
+                  </div>
+                ))}
+             </div>
             
-           
-            <Col>
-              <Button onClick={()=>handleAddIngredient()}>
+          
+             <ButtonConfirm type="button" onClick={()=>handleAddIngredient()}>
                 Add Ingredient
-              </Button>
-            </Col>
+              </ButtonConfirm>
            
-            <Row>
-              <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Upload Image</Form.Label>
-              <Form.Control type="file"
-                            onChange={handleImageChange}/>
-              </Form.Group>
-              
-            </Row>
+              <div className="my-10">
+              <Label>Upload Image</Label>
+              <InputFile type="file"
+                            onChange={handleImageChange}
+                            id = "formFile"/>
+              </div>
+
+            <div className="grid grid-cols-1">
             <Link to="/done">
-              <Button onClick={()=>handleUploadImage(image, sendPostRequest)}>
+              <ButtonConfirm
+                className="container mx-auto w-full px-25 py-3 mb-5"
+                onClick={()=>handleUploadImage(image, sendPostRequest)}>
                 Submit
-              </Button>
+              </ButtonConfirm>
             </Link>
+            <ButtonIcon 
+                      className="container mx-auto"
+                      onClick={() => navigate(-1)}>Back</ButtonIcon>
+            </div>
             
-          </Form>
-       </Container>
+       </div>
 
     </div>
   );

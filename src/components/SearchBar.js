@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Form, Col, Row, Container, Button } from 'react-bootstrap';
 import { listRecipesByIds, listRecipesByIngredient, listRecipesByName, listRecipesByCalories } from '../utils/index';
+import { ButtonConfirm } from './ui/Buttons';
+import { SearchInput, Select } from './ui/Forms';
+import { MdOutlineSearch } from "react-icons/md";
 const _ = require('lodash');
 
 // handler function
@@ -59,50 +61,44 @@ export default function SearchBar(props) {
 
 
   return (
-    <div className="search-bar">
-      <Container>
-        <Form>
-          <Row>
-          <Col sm={5}>
-          <Form.Group className="mb-3" controlId="search-name">
-            <Form.Control
-            type="text"
-            placeholder="Search By Recipe Name"
-            onChange={getName}/>
-          </Form.Group>
-          </Col>
+    <div className="container mx-auto">
+      <div className="flex flex-col mt-5 desktop:flex-row desktop:space-x-5">
+        <div className="mx-5 mb-5 desktop:basis-4/12 desktop:mx-0 desktop:mb-0">
+         <SearchInput placeholder="Search Recipe by Name (e.g. Pasta)"
+              type="text"
+              onChange={getName}>
+         </SearchInput>
+        </div>
 
-          <Col sm={3}>
-          <Form.Group className="mb-3">
-            <Form.Control type="text"
-            placeholder="Ingredient"
-            onChange={getIngredient} />
-          </Form.Group>
-          </Col>
-          <Col sm={3}>
-          <Form.Select aria-label="Default select example"  onChange={getCalories}>
+      <div className="mx-5 mb-5 desktop:basis-3/12 desktop:mx-0 desktop:mb-0">
+        <SearchInput type="text"
+                placeholder="Ingredient (e.g. Egg)"
+                onChange={getIngredient}>
+        </SearchInput>
+      </div>
+
+      <div className="mx-5 mb-5 desktop:basis-3/12 desktop:mx-0 desktop:mb-0">
+        <Select onChange={getCalories}>
             <option value="[null, null]">--Calories--</option>
             <option value="[400, 0]">Under 400kcal</option>
             <option value="[600, 400]">400 - 600kcal</option>
             <option value="[800, 600]">600 - 800kcal</option>
             <option value="[10000, 900]">Over 900kcal</option>
-          </Form.Select>
-          </Col>
-          <Col sm={1}>
-          <Link to="search-result">
-            <Button
-            onClick={()=>{
-              getFilteredRecipes()
-              }}>
-              Search
-            </Button>
-          </Link>
-          </Col>
-          </Row>
-        </Form>
-      </Container>
+       </Select>
+      </div>
 
-
+    <div className="mx-5 mb-5">
+      <Link to="search-result">
+          <ButtonConfirm 
+          className="mx-5 mb-5 w-full"
+          onClick={()=>{
+            getFilteredRecipes()
+            }}><MdOutlineSearch className="inline w-5 h-4" />Search
+          </ButtonConfirm>
+        </Link>
+    </div>
+    
+      </div>
     </div>
   );
 }
