@@ -6,17 +6,16 @@ This project was created during my time as a student at Code Chrysalis.
 What if there is a way to search for your favorite recipe with only keywords or ingredients, and you can filter out with the calorie value?
 Fast Recipe may be your best solution!
 
-Fast Recipe is a web app built by React & Bootstrap.\
+Fast Recipe is a web app built by React.JS & TailwindCSS.\
 You can try the deployed version on:\
 [Firebase](https://fast-recipe-react.web.app/)
 
-You can see a video demo on: \
-[Video Demo for Fast Recipe](https://youtu.be/X603t6MLHkE)
+<!-- You can see a video demo on: \
+[Video Demo for Fast Recipe](https://youtu.be/X603t6MLHkE) -->
 
 The backend is supported by API calls to handle the CRUD function for the recipe database.\
 Please check my repository at: \
 [Recipe API: Find Recipe with Calories or Ingredients](https://github.com/mayl730/ccp4-ipt.api-solo-project-recipe)
-
 
 
 ## Screen Shots
@@ -35,7 +34,7 @@ Please check my repository at: \
 7. Image will be automatically compressed before upload.
 
 ## Future Release
-1. Style the CSS with Tailwind CSS.
+1. Refine CSS.
 2. Login would be required for the Admin features (Add recipes, Edit & Delete recipes) 
 3. Bug fix for crashing when accessing recipe-detail or edit directory directly.
 
