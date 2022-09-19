@@ -43,7 +43,8 @@ function Textarea({
 }
 
 function InputFile({
-  type = 'file',
+  type = '',
+  id = '',
   onChange
 }) {
   return (
@@ -61,7 +62,11 @@ function InputFile({
     transition
     ease-in-out
     m-0
-    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" id="formFile"/>
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+    type = { type }
+    onChange = { onChange }
+    id = {id}
+    />
   );
 }
 

@@ -174,7 +174,8 @@ const navigate = useNavigate();
               <div className="my-10">
               <Label>Upload Image</Label>
               <InputFile type="file"
-                            onChange={handleImageChange}/>
+                            onChange={handleImageChange}
+                            id = "formFile"/>
               </div>
 
             <div className="grid grid-cols-1">

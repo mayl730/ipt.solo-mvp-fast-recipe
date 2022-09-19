@@ -224,8 +224,10 @@ const navigate = useNavigate();
 
               <div className="my-10">
               <Label>Upload Image</Label>
-              <InputFile type="file"
-                            onChange={handleImageChange}/>
+              <InputFile type = "file"
+                         onChange={handleImageChange}
+                         id = "formFile"
+                         />
               </div>
         
 
