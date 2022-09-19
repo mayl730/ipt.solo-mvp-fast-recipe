@@ -19,9 +19,9 @@ Please check my repository at: \
 
 
 ## Screen Shots
-![image](./public/screen_shot_fast_recipe_v1.png)
-![image](./public/screen_shot_detail.png)
-![image](./public/screen_shot_edit.png)
+![image](./public/screen_home.png)
+![image](./public/screen_detail.png)
+![image](./public/screen_edit.png)
 
 
 ## Current Features
