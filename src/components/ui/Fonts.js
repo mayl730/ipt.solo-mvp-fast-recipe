@@ -38,4 +38,12 @@ function H4({
     );
   }
 
-export {H1, H2, H3, H4};
+  function P1({
+    className = '',
+    children
+  }) {
+    return (
+<p className={`font-cabin text-lg text-black-800 leading-8 mt-5 ` + className}>{children}</p>
+    );
+  }
+export {H1, H2, H3, H4, P1};

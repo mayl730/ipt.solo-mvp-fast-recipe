@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { listRecipeIngredientsByID } from '../utils/index';
 import { MdAccessTime } from "react-icons/md";
-import { H2} from './ui/Fonts';
+import { H2 } from './ui/Fonts';
 
 export default function HomeRecipes(props) {
   const {recipes, setSelectedRecipe, setSelectedRecipeIngredients} = props;
@@ -13,7 +13,7 @@ export default function HomeRecipes(props) {
         { recipes.map((item, index) => {
             return (
               <Link to="recipe-detail">
-                <div className=""
+                <div className="hover:opacity-80"
                     key={item.id}
                     onClick={()=>{
                       setSelectedRecipe(item)
