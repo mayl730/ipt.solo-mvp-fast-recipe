@@ -246,7 +246,6 @@ export function resizeFile (file) {
 }
 
 export async function handleUploadImage (image, reqFunc, isEdit) {
-
     if (isEdit) {
         if (image == null) {
             reqFunc();

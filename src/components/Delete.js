@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
-import { Container } from 'react-bootstrap';
+import { ButtonIcon } from './ui/Buttons';
+import { H3 } from './ui/Fonts';
 
 export default function Delete(props) {
     return (
-      <div className="recipe-detail">
-        <Container>
-          <h2>Recipe Deleted!</h2>
-          <Link to="/"><p>Back to Home</p></Link>
-        </Container>
-      </div>
+      <div className="container mx-auto">
+      <H3 className="text-3xl font-montserrat font-bold text-center text-black-800 my-7">
+        Recipe is Deleted!</H3>
+      <Link to="/">
+        <ButtonIcon className="container mx-auto">Back to Home</ButtonIcon>
+      </Link>
+  </div>
     );
   }
