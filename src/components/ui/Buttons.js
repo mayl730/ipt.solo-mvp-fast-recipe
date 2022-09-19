@@ -12,7 +12,7 @@ function ButtonIcon({
     <button
       type = {type}
       className={
-        color + ` hover:text-orange-100 font-bold py-2 px-1 text-base ` + className
+        color + ` hover:opacity-70 font-bold py-2 px-1 text-base ` + className
       }
       onClick={onClick}
     >

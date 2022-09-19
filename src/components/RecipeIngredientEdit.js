@@ -1,7 +1,5 @@
 import React from 'react'
-import { Form, Col, Row, Container, Button } from 'react-bootstrap';
-import { Label, Input } from './ui/Forms';
-import { ButtonIcon } from './ui/Buttons';
+import { Input } from './ui/Forms';
 
 
 export default function RecipeIngredientEdit(props) {
@@ -33,10 +31,6 @@ export default function RecipeIngredientEdit(props) {
                     &times;
                 </p>
             </div>
-              
-            
-     
-
     </>
   )
 }
