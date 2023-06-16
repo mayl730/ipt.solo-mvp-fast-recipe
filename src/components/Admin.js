@@ -17,6 +17,7 @@ const [image, setImage] = useState(null);
 
 const [recipeRequest, setRequest] = useState(
   {
+      userID:"999",
       title: "",
       description: "",
       calories: "",
