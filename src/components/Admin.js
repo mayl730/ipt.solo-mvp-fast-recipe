@@ -87,7 +87,8 @@ const sendPostRequest = async (url) => {
   setMessage("Created")
   const reqRecipe = {...recipeRequest, image: url}
   const recipeID = await addRecipe(reqRecipe);
-  const newList = await handleAddIngredientsToRecipe(recipeID, recipeIngredientList)
+  const newList = await handleAddIngredientsToRecipe(recipeID, recipeIngredientList);
+  console.log('newList', newList);
   await addIngredientsToRecipe(recipeID, newList);
 }
 

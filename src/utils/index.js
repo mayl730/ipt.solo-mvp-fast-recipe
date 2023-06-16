@@ -94,7 +94,9 @@ export async function addRecipe (req) {
         method: 'post',
         url: `${apiUrl}api/recipe/`,
         data: req
-      }).then((res)=>res.data.id)
+      }).then((res)=>{
+        console.log("Item added! Recipe ID", res.data.id);
+        return res.data.id;})
         .catch(err=>console.log(err));
     return res;
 }
@@ -155,7 +157,7 @@ export async function addIngredientToRecipe (recipeID, req) {
 // Add Multiple Ingredients to a recipe
 export async function addIngredientsToRecipe (recipeID, reqList) {
     
-    if (reqList.length <= 0 ) {
+    if (reqList[0] === undefined) {
         axios({
             method: 'post',
             url: `${apiUrl}api/recipe/${recipeID}/ingredient`,
@@ -163,15 +165,26 @@ export async function addIngredientsToRecipe (recipeID, reqList) {
                 ingredientID: 11,
                 amount: "N/A"
             }
+          }).then(response => {
+            console.log(response.data);
+            return response.data;
+          })
+          .catch(error => {
+            console.error(error);
           });
-        return;
     }
     reqList.forEach((req) => {
         axios({
             method: 'post',
             url: `${apiUrl}api/recipe/${recipeID}/ingredient`,
             data: req
-            });
+            }).then(response => {
+                console.log(response.data);
+              })
+              .catch(error => {
+                console.log('request', req);
+                console.error(error);
+              });
     })
 }
 
